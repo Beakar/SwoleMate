@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_background" >
+
+    <ImageView
+        android:id="@+id/userProfileImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:src="@drawable/profile_pic_default" />
+
+    <TextView
+        android:id="@+id/userNameText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/userProfileImage"
+        android:layout_toRightOf="@+id/userProfileImage"
+        android:text="@string/user_name"
+        android:textSize="@dimen/title_text_size" />
+
+    <TextView
+        android:id="@+id/user_weight_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/userProfileImage"
+        android:layout_below="@+id/userProfileImage"
+        android:layout_marginTop="70dp"
+        android:text="@string/user_weight"
+        android:textSize="50dp" />
+
+    <TextView
+        android:id="@+id/weight_unit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/user_weight_number"
+        android:layout_toRightOf="@+id/user_weight_number"
+        android:text="lbs" />
+
+    <Button
+        android:id="@+id/editProfileButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="Edit profile" />
+
+    <TextView
+        android:id="@+id/userHeight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/user_weight_number"
+        android:layout_below="@+id/user_weight_number"
+        android:text="5&apos;11&quot;"
+        android:textSize="50sp" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/weight_unit"
+        android:layout_marginLeft="30dp"
+        android:layout_toRightOf="@+id/weight_unit"
+        android:text="your weight" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/userHeight"
+        android:layout_alignLeft="@+id/textView1"
+        android:text="your height" />
+
+</RelativeLayout>

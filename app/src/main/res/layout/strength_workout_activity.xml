@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_background"
+    android:gravity="left" >
+
+    <TextView
+        android:id="@+id/history_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:text="@string/strength_workout"
+        android:textSize="@dimen/title_text_size" />
+
+    <LinearLayout
+        android:id="@+id/listContainer1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/history_label"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:background="@color/list_border_color"
+        android:orientation="vertical" >
+
+        <ListView
+            android:id="@+id/strengthList"
+            android:layout_width="wrap_content"
+            android:layout_height="322dp"
+            android:layout_marginBottom="@dimen/list_border_width"
+            android:layout_marginLeft="@dimen/list_border_width"
+            android:layout_marginRight="@dimen/list_border_width"
+            android:layout_marginTop="@dimen/list_border_width"
+            android:background="@color/list_background"
+            android:divider="@color/list_divider_color"
+            android:dividerHeight="1dp"
+            android:focusable="false"
+            android:stackFromBottom="false" >
+
+        </ListView>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/finishButton1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@id/listContainer1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:text="@string/finish" />
+
+</RelativeLayout>
