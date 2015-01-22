@@ -26,7 +26,18 @@ public abstract class BaseWorkout {
         this.displayName = displayName;
     }
 
+    /**
+     * Sets the display name for the workout object
+     * @param displayName
+     */
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
 
+    /**
+     * Returns the display name of the workout
+     * @return
+     */
     public String getDisplayName() {
         return displayName;
     }

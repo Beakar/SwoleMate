@@ -41,6 +41,22 @@ public class StrengthWorkout extends BaseWorkout {
     }
 
     /**
+     * Gets the list of exercises for the workout
+     * @return
+     */
+    public ArrayList<Exercise> getExercises() {
+        return exercises;
+    }
+
+    /**
+     * Set list of exercises for the workout
+     * @param exercises
+     */
+    public void setExercises(ArrayList<Exercise> exercises) {
+        this.exercises = exercises;
+    }
+
+    /**
      * Removes an exercise from the workout based on its name
      * @param exerciseName
      */

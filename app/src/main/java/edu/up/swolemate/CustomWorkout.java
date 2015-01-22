@@ -26,6 +26,22 @@ public class CustomWorkout extends BaseWorkout {
     }
 
     /**
+     * returns the workout data for the workout object
+     * @return
+     */
+    public String getWorkoutData() {
+        return workoutData;
+    }
+
+    /**
+     * sets the workout data for the workout object
+     * @param workoutData
+     */
+    public void setWorkoutData(String workoutData) {
+        this.workoutData = workoutData;
+    }
+
+    /**
      * Initializes a CustomWorkout object with the specified name and data string
      * @param name
      * @param workoutData
