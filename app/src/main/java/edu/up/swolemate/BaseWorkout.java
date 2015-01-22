@@ -1,6 +1,6 @@
 package edu.up.swolemate;
 
-public abstract class Workout {
+public abstract class BaseWorkout {
     /**
      * Id of workout for database usage
      */
@@ -14,7 +14,7 @@ public abstract class Workout {
     /**
      * defines an empty workout object
      */
-    public Workout() {
+    public BaseWorkout() {
 
     }
 
@@ -22,7 +22,7 @@ public abstract class Workout {
      * defines a workout with a specific display name
      * @param displayName
      */
-    public Workout(String displayName) {
+    public BaseWorkout(String displayName) {
         this.displayName = displayName;
     }
 

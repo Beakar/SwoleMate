@@ -4,7 +4,7 @@ import java.util.ArrayList;
 /**
  * Created by Nathan on 1/21/2015.
  */
-public class StrengthWorkout extends Workout {
+public class StrengthWorkout extends BaseWorkout {
     protected ArrayList<Exercise> exercises;
 
     public StrengthWorkout() {
