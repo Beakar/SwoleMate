@@ -46,12 +46,11 @@ public class StrengthWorkout extends BaseWorkout {
      */
     public void removeExercise(String exerciseName) {
         for(Exercise e : exercises) {
-            if(e.getName() == exerciseName) {
+            if(e.getName().equals(exerciseName)) {
                 exercises.remove(e);
                 break;
             }
         }
     }
-
 
 }
