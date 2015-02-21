@@ -2,20 +2,23 @@ package edu.up.swolemate;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 /**
  * Created by Daniel on 2/2/2015.
  */
-public class FirstTimeActivity extends Activity implements View.OnTouchListener{
+public class FirstTimeActivity extends Activity implements View.OnClickListener {
 
     private EditText nameEditText;
     private EditText heightEditText;
     private EditText weightEditText;
+    private Button createButton;
 
     /*
     * The user's name
@@ -40,11 +43,15 @@ public class FirstTimeActivity extends Activity implements View.OnTouchListener{
         nameEditText = (EditText)findViewById(R.id.nameEntry);
         heightEditText = (EditText)findViewById(R.id.heightEntry);
         weightEditText = (EditText)findViewById(R.id.weightEntry);
+        createButton = (Button)findViewById(R.id.createButton);
+
 
         name = nameEditText.getText().toString();
 System.out.println("name: " + name);
         height = heightEditText.getText().toString();
+System.out.println("height: " + height);
         weight = weightEditText.getText().toString();
+System.out.println("weight: " + weight);
     }
 
 
@@ -67,8 +74,10 @@ System.out.println("name: " + name);
         return super.onOptionsItemSelected(item);
     }
 
-
-    public boolean onTouch(View v, MotionEvent me){
-return true;
+    @Override
+    public void onClick(View view) {
+        if(view.getId() == R.id.createButton){
+            System.out.println("ASASDFASDFASDFASDFASDF");
+        }
     }
 }
