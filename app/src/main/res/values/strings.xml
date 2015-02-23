@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <string name="aerobic_workout"></string>
-    <string name="app_name">SwoleMate</string>
     <string name="action_settings">Settings</string>
+    <string name="add_new_food">Add new food item</string>
+    <string name="aerobic_workout">Aerobic Workout</string>
+    <string name="app_name">SwoleMate</string>
+    <string name="cardio">Cardio</string>
+    <string name="create_new_workout">Create new workout</string>
     <string name="enter_info_request">Please enter your information below:</string>
-    <string name="hello_user"></string>
     <string name="finish"></string>
-    <string name="create_new_workout"></string>
-    <string name="add_new_food"></string>
-    <string name="view_workout_history"></string>
-    <string name="view_eating_habits"></string>
+    <string name="hello_user"></string>
+    <string name="other">Other</string>
     <string name="strength">Strength</string>
     <string name="strength_workout">Strength Workout</string>
-    <string name="cardio">Cardio</string>
-    <string name="other">Other</string>
     <string name="user_name"></string>
     <string name="user_weight"></string>
+    <string name="view_eating_habits">View eating habits</string>
+    <string name="view_workout_history">View past workouts</string>
     <string name="welcome">Hello and welcome!</string>
+    <string name="title_activity_main">MainActivity</string>
+
+    <string name="hello_world">Hello world!</string>
 
 </resources>

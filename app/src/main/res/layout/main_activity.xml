@@ -1,0 +1,49 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_background"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".MainActivity" >
+    
+    <TextView
+        android:id="@+id/userGreeting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/hello_user"
+        android:textSize="@dimen/title_text_size" />
+
+    <Button
+        android:id="@+id/viewWorkoutHistoryButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight=".4"
+        android:text="@string/view_workout_history" />
+
+    <Button
+        android:id="@+id/viewFoodHistoryButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight=".4"
+        android:text="@string/view_eating_habits"/>
+
+    <Button
+        android:id="@+id/createNewWorkoutButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_weight=".05"
+        android:text="@string/create_new_workout" />
+
+    <Button
+        android:id="@+id/addNewFoodButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight=".05"
+        android:text="@string/add_new_food"  />
+
+</LinearLayout>

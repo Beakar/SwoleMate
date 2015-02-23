@@ -1,19 +1,26 @@
 package edu.up.swolemate;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by Daniel on 2/2/2015.
  */
-public class FirstTimeActivity extends Activity implements View.OnClickListener {
+public class FirstTimeActivity extends Activity implements OnClickListener {
 
     private EditText nameEditText;
     private EditText heightEditText;
@@ -35,6 +42,137 @@ public class FirstTimeActivity extends Activity implements View.OnClickListener 
     * */
     private String weight;
 
+
+    /**
+     * alertName()
+     *
+     * Description: Alerts the user that they must enter their name.
+     */
+    private void alertName(){
+        //create the builder
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+        alertBuilder.setTitle("Enter name");
+        alertBuilder.setMessage("In order to use SwoleMate, you must enter your name.");
+        //make the "OK" button
+        alertBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener(){
+            public void onClick(DialogInterface dialog, int id){
+            }
+        });
+
+        //create the alert
+        AlertDialog alert = alertBuilder.create();
+        alert.show();
+    }
+
+
+    /**
+     * alertHeightWrong()
+     *
+     * Description: Alerts the user they entered the height in the wrong format.
+     */
+    private void alertHeightWrong(){
+        //create the builder
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+        alertBuilder.setTitle("Incorrect height format.");
+        alertBuilder.setMessage("Your height must be entered in the following format: (ie. 5' 10\"");
+
+        //make the "OK" button
+        alertBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener(){
+            public void onClick(DialogInterface dialog, int id){
+            }
+        });
+
+        //create the alert
+        AlertDialog alert = alertBuilder.create();
+        alert.show();
+    }
+
+
+    /**
+     * alertWeightWrong()
+     *
+     * Description: Alerts the user they entered the weight in the wrong format.
+     */
+    private void alertWeightWrong(){
+        //create the builder
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+        alertBuilder.setTitle("Incorrect weight format.");
+        alertBuilder.setMessage("Your weight must be entered in the following format: (ie. 180");
+
+        //make the "OK" button
+        alertBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener(){
+            public void onClick(DialogInterface dialog, int id){
+            }
+        });
+
+        //create the alert
+        AlertDialog alert = alertBuilder.create();
+        alert.show();
+    }
+
+
+    /**
+     * alertEmptyHeightWeight()
+     *
+     * Description: Alerts the user they entered the weight in the wrong format.
+     */
+    private void alertEmptyHeightWeight(){
+        //create the builder
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+        alertBuilder.setTitle("Height/weight not entered");
+        alertBuilder.setMessage("Your height or weight has not been entered. You may enter this " +
+                "information at a later time on the profile page.\n\nDo you wish to proceed?");
+
+        //make the "OK" button
+        alertBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                Intent myIntent = new Intent(FirstTimeActivity.this, MainActivity.class);
+                startActivity(myIntent);
+            }
+        });
+        //make the "Cancel" button
+        alertBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
+            public void onClick(DialogInterface dialog, int id){
+                System.out.println("They clicked Cancel!!!!");
+            }
+        });
+
+        //create the alert
+        AlertDialog alert = alertBuilder.create();
+        alert.show();
+    }
+
+
+    /**
+     * checkHeightFormat()
+     *
+     * Description: Checks the height input against a regex and reports its success.
+     * @param height -- The user-entered height
+     * @return success/failure
+     */
+    private boolean checkHeightFormat(String height){
+        //regex: 1-2 digits, any whitespace, '-', any whitespace, 1-2 digits.
+        Pattern regex = Pattern.compile("\\d{1,2}\\s*\\-\\s*\\d{1,2}");
+        Matcher matcher = regex.matcher(height.trim());
+        return matcher.matches();
+    }
+
+
+    /**
+     * checkWeightFormat
+     *
+     * Description: Checks the weight input against a regex and reports its success.
+     * @param weight -- The user-entered weight.
+     * @return success/failure
+     */
+    private boolean checkWeightFormat(String weight){
+        //regex: 1-3 digits
+        Pattern regex = Pattern.compile("\\d{1,3}");
+        Matcher matcher = regex.matcher(weight.trim());
+        return matcher.matches();
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,14 +182,7 @@ public class FirstTimeActivity extends Activity implements View.OnClickListener 
         heightEditText = (EditText)findViewById(R.id.heightEntry);
         weightEditText = (EditText)findViewById(R.id.weightEntry);
         createButton = (Button)findViewById(R.id.createButton);
-
-
-        name = nameEditText.getText().toString();
-System.out.println("name: " + name);
-        height = heightEditText.getText().toString();
-System.out.println("height: " + height);
-        weight = weightEditText.getText().toString();
-System.out.println("weight: " + weight);
+        createButton.setOnClickListener(this);
     }
 
 
@@ -76,8 +207,33 @@ System.out.println("weight: " + weight);
 
     @Override
     public void onClick(View view) {
+        String nameText = nameEditText.getText().toString().trim();
+        String heightText = heightEditText.getText().toString().trim();
+        String weightText = weightEditText.getText().toString().trim();
         if(view.getId() == R.id.createButton){
-            System.out.println("ASASDFASDFASDFASDFASDF");
+            //The name field is empty
+            if(nameText.equals("")){
+                alertName();
+            }
+            //if the user entered their height, check the format
+            else if(!heightText.equals("")) {
+                //if the height is wrong
+                if (!checkHeightFormat(heightText)) {
+                    alertHeightWrong();
+                }
+            }
+            //if the user entered their weight, check the format
+            else if(!weightText.equals("")){
+                if(!checkWeightFormat(weightText)){
+                    alertWeightWrong();
+                }
+            }
+            //if either the height or weight fields are empty, alert the
+            //user and ask to proceed.
+            else if(heightText.equals("") || weightText.equals("")){
+                alertEmptyHeightWeight();
+            }
+
         }
     }
 }
