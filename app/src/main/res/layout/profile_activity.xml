@@ -55,7 +55,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/user_weight_number"
         android:layout_below="@+id/user_weight_number"
-        android:text="5&apos;11&quot;"
+        android:text="@string/user_height"
         android:textSize="50sp" />
 
     <TextView

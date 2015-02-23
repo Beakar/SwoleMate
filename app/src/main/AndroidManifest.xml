@@ -20,6 +20,14 @@
             android:name=".MainActivity"
             android:label="@string/title_activity_main" >
         </activity>
+        <activity
+            android:name=".ProfileActivity"
+            android:label="@string/title_activity_profile" >
+        </activity>
+        <activity
+            android:name=".CreateWorkoutActivity"
+            android:label="@string/title_activity_create_workout" >
+        </activity>
     </application>
 
 </manifest>

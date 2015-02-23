@@ -5,33 +5,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
 
-public class MainActivity extends Activity implements OnClickListener{
 
-    private Button createWorkoutButton;
-    private Button addFoodItemButton;
+public class ProfileActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_activity);
-
-        createWorkoutButton = (Button)findViewById(R.id.createNewWorkoutButton);
-        createWorkoutButton.setOnClickListener(this);
-        addFoodItemButton = (Button)findViewById(R.id.addNewFoodButton);
-        addFoodItemButton.setOnClickListener(this);
-    }
-
-
-    @Override
-    public void onClick(View v){
-        if(v.getId() == R.id.createNewWorkoutButton){
-            Intent myIntent = new Intent(this, CreateWorkoutActivity.class);
-            startActivity(myIntent);
-        }
+        setContentView(R.layout.profile_activity);
     }
 
 
@@ -54,7 +35,10 @@ public class MainActivity extends Activity implements OnClickListener{
             return true;
         }
         else if(id == R.id.profile){
-            Intent myIntent = new Intent(this, ProfileActivity.class);
+            return true;
+        }
+        else if(id == R.id.main_menu){
+            Intent myIntent = new Intent(this, MainActivity.class);
             startActivity(myIntent);
         }
 

@@ -12,13 +12,16 @@
     <string name="other">Other</string>
     <string name="strength">Strength</string>
     <string name="strength_workout">Strength Workout</string>
-    <string name="user_name"></string>
-    <string name="user_weight"></string>
+    <string name="user_name">Daniel</string>
+    <string name="user_height">5&quot; 10&apos;</string>
+    <string name="user_weight">185</string>
     <string name="view_eating_habits">View eating habits</string>
     <string name="view_workout_history">View past workouts</string>
     <string name="welcome">Hello and welcome!</string>
     <string name="title_activity_main">MainActivity</string>
 
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_profile">ProfileActivity</string>
+    <string name="title_activity_create_workout">CreateWorkoutActivity</string>
 
 </resources>

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -74,7 +75,7 @@ public class FirstTimeActivity extends Activity implements OnClickListener {
         //create the builder
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
         alertBuilder.setTitle("Incorrect height format.");
-        alertBuilder.setMessage("Your height must be entered in the following format: (ie. 5' 10\"");
+        alertBuilder.setMessage("Your height must be entered in the following format: (ie. 5-10");
 
         //make the "OK" button
         alertBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener(){
@@ -126,6 +127,7 @@ public class FirstTimeActivity extends Activity implements OnClickListener {
         //make the "OK" button
         alertBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
+                saveUserInput();
                 Intent myIntent = new Intent(FirstTimeActivity.this, MainActivity.class);
                 startActivity(myIntent);
             }
@@ -133,7 +135,30 @@ public class FirstTimeActivity extends Activity implements OnClickListener {
         //make the "Cancel" button
         alertBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
             public void onClick(DialogInterface dialog, int id){
-                System.out.println("They clicked Cancel!!!!");
+            }
+        });
+
+        //create the alert
+        AlertDialog alert = alertBuilder.create();
+        alert.show();
+    }
+
+
+    /**
+     * alertProfile()
+     *
+     * Description: Alerts the user they cannot view their profile until all required information
+     * has been entered.
+     */
+    private void alertProfile(){
+        //create the builder
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+        alertBuilder.setTitle("Please finish entering information");
+        alertBuilder.setMessage("To view your profile, you must first enter and save your name.");
+
+        //make the "OK" button
+        alertBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener(){
+            public void onClick(DialogInterface dialog, int id){
             }
         });
 
@@ -174,6 +199,43 @@ public class FirstTimeActivity extends Activity implements OnClickListener {
 
 
     @Override
+    public void onClick(View view) {
+        String nameText = nameEditText.getText().toString().trim();
+        String heightText = heightEditText.getText().toString().trim();
+        String weightText = weightEditText.getText().toString().trim();
+        if(view.getId() == R.id.createButton){
+            //The name field is empty
+            if(nameText.equals("")){
+                alertName();
+            }
+            //if the user entered their height, check the format
+            else if(!heightText.equals("")) {
+                //if the height is wrong
+                if (!checkHeightFormat(heightText)) {
+                    alertHeightWrong();
+                }
+            }
+            //if the user entered their weight, check the format
+            else if(!weightText.equals("")){
+                if(!checkWeightFormat(weightText)){
+                    alertWeightWrong();
+                }
+            }
+            //if either the height or weight fields are empty, alert the
+            //user and ask to proceed.
+            else if(heightText.equals("") || weightText.equals("")){
+                System.out.println("***** ONE OF THESE IS NOT LIKE THE OTHER");
+                alertEmptyHeightWeight();
+            }
+            else{
+                System.out.println("****!@$#RWERFGQ@#$WAGF@#W$ESD");
+                saveUserInput();
+            }
+        }
+    }
+
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.first_time_activity);
@@ -202,38 +264,19 @@ public class FirstTimeActivity extends Activity implements OnClickListener {
         if (id == R.id.action_settings) {
             return true;
         }
+        else if(id == R.id.profile){
+            alertProfile();
+        }
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onClick(View view) {
-        String nameText = nameEditText.getText().toString().trim();
-        String heightText = heightEditText.getText().toString().trim();
-        String weightText = weightEditText.getText().toString().trim();
-        if(view.getId() == R.id.createButton){
-            //The name field is empty
-            if(nameText.equals("")){
-                alertName();
-            }
-            //if the user entered their height, check the format
-            else if(!heightText.equals("")) {
-                //if the height is wrong
-                if (!checkHeightFormat(heightText)) {
-                    alertHeightWrong();
-                }
-            }
-            //if the user entered their weight, check the format
-            else if(!weightText.equals("")){
-                if(!checkWeightFormat(weightText)){
-                    alertWeightWrong();
-                }
-            }
-            //if either the height or weight fields are empty, alert the
-            //user and ask to proceed.
-            else if(heightText.equals("") || weightText.equals("")){
-                alertEmptyHeightWeight();
-            }
 
-        }
+    private void saveUserInput(){
+        boolean success = false;
+
+        SharedPreferences settings = getSharedPreferences("user_settings", 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString("userName", nameEditText.getText().toString());
+       // String[] heightString = heightEditText.getText().toString().trim().split("\\s*");
     }
 }
