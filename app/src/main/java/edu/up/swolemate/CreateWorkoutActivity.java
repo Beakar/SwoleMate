@@ -1,17 +1,47 @@
 package edu.up.swolemate;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 
 
-public class CreateWorkoutActivity extends Activity {
+public class CreateWorkoutActivity extends Activity implements OnClickListener{
+    Button strengthWorkoutButton;
+    Button cardioWorkoutButton;
+    Button otherWorkoutButton;
+
+    @Override
+    public void onClick(View v){
+        if(v.getId() == R.id.strengthButton){
+            Intent myIntent = new Intent(this, StrengthWorkoutActivity.class);
+            startActivity(myIntent);
+        }
+        else if(v.getId() == R.id.cardioButton){
+            Intent myIntent = new Intent(this, CardioWorkoutActivity.class);
+            startActivity(myIntent);
+        }
+        else if(v.getId() == R.id.otherButton){
+            Intent myIntent = new Intent(this, CustomWorkoutActivity.class);
+            startActivity(myIntent);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_workout_activity);
+
+        strengthWorkoutButton = (Button)findViewById(R.id.strengthButton);
+        strengthWorkoutButton.setOnClickListener(this);
+        cardioWorkoutButton = (Button)findViewById(R.id.cardioButton);
+        cardioWorkoutButton.setOnClickListener(this);
+        otherWorkoutButton = (Button)findViewById(R.id.otherButton);
+        otherWorkoutButton.setOnClickListener(this);
     }
 
 

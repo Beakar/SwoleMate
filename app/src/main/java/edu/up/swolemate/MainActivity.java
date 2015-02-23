@@ -32,6 +32,10 @@ public class MainActivity extends Activity implements OnClickListener{
             Intent myIntent = new Intent(this, CreateWorkoutActivity.class);
             startActivity(myIntent);
         }
+        else if(v.getId() == R.id.addNewFoodButton){
+            Intent myIntent = new Intent(this, FoodTrackingActivity.class);
+            startActivity(myIntent);
+        }
     }
 
 
