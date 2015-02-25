@@ -1,61 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/app_background" >
+    android:background="@color/app_background"
+    android:orientation="vertical"
+    android:layout_marginTop="10dp"
+    android:layout_marginLeft="25dp">
 
     <EditText
         android:id="@+id/cardioNameEntry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:ems="10"
-        android:hint="Name" >
+        android:hint="Workout Name" >
 
         <requestFocus />
     </EditText>
 
     <CheckBox
-        android:id="@+id/checkBox1"
+        android:id="@+id/cardioTimerCheck"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/cardioNameEntry"
         android:layout_below="@+id/cardioNameEntry"
-        android:layout_marginTop="61dp"
+        android:layout_marginTop="150dp"
         android:text="Use Timer"
         android:textColorHint="@color/black" />
 
     <CheckBox
-        android:id="@+id/checkBox2"
+        android:id="@+id/cardioDistanceCheck"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/checkBox1"
         android:layout_below="@+id/durationEntry"
-        android:layout_marginTop="68dp"
+        android:layout_marginTop="15dp"
         android:text="Record Distance" />
 
     <EditText
-        android:id="@+id/editText1"
+        android:id="@+id/cardioDistanceEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/checkBox2"
+        android:layout_marginTop="15dp"
         android:layout_below="@+id/checkBox2"
         android:ems="10"
+        android:hint="Distance"
         android:inputType="numberDecimal" />
 
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:text="@string/finish" />
+
 
     <EditText
         android:id="@+id/durationEntry"
@@ -63,8 +56,23 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/checkBox1"
         android:layout_below="@+id/checkBox1"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="15dp"
         android:ems="10"
         android:hint="Duration" />
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp">
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:layout_marginRight="25dp"
+            android:text="Save Workout" />
+        </RelativeLayout>
 
-</RelativeLayout>
+
+</LinearLayout>
