@@ -3,6 +3,6 @@
     <color name="app_background">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="list_border_color">#555555</color>
-    <color name="list_background">#555555</color>
+    <color name="list_background">#DDDDDD</color>
     <color name="list_divider_color">#555555</color>
 </resources>
