@@ -6,7 +6,7 @@
     <string name="app_name">SwoleMate</string>
     <string name="cardio">Cardio</string>
     <string name="create_new_workout">Create new workout</string>
-    <string name="enter_info_request">Please enter your information below:</string>
+    <string name="enter_info_request">Please enter some basic information below:</string>
     <string name="finish">Finish</string>
     <string name="hello_user"></string>
     <string name="workout_name">Workout Name</string>
