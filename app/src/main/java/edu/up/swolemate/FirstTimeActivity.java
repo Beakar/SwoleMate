@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
 /**
  * Created by Daniel on 2/2/2015.
  */
-public class FirstTimeActivity extends Activity implements OnClickListener {
+public class FirstTimeActivity extends Activity {
 
     private EditText nameEditText;
     private EditText heightEditText;
@@ -42,6 +42,41 @@ public class FirstTimeActivity extends Activity implements OnClickListener {
     * The user's weight
     * */
     private String weight;
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.first_time_activity);
+
+        nameEditText = (EditText)findViewById(R.id.nameEntry);
+        heightEditText = (EditText)findViewById(R.id.heightEntry);
+        weightEditText = (EditText)findViewById(R.id.weightEntry);
+        createButton = (Button)findViewById(R.id.createButton);
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            return true;
+        }
+        else if(id == R.id.profile){
+            alertProfile();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
 
     /**
@@ -198,79 +233,51 @@ public class FirstTimeActivity extends Activity implements OnClickListener {
     }
 
 
-    @Override
-    public void onClick(View view) {
+    /**
+     * Handles the click action for the button in this activity.
+     * @param view
+     */
+    public void onSaveClick(View view) {
         String nameText = nameEditText.getText().toString().trim();
         String heightText = heightEditText.getText().toString().trim();
         String weightText = weightEditText.getText().toString().trim();
-        if(view.getId() == R.id.createButton){
-            //The name field is empty
-            if(nameText.equals("")){
-                alertName();
-            }
-            //if the user entered their height, check the format
-            else if(!heightText.equals("")) {
-                //if the height is wrong
-                if (!checkHeightFormat(heightText)) {
-                    alertHeightWrong();
-                }
-            }
-            //if the user entered their weight, check the format
-            else if(!weightText.equals("")){
-                if(!checkWeightFormat(weightText)){
-                    alertWeightWrong();
-                }
-            }
-            //if either the height or weight fields are empty, alert the
-            //user and ask to proceed.
-            else if(heightText.equals("") || weightText.equals("")){
-                System.out.println("***** ONE OF THESE IS NOT LIKE THE OTHER");
-                alertEmptyHeightWeight();
-            }
-            else{
-                System.out.println("****!@$#RWERFGQ@#$WAGF@#W$ESD");
-                saveUserInput();
+        
+        //The name field is empty
+        if(nameText.equals("")){
+            alertName();
+        }
+        if(!heightText.equals("")) {
+            //if the height is wrong
+            if (!checkHeightFormat(heightText)) {
+                alertHeightWrong();
+                return;
             }
         }
-    }
-
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.first_time_activity);
-
-        nameEditText = (EditText)findViewById(R.id.nameEntry);
-        heightEditText = (EditText)findViewById(R.id.heightEntry);
-        weightEditText = (EditText)findViewById(R.id.weightEntry);
-        createButton = (Button)findViewById(R.id.createButton);
-        createButton.setOnClickListener(this);
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+        //if the user entered their weight, check the format
+        if(!weightText.equals("")){
+            if(!checkWeightFormat(weightText)){
+                alertWeightWrong();
+                return;
+            }
         }
-        else if(id == R.id.profile){
-            alertProfile();
+        //if either the height or weight fields are empty, alert the
+        //user and ask to proceed.
+        if(heightText.equals("") || weightText.equals("")){
+            System.out.println("***** ONE OF THESE IS NOT LIKE THE OTHER");
+            alertEmptyHeightWeight();
+            return;
         }
-        return super.onOptionsItemSelected(item);
+        //otherwise, everything should be good to go. take user to home activity.
+        System.out.println("****!@$#RWERFGQ@#$WAGF@#W$ESD");
+        goToHomeActivity();
+        //saveUserInput();
+
+
     }
 
-
+    /**
+     * Saves the user's input during their first usage of the application
+     */
     private void saveUserInput(){
         boolean success = false;
 
@@ -278,5 +285,13 @@ public class FirstTimeActivity extends Activity implements OnClickListener {
         SharedPreferences.Editor editor = settings.edit();
         editor.putString("userName", nameEditText.getText().toString());
        // String[] heightString = heightEditText.getText().toString().trim().split("\\s*");
+    }
+
+    /**
+     * Takes the user to the home activity after they have completed their data entry
+     */
+    private void goToHomeActivity() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 }
