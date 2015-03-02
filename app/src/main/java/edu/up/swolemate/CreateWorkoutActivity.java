@@ -34,7 +34,7 @@ public class CreateWorkoutActivity extends Activity implements OnClickListener{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.create_workout_activity);
+        setContentView(R.layout.activity_create_workout);
 
         strengthWorkoutButton = (Button)findViewById(R.id.strengthButton);
         strengthWorkoutButton.setOnClickListener(this);

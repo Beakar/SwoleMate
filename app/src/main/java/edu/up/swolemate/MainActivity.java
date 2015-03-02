@@ -17,7 +17,7 @@ public class MainActivity extends Activity implements OnClickListener{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_activity);
+        setContentView(R.layout.activity_main);
 
         createWorkoutButton = (Button)findViewById(R.id.createNewWorkoutButton);
         createWorkoutButton.setOnClickListener(this);

@@ -11,7 +11,7 @@ public class MyActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_activity); //activity_my???
+        setContentView(R.layout.activity_main); //activity_my???
     }
 
 

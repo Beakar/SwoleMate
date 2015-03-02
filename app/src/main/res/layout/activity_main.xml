@@ -16,34 +16,34 @@
         android:layout_height="wrap_content"
         android:text="@string/hello_user"
         android:textSize="@dimen/title_text_size" />
-    
+
     <Button
-        android:id="@+id/createNewWorkoutButton"
+        android:id="@+id/viewWorkoutHistoryButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
         android:layout_weight=".4"
-        android:text="@string/create_new_workout" />
+        android:text="@string/view_workout_history" />
 
     <Button
         android:id="@+id/viewFoodHistoryButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight=".4"
-        android:text="@string/add_new_food"/>
+        android:text="@string/view_eating_habits"/>
 
     <Button
-        android:id="@+id/viewWorkoutHistoryButton"
+        android:id="@+id/createNewWorkoutButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
         android:layout_weight=".05"
-        android:text="@string/view_workout_history" />
+        android:text="@string/create_new_workout" />
 
     <Button
         android:id="@+id/addNewFoodButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight=".05"
-        android:text="@string/view_eating_habits"  />
+        android:text="@string/add_new_food"  />
 
 </LinearLayout>

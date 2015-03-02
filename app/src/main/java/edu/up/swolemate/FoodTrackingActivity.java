@@ -11,7 +11,7 @@ public class FoodTrackingActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.food_tracking_activity);
+        setContentView(R.layout.activity_food_tracking);
     }
 
 

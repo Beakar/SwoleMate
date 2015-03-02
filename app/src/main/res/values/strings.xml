@@ -8,7 +8,7 @@
     <string name="create_new_workout">Create new workout</string>
     <string name="enter_info_request">Please enter some basic information below:</string>
     <string name="finish">Finish</string>
-    <string name="hello_user"></string>
+    <string name="hello_user">Hello, User</string>
     <string name="workout_name">Workout Name</string>
     <string name="other">Other</string>
     <string name="strength">Strength</string>

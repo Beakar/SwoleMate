@@ -11,7 +11,7 @@ public class CardioWorkoutActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.cardio_workout_activity);
+        setContentView(R.layout.activity_cardio_workout);
     }
 
 
