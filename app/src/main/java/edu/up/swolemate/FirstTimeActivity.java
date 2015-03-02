@@ -117,7 +117,7 @@ public class FirstTimeActivity extends Activity implements OnClickListener {
      *
      * Description: Alerts the user they entered the weight in the wrong format.
      */
-    private void alertEmptyHeightWeight(){
+    private void alertEmptyHeightWeight(String heightText, String weightText){
         //create the builder
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
         alertBuilder.setTitle("Height/weight not entered");
@@ -179,7 +179,11 @@ public class FirstTimeActivity extends Activity implements OnClickListener {
         //regex: 1-2 digits, any whitespace, '-', any whitespace, 1-2 digits.
         Pattern regex = Pattern.compile("\\d{1,2}\\s*\\-\\s*\\d{1,2}");
         Matcher matcher = regex.matcher(height.trim());
-        return matcher.matches();
+        if(!height.equals("")){
+            return matcher.matches();
+        }
+        //The user is allowed to enter an empty height
+        return true;
     }
 
 
@@ -194,7 +198,11 @@ public class FirstTimeActivity extends Activity implements OnClickListener {
         //regex: 1-3 digits
         Pattern regex = Pattern.compile("\\d{1,3}");
         Matcher matcher = regex.matcher(weight.trim());
-        return matcher.matches();
+        if(!weight.equals("")){
+            return matcher.matches();
+        }
+        //the user is allowed to enter an empty weight
+        return true;
     }
 
 
@@ -203,33 +211,31 @@ public class FirstTimeActivity extends Activity implements OnClickListener {
         String nameText = nameEditText.getText().toString().trim();
         String heightText = heightEditText.getText().toString().trim();
         String weightText = weightEditText.getText().toString().trim();
+
         if(view.getId() == R.id.createButton){
             //The name field is empty
             if(nameText.equals("")){
                 alertName();
             }
-            //if the user entered their height, check the format
-            else if(!heightText.equals("")) {
-                //if the height is wrong
+            else {
+                //The height is in the wrong format
                 if (!checkHeightFormat(heightText)) {
-                    alertHeightWrong();
+                        alertHeightWrong();
                 }
-            }
-            //if the user entered their weight, check the format
-            else if(!weightText.equals("")){
-                if(!checkWeightFormat(weightText)){
-                    alertWeightWrong();
+                //The weight is in the wrong format
+                else if (!checkWeightFormat(weightText)) {
+                        alertWeightWrong();
                 }
-            }
-            //if either the height or weight fields are empty, alert the
-            //user and ask to proceed.
-            else if(heightText.equals("") || weightText.equals("")){
-                System.out.println("***** ONE OF THESE IS NOT LIKE THE OTHER");
-                alertEmptyHeightWeight();
-            }
-            else{
-                System.out.println("****!@$#RWERFGQ@#$WAGF@#W$ESD");
-                saveUserInput();
+                //if either the height or weight fields are empty, alert the
+                //user and ask to proceed.
+                else if(heightText.equals("") || weightText.equals("")) {
+                    alertEmptyHeightWeight(heightText,weightText);
+                }
+                else {
+                    //saveUserInput();
+                    Intent myIntent = new Intent(FirstTimeActivity.this, MainActivity.class);
+                    startActivity(myIntent);
+                }
             }
         }
     }
