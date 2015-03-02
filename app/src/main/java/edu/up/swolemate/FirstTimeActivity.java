@@ -117,7 +117,7 @@ public class FirstTimeActivity extends Activity implements OnClickListener {
      *
      * Description: Alerts the user they entered the weight in the wrong format.
      */
-    private void alertEmptyHeightWeight(String heightText, String weightText){
+    private void alertEmptyHeightWeight(final String name, final String heightText, final String weightText){
         //create the builder
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
         alertBuilder.setTitle("Height/weight not entered");
@@ -127,7 +127,7 @@ public class FirstTimeActivity extends Activity implements OnClickListener {
         //make the "OK" button
         alertBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                saveUserInput();
+                saveUserInput(name, heightText, weightText);
                 Intent myIntent = new Intent(FirstTimeActivity.this, MainActivity.class);
                 startActivity(myIntent);
             }
@@ -229,10 +229,10 @@ public class FirstTimeActivity extends Activity implements OnClickListener {
                 //if either the height or weight fields are empty, alert the
                 //user and ask to proceed.
                 else if(heightText.equals("") || weightText.equals("")) {
-                    alertEmptyHeightWeight(heightText,weightText);
+                    alertEmptyHeightWeight(nameText, heightText,weightText);
                 }
                 else {
-                    //saveUserInput();
+                    saveUserInput(nameText, heightText, weightText);
                     Intent myIntent = new Intent(FirstTimeActivity.this, MainActivity.class);
                     startActivity(myIntent);
                 }
@@ -277,12 +277,15 @@ public class FirstTimeActivity extends Activity implements OnClickListener {
     }
 
 
-    private void saveUserInput(){
+    private void saveUserInput(String name, String height, String weight){
         boolean success = false;
 
         SharedPreferences settings = getSharedPreferences("user_settings", 0);
         SharedPreferences.Editor editor = settings.edit();
-        editor.putString("userName", nameEditText.getText().toString());
-       // String[] heightString = heightEditText.getText().toString().trim().split("\\s*");
+        editor.putString("name", name);
+        editor.putString("height", height);
+        editor.putString("weight", weight);
+
+        editor.commit();
     }
 }
