@@ -241,7 +241,7 @@ public class FirstTimeActivity extends Activity {
         String nameText = nameEditText.getText().toString().trim();
         String heightText = heightEditText.getText().toString().trim();
         String weightText = weightEditText.getText().toString().trim();
-        
+
         //The name field is empty
         if(nameText.equals("")){
             alertName();
@@ -271,7 +271,6 @@ public class FirstTimeActivity extends Activity {
         System.out.println("****!@$#RWERFGQ@#$WAGF@#W$ESD");
         goToHomeActivity();
         //saveUserInput();
-
 
     }
 

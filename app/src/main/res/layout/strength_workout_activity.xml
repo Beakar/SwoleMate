@@ -17,11 +17,14 @@
         android:id="@+id/listContainer1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/history_label">
+        android:layout_below="@id/history_label"
+        android:layout_weight="1">
+
+        <!--Don't want to use a static height here, messes with rotation-->
         <ListView
             android:id="@+id/strengthList"
             android:layout_width="wrap_content"
-            android:layout_height="350dp"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/list_border_width"
             android:layout_marginLeft="@dimen/list_border_width"
             android:layout_marginRight="@dimen/list_border_width"
@@ -30,7 +33,7 @@
             android:divider="@color/list_divider_color"
             android:dividerHeight="1dp"
             android:focusable="false"
-            android:stackFromBottom="false" >
+            android:stackFromBottom="false">
 
         </ListView>
 
@@ -40,10 +43,11 @@
         android:id="@+id/finishButton1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
         android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:text="@string/finish" />
+
 
 </LinearLayout>
