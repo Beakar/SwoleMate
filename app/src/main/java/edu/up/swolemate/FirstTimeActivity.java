@@ -268,7 +268,6 @@ public class FirstTimeActivity extends Activity {
         System.out.println("****!@$#RWERFGQ@#$WAGF@#W$ESD");
         goToHomeActivity();
         //saveUserInput();
-
     }
 
     /**

@@ -1,11 +1,17 @@
 package edu.up.swolemate;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Nathan on 1/21/2015.
  */
 public class StrengthWorkout extends BaseWorkout {
-    protected ArrayList<Exercise> exercises;
+    /**
+     * Id for this workout object (for database usage)
+     */
+    protected int id;
+
+    protected List<Exercise> exercises;
 
     public StrengthWorkout() {
         super();
@@ -15,7 +21,7 @@ public class StrengthWorkout extends BaseWorkout {
         this.displayName = displayName;
     }
 
-    public StrengthWorkout(String displayName, ArrayList<Exercise> exercises) {
+    public StrengthWorkout(String displayName, List<Exercise> exercises) {
         this(displayName);
         this.exercises = exercises;
     }
@@ -44,7 +50,7 @@ public class StrengthWorkout extends BaseWorkout {
      * Gets the list of exercises for the workout
      * @return
      */
-    public ArrayList<Exercise> getExercises() {
+    public List<Exercise> getExercises() {
         return exercises;
     }
 
@@ -52,7 +58,7 @@ public class StrengthWorkout extends BaseWorkout {
      * Set list of exercises for the workout
      * @param exercises
      */
-    public void setExercises(ArrayList<Exercise> exercises) {
+    public void setExercises(List<Exercise> exercises) {
         this.exercises = exercises;
     }
 

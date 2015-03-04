@@ -13,7 +13,7 @@ public class Exercise {
     /**
      * display name of the exercise
      */
-    protected String name;
+    protected String displayName;
 
     /**
      * number of sets for the exercise
@@ -26,7 +26,7 @@ public class Exercise {
     protected int numReps;
 
     /**
-     * initializes an empty exercise objet
+     * initializes an empty exercise object
      */
     public Exercise() {
 
@@ -37,7 +37,7 @@ public class Exercise {
      * @param exerciseName
      */
     public Exercise(String exerciseName) {
-        this.name = exerciseName;
+        this.displayName = exerciseName;
     }
 
     /**
@@ -45,7 +45,7 @@ public class Exercise {
      * @return
      */
     public String getName() {
-        return this.name;
+        return this.displayName;
     }
 
     /**
@@ -53,7 +53,7 @@ public class Exercise {
      * @param name
      */
     public void setName(String name) {
-        this.name = name;
+        this.displayName = name;
     }
 
     /**
