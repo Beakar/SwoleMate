@@ -52,7 +52,8 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
                 "StrengthWorkouts",
                 new String[]{
                         "id INTEGER",
-                        "displayName TEXT"
+                        "displayName TEXT",
+                        "dateCompleted INTEGER"
                 },
                 new PrimaryKeyHelper("id", "ASC"),
                 null);
@@ -64,7 +65,9 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
                         "id INTEGER",
                         "displayName TEXT",
                         "duration REAL",
-                        "distance REAL"
+                        "distance REAL",
+                        "dateCompleted INTEGER"
+
                 },
                 new PrimaryKeyHelper("id", "ASC"),
                 null);
@@ -75,7 +78,8 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
                 new String[]{
                         "id INTEGER",
                         "displayName TEXT",
-                        "workoutData TEXT"
+                        "workoutData TEXT",
+                        "dateCompleted INTEGER"
                 },
                 new PrimaryKeyHelper("id", "ASC"),
                 null);
@@ -102,7 +106,31 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
                 null);
 
         //Create SubsetsToExercises table
-        
+        createTable(db,
+                "SubsetsToExercises",
+                new String[]{
+                        "id INTEGER",
+                        "subsetId INTEGER",
+                        "exerciseId INTEGER"
+                },
+                new PrimaryKeyHelper("id", "ASC"),
+                new ForeignKeyHelper[]{
+                        new ForeignKeyHelper("subsetId", "ExerciseSubsets", "id"),
+                        new ForeignKeyHelper("exerciseId", "Exercises", "id")
+                });
+
+        createTable(db,
+                "ExercisesToWorkouts",
+                new String[]{
+                        "id INTEGER",
+                        "exerciseId INTEGER",
+                        "workoutId INTEGER"
+                },
+                new PrimaryKeyHelper("id", "ASC"),
+                new ForeignKeyHelper[]{
+                        new ForeignKeyHelper("subsetId", "ExerciseSubsets", "id"),
+                        new ForeignKeyHelper("workoutId", "StrengthWorkouts", "id")
+                });
     }
         //create FoodItems table
 
@@ -132,7 +160,8 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
                 "FoodMeals",
                 new String[]{
                         "id INTEGER",
-                        "displayName TEXT"
+                        "displayName TEXT",
+                        "dateCompleted INTEGER"
                 },
                 new PrimaryKeyHelper("id", "ASC"),
                 null);
