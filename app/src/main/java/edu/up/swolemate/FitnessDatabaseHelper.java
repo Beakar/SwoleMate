@@ -119,6 +119,7 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
                         new ForeignKeyHelper("exerciseId", "Exercises", "id")
                 });
 
+        //Create ExercisesToWorkouts table
         createTable(db,
                 "ExercisesToWorkouts",
                 new String[]{
@@ -132,7 +133,7 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
                         new ForeignKeyHelper("workoutId", "StrengthWorkouts", "id")
                 });
     }
-        //create FoodItems table
+
 
         /**
          * Helper method that creates food-related database tables
@@ -141,6 +142,7 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
          * @param db
          */
         private void createFoodTables(SQLiteDatabase db) {
+        //create FoodItems table
         createTable(db,
                 "FoodItems",
                 new String[]{

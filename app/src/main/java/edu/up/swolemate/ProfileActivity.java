@@ -6,11 +6,24 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 
 public class ProfileActivity extends Activity {
 
+    protected CompoundButton.OnCheckedChangeListener unitChangeListener = new CompoundButton.OnCheckedChangeListener() {
+        public void onCheckedChanged(CompoundButton btnView, boolean on) {
+            SharedPreferences settings = getSharedPreferences("user_settings", 0);
+            SharedPreferences.Editor editor = settings.edit();
+
+            if(on) {
+                editor.putString("units", "imperial");
+            } else {
+                editor.putString("units", "metric");
+            }
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +46,8 @@ public class ProfileActivity extends Activity {
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
