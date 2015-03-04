@@ -15,17 +15,6 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "SwoleMate";
     private static final int DB_VERSION = 1;
 
-    private static final String QUERY = "CREATE TABLE StrengthWorkouts    (id INTEGER PRIMARY KEY ASC, displayName);\n" +
-            "CREATE TABLE FoodMeals           (id INTEGER PRIMARY KEY ASC, displayName);\n" +
-            "CREATE TABLE FoodItems           (id INTEGER PRIMARY KEY ASC, foodType, servingSize, calories, fat, carbs, protein);\n" +
-            "CREATE TABLE ItemsToMeals        (id INTEGER PRIMARY KEY ASC, mealId, itemId);\n" +
-            "CREATE TABLE Exercises           (id INTEGER PRIMARY KEY ASC, displayName);\n" +
-            "CREATE TABLE ExerciseSubsets     (id INTEGER PRIMARY KEY ASC, weight INTEGER, numReps INTEGER);\n" +
-            "CREATE TABLE SubsetsToExercises  (id INTEGER PRIMARY KEY ASC, subsetId, exerciseId, FOREIGN KEY(subsetId) REFERENCES ExerciseSubsets(id), FOREIGN KEY(exerciseId) REFERENCES ExercisePresets(id));\n" +
-            "CREATE TABLE ExercisesToWorkouts (id INTEGER PRIMARY KEY ASC, exerciseId INTEGER, workoutId INTEGER, FOREIGN KEY(workoutId) REFERENCES StrengthWorkouts(id));\n" +
-            "CREATE TABLE WorkoutHistoryItems (id INTEGER PRIMARY KEY ASC, workoutId INTEGER, timeCompleted INTEGER, FOREIGN KEY(workoutId) REFERENCES StrengthWorkouts(id));\n" +
-            "CREATE TABLE FoodHistoryItems    (id INTEGER PRIMARY KEY ASC, mealId INTEGER, timeCompleted INTEGER, FOREIGN KEY(mealId) REFERENCES FoodMeals(id));";
-
     public FitnessDatabaseHelper(Context ctx) {
         super(ctx, DB_NAME, null, DB_VERSION);
     }
@@ -129,7 +118,7 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
                 },
                 new PrimaryKeyHelper("id", "ASC"),
                 new ForeignKeyHelper[]{
-                        new ForeignKeyHelper("subsetId", "ExerciseSubsets", "id"),
+                        new ForeignKeyHelper("exerciseId", "ExerciseSubsets", "id"),
                         new ForeignKeyHelper("workoutId", "StrengthWorkouts", "id")
                 });
     }
@@ -203,7 +192,7 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
 
         //add primary keys
         if (pk != null)
-            columns = columns + "PRIMARY KEY(" + pk.fieldName + " " + pk.order;
+            columns = columns + "PRIMARY KEY(" + pk.fieldName + " " + pk.order + "), ";
 
         //add foreign keys
         if (fks != null) {

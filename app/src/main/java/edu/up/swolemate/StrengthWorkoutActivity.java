@@ -1,12 +1,19 @@
 package edu.up.swolemate;
 
 import android.app.Activity;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 
 public class StrengthWorkoutActivity extends Activity {
+
+    /**
+     * References the current workout being created
+     */
+    protected StrengthWorkout currentWorkout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,5 +42,25 @@ public class StrengthWorkoutActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Inserts the current workout into the database
+     */
+    private void insertCurrentWorkout() {
+        FitnessDatabaseHelper helper = new FitnessDatabaseHelper(this);
+
+        SQLiteDatabase db = helper.getWritableDatabase();
+
+        String query = "INSERT INTO StrengthWorkouts (displayName, dateCompleted) VALUES ('testWorkout', 1425511564)";
+        db.execSQL(query);
+
+        db = helper.getReadableDatabase();
+
+        
+    }
+
+    public void onFinishWorkoutClick(View v) {
+        insertCurrentWorkout();
     }
 }

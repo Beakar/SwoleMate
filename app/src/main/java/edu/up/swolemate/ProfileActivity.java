@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 public class ProfileActivity extends Activity {
 
+    //changes the units stored in sharedpreferences
     protected CompoundButton.OnCheckedChangeListener unitChangeListener = new CompoundButton.OnCheckedChangeListener() {
         public void onCheckedChanged(CompoundButton btnView, boolean on) {
             SharedPreferences settings = getSharedPreferences("user_settings", 0);

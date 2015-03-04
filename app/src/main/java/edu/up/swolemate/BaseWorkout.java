@@ -1,5 +1,7 @@
 package edu.up.swolemate;
 
+import java.util.Date;
+
 public abstract class BaseWorkout {
     /**
      * Id of workout for database usage
@@ -10,6 +12,11 @@ public abstract class BaseWorkout {
      * Display name for the workout specified by the user
      */
     protected String displayName;
+
+    /**
+     * Date the workout was completed on
+     */
+    protected Date dateCompleted;
 
     /**
      * defines an empty workout object
