@@ -2,9 +2,11 @@ package edu.up.swolemate;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 
 public class ProfileActivity extends Activity {
@@ -12,7 +14,16 @@ public class ProfileActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_profile);
+        TextView nameView = (TextView)findViewById(R.id.userNameText);
+        TextView heightView = (TextView)findViewById(R.id.userHeight);
+        TextView weightView = (TextView)findViewById(R.id.userWeight);
+        SharedPreferences settings = getSharedPreferences("user_settings", 0);
+
+        nameView.setText(settings.getString("name", ""));
+        heightView.setText(settings.getString("height", ""));
+        weightView.setText(settings.getString("weight", ""));
     }
 
 

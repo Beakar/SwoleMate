@@ -17,7 +17,7 @@
         android:id="@+id/userNameText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/user_name"
+        android:text=""
         android:textSize="@dimen/title_text_size" />
 
     <TextView
@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <TextView
-            android:id="@+id/user_weight_number"
+            android:id="@+id/userWeight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/user_weight"
@@ -62,8 +62,8 @@
         android:id="@+id/userHeight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/user_weight_number"
-        android:layout_below="@+id/user_weight_number"
+        android:layout_alignLeft="@+id/userWeight"
+        android:layout_below="@+id/userWeight"
         android:text="@string/user_height"
         android:textSize="50sp" />
 
