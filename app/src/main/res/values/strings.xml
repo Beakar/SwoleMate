@@ -28,5 +28,7 @@
     <string name="title_activity_strength_workout">StrengthWorkoutActivity</string>
     <string name="title_activity_cardio_workout">CardioWorkoutActivity</string>
     <string name="title_activity_custom_workout">CustomWorkoutActivity</string>
+    <string name="reps">Reps</string>
+    <string name="weight">Weight</string>
 
 </resources>
