@@ -4,9 +4,11 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,23 +18,46 @@ import android.widget.Button;
 import android.widget.ListView;
 
 
-public class StrengthWorkoutActivity extends Activity {
+public class StrengthWorkoutActivity extends Activity  implements View.OnClickListener {
+
+    //    #######################################################################################
+//    DELETE THESE EVENTUALLY, BUT THEY'RE HELPFUL FOR NOW
+//    http://www.vogella.com/tutorials/AndroidListView/article.html#androidlists_inputtype
+//    http://www.codelearn.org/android-tutorial/android-listview
+//    #######################################################################################
+    Button createExerciseButton;
+    Button finishButton;
+    ExerciseDialogFragment createDialog;
+    FragmentManager fragManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-//        setListAdapter setListAdapter = new setListAdapter();
-//        ListView setList = (ListView)findViewById(R.id.strengthList);
-//        setList.setAdapter(setListAdapter);
-//        final Button button = (Button) findViewById(R.id.finishButton1);
-//        button.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//                Log.e("DERP","DERP");
-//            }
-//        });
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_strength_workout);
+        super.onCreate(savedInstanceState);
+        fragManager = getFragmentManager();
+        if (fragManager == null){
+            Log.e("Logged", "FRAG MANAGER IS NULL");
+        }
+        createDialog = new ExerciseDialogFragment();
+        createExerciseButton = (Button)findViewById(R.id.newStrengthExercise);
+        finishButton = (Button)findViewById(R.id.finishButton1);
+        finishButton.setOnClickListener(this);
+        createExerciseButton.setOnClickListener(this);
+
+
     }
 
+    @Override
+    public void onClick(View v){
+        if(v.getId() == R.id.finishButton1){
+            Log.e("Logged Button pressed","finish");
+
+        }
+        if(v.getId() == R.id.newStrengthExercise){
+            Log.e("logged Button pressed","Create new str exercise");
+            createDialog.show(fragManager,"Create new exercise");
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -56,26 +81,34 @@ public class StrengthWorkoutActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-//    public static class createExerciseDialogFragment extends DialogFragment {
-//        @Override
-//        public Dialog onCreateDialog(Bundle savedInstanceState) {
-//            // Use the Builder class for convenient dialog construction
-//            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-//            builder.setMessage("placeholder 1")
-//                    .setPositiveButton("placeholder 2", new DialogInterface.OnClickListener() {
-//                        public void onClick(DialogInterface dialog, int id) {
-//
-//                        }
-//                    })
-//                    .setNegativeButton("placeholder 1", new DialogInterface.OnClickListener() {
-//                        public void onClick(DialogInterface dialog, int id) {
-//                            // User cancelled the dialog
-//                        }
-//                    });
-//            // Create the AlertDialog object and return it
-//            return builder.create();
-//        }
-//    }
+    public static class ExerciseDialogFragment extends DialogFragment {
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            // Get the layout inflater
+            LayoutInflater inflater = getActivity().getLayoutInflater();
+            // Use the Builder class for convenient dialog construction
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            // set the view
+            builder.setView(inflater.inflate(R.layout.list_item_strength_exercise_sets, null))
+                    //buttons
+                    .setPositiveButton("placeholder 2", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+
+                        }
+                    })
+                    .setNegativeButton("placeholder 1", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            // User cancelled the dialog
+                        }
+                    });
+            // Create the AlertDialog object and return it
+            return builder.create();
+        }
+
+        public void showDialog(){
+            //this.show(getFragmentManager(),"exerciseDialogFragment");
+        }
+    }
 
 //    public class setListAdapter extends BaseAdapter {
 //
