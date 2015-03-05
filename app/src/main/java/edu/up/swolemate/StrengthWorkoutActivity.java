@@ -1,8 +1,10 @@
 package edu.up.swolemate;
 
 import android.app.Activity;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -57,10 +59,43 @@ public class StrengthWorkoutActivity extends Activity {
 
         db = helper.getReadableDatabase();
 
-        
+
     }
 
     public void onFinishWorkoutClick(View v) {
-        insertCurrentWorkout();
+
+
+
+
+    }
+
+    /**
+     * Deletes all records from the StrengthWorkouts table.
+     * Test function
+     */
+    private void deleteAll() {
+        SQLiteDatabase db = new FitnessDatabaseHelper(this).getReadableDatabase();
+
+        String query = "DELETE FROM StrengthWorkouts";
+        db.execSQL(query);
+        
+        Log.d("Spacer", "------------------------------------");
+        selectAll();
+        Log.d("Spacer", "------------------------------------");
+    }
+
+    /**
+     * Prints out records from the database
+     * Test function
+     */
+    private void selectAll() {
+        SQLiteDatabase db = new FitnessDatabaseHelper(this).getReadableDatabase();
+
+        String query = "SELECT * FROM StrengthWorkouts";
+        Cursor c = db.rawQuery(query, null);
+
+        while(c.moveToNext()) {
+            Log.d("Workouts in database", c.getString(0) + " : " + c.getString(1));
+        }
     }
 }
