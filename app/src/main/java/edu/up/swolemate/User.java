@@ -24,12 +24,12 @@ public class User {
     /**
      * Contains the eating history of the user
      */
-    protected ArrayList<FoodMeal> foodHistory;
+    protected ArrayList<FoodHistoryItem> foodHistory;
 
     /**
      * Contains the workout history of the user
      */
-    protected ArrayList<BaseWorkout> workoutHistory;
+    protected ArrayList<WorkoutHistoryItem> workoutHistory;
 
 
     /**
@@ -60,7 +60,7 @@ public class User {
      * Returns the food history of the user
      * @return
      */
-    public ArrayList<FoodMeal> getFoodHistory() {
+    public ArrayList<FoodHistoryItem> getFoodHistory() {
         return foodHistory;
     }
 
@@ -68,7 +68,7 @@ public class User {
      * returns the workout history of the user
      * @return
      */
-    public ArrayList<BaseWorkout> getWorkoutHistory() {
+    public ArrayList<WorkoutHistoryItem> getWorkoutHistory() {
         return workoutHistory;
     }
 
@@ -101,7 +101,7 @@ public class User {
      * Sets the food history of the user
      * @param foodHistory
      */
-    public void setFoodHistory(ArrayList<FoodMeal> foodHistory) {
+    public void setFoodHistory(ArrayList<FoodHistoryItem> foodHistory) {
         this.foodHistory = foodHistory;
     }
 
@@ -109,7 +109,7 @@ public class User {
      * Sets the workout history of the user
      * @param workoutHistory
      */
-    public void setWorkoutHistory(ArrayList<BaseWorkout> workoutHistory) {
+    public void setWorkoutHistory(ArrayList<WorkoutHistoryItem> workoutHistory) {
         this.workoutHistory = workoutHistory;
     }
 
