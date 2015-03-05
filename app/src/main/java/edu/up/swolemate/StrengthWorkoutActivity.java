@@ -1,6 +1,7 @@
 package edu.up.swolemate;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -8,6 +9,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
+import java.net.ContentHandler;
+import java.sql.SQLException;
 
 
 public class StrengthWorkoutActivity extends Activity {
@@ -50,24 +54,53 @@ public class StrengthWorkoutActivity extends Activity {
      * Inserts the current workout into the database
      */
     private void insertCurrentWorkout() {
-        FitnessDatabaseHelper helper = new FitnessDatabaseHelper(this);
 
-        SQLiteDatabase db = helper.getWritableDatabase();
+        SQLiteDatabase db = new FitnessDatabaseHelper(this).getWritableDatabase();
 
-        String query = "INSERT INTO StrengthWorkouts (displayName, dateCompleted) VALUES ('testWorkout', 1425511564)";
-        db.execSQL(query);
+        //ContentValues links field names to values for each field
+        ContentValues vals = new ContentValues();
 
-        db = helper.getReadableDatabase();
+        vals.put("displayName", currentWorkout.getDisplayName());
+        vals.put("dateCompleted", System.currentTimeMillis() / 1000);
+        long workoutId = db.insert("StrengthWorkouts", null, vals);
 
+        //there was some error
+        if(workoutId == -1) {
+            Log.e("Invalid database query", "Something went wrong with the database query");
+            return;
+        }
+
+        //add each exercise for the workout
+        for(Exercise e : currentWorkout.getExercises()) {
+            vals.clear();
+            vals.put("displayName", e.getName());
+            long exerciseId = db.insert("Exercises", null, vals);
+
+
+            for(ExerciseSubset set : e.getSets()) {
+                //add each set for the exercise
+                vals.clear();
+                vals.put("weight", set.getWeight());
+                vals.put("numReps", set.getNumReps());
+                long subsetId = db.insert("ExerciseSubsets", null, vals);
+
+                //link subset to exercise it came from
+                vals.clear();
+                vals.put("subsetId", subsetId);
+                vals.put("exerciseId", exerciseId);
+                db.insert("SubsetsToExercises", null, vals);
+            }
+
+            //link exercise to workout
+            vals.clear();
+            vals.put("exerciseId", exerciseId);
+            vals.put("workoutId", workoutId);
+            db.insert("ExercisesToWorkouts", null, vals);
+        }
 
     }
 
-    public void onFinishWorkoutClick(View v) {
 
-
-
-
-    }
 
     /**
      * Deletes all records from the StrengthWorkouts table.
@@ -78,7 +111,7 @@ public class StrengthWorkoutActivity extends Activity {
 
         String query = "DELETE FROM StrengthWorkouts";
         db.execSQL(query);
-        
+
         Log.d("Spacer", "------------------------------------");
         selectAll();
         Log.d("Spacer", "------------------------------------");

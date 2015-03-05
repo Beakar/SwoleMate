@@ -1,5 +1,7 @@
 package edu.up.swolemate;
 
+import java.util.List;
+
 /**
  * Created by Nathan on 1/21/2015.
  */
@@ -15,15 +17,12 @@ public class Exercise {
      */
     protected String displayName;
 
-    /**
-     * number of sets for the exercise
-     */
-    protected int numSets;
+
 
     /**
-     * number of repetitions per set for the exercise
+     * sets for the exercise
      */
-    protected int numReps;
+    protected List<ExerciseSubset> sets;
 
     /**
      * initializes an empty exercise object
@@ -57,34 +56,27 @@ public class Exercise {
     }
 
     /**
-     * Get the number of sets in the exercise
+     * Adds a set to the exercise
+     * @param set
+     */
+    public void addSet(ExerciseSubset set) {
+        this.sets.add(set);
+    }
+
+    /**
+     * Gets the list of sets for this exercise.
      * @return
      */
-    public int getNumSets() {
-        return numSets;
+    public List<ExerciseSubset> getSets() {
+        return sets;
     }
 
     /**
-     * Set the number of sets in the exercise
-     * @param numSets
+     * Sets the list of sets for this exercise.
+     * @param sets
      */
-    public void setNumSets(int numSets) {
-        this.numSets = numSets;
+    public void setSets(List<ExerciseSubset> sets) {
+        this.sets = sets;
     }
 
-    /**
-     * Get the number of reps in the per set in the exercise
-     * @return
-     */
-    public int getNumReps() {
-        return numReps;
-    }
-
-    /**
-     * Set the number of reps per set in the exercise
-     * @param numReps
-     */
-    public void setNumReps(int numReps) {
-        this.numReps = numReps;
-    }
 }

@@ -6,7 +6,31 @@ package edu.up.swolemate;
 public class ExerciseSubset {
     protected int id;
 
-    protected int weight;
+    /**
+     * Weight for subset
+     */
+    protected double weight;
 
     protected int numReps;
+
+    public ExerciseSubset(double weight, int numReps) {
+        this.weight = weight;
+        this.numReps = numReps;
+    }
+
+    public double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
+
+    public int getNumReps() {
+        return numReps;
+    }
+
+    public void setNumReps(int numReps) {
+        this.numReps = numReps;
+    }
 }
