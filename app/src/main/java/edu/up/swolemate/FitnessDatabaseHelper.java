@@ -124,13 +124,13 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-        /**
-         * Helper method that creates food-related database tables
-         * cleans up code in the onCreate method
-         *
-         * @param db
-         */
-        private void createFoodTables(SQLiteDatabase db) {
+    /**
+     * Helper method that creates food-related database tables
+     * cleans up code in the onCreate method
+     *
+     * @param db
+     */
+    private void createFoodTables(SQLiteDatabase db) {
         //create FoodItems table
         createTable(db,
                 "FoodItems",
