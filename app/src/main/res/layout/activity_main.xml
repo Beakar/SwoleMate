@@ -22,7 +22,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight=".4"
-        android:text="@string/view_workout_history" />
+        android:text="@string/view_workout_history"
+        android:onClick="onViewHistoryClick"/>
 
     <Button
         android:id="@+id/viewFoodHistoryButton"

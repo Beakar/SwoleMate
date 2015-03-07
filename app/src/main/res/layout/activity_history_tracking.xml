@@ -3,36 +3,44 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/app_background"
+    android:layout_margin="@dimen/activity_horizontal_margin"
     android:orientation="vertical">
-
-    <TextView
-        android:id="@+id/history_label"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:text="Show workouts from the"
-        android:textSize="16sp" />
+        android:orientation="horizontal"
+        android:weightSum="2">
+        <TextView
+            android:id="@+id/history_label"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="Show workouts from"
+            android:layout_weight="1"
+            android:textSize="18dp" /> <!--Scale text size based on container size?-->
+
+        <Spinner
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+
 
     <LinearLayout
         android:id="@+id/listContainer1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/history_label"
-        android:orientation="vertical"
-        android:layout_weight="2">
+        android:layout_weight="1">
 
         <ListView
-            android:id="@+id/strengthList"
+            android:id="@+id/historyWorkoutList"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="@dimen/list_border_width"
-            android:layout_marginLeft="@dimen/list_border_width"
-            android:layout_marginRight="@dimen/list_border_width"
-            android:layout_marginTop="@dimen/list_border_width"
+            android:layout_height="wrap_content"
             android:background="@color/list_background"
             android:divider="@color/list_divider_color"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
             android:dividerHeight="1dp"
             android:focusable="false"
             android:stackFromBottom="false" >
@@ -41,13 +49,11 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/finishButton1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:text="@string/finish" />
+        <Button
+            android:id="@+id/finishButton1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/finish"
+            android:layout_alignParentBottom="true"/>
 
 </LinearLayout>
