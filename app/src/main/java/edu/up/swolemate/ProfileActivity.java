@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
@@ -70,5 +71,11 @@ public class ProfileActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    public void onSeeMoreClick(View v) {
+        Intent intent = new Intent(this, HistoryTrackingActivity.class);
+        startActivity(intent);
     }
 }

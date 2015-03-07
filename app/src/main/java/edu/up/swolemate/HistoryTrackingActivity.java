@@ -7,8 +7,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
+
+import java.util.ArrayList;
 
 
 public class HistoryTrackingActivity extends Activity {
@@ -17,6 +20,15 @@ public class HistoryTrackingActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history_tracking);
+        Spinner s = (Spinner)findViewById(R.id.spin_dateSelector);
+        ArrayList<String> strings = new ArrayList<String>();
+
+        strings.add("Today");
+        strings.add("This week");
+        strings.add("This month");
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, strings);
+        s.setAdapter(adapter);
 
     }
 
