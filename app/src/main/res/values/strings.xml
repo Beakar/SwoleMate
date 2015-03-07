@@ -7,6 +7,7 @@
     <string name="cardio">Cardio</string>
     <string name="create_new_workout">Create new workout</string>
     <string name="enter_info_request">Please enter some basic information below:</string>
+    <string name="privacy_disclaimer">SwoleMate won't collect any of this data; it is purely for your own personal app experience.</string>
     <string name="finish">Finish</string>
     <string name="hello_user">Hello, User</string>
     <string name="workout_name">Workout Name</string>
