@@ -75,6 +75,43 @@ public class StrengthWorkout extends BaseWorkout {
         }
     }
 
+    //Creates and returns a strength workout object for testing purposes.
+    @Override
+    public void initTestValues() {
+        Exercise e = new Exercise();
+
+        //add bench press
+        e.setName("Bench press");
+        e.addSet(new ExerciseSubset(125.0, 12));
+        e.addSet(new ExerciseSubset(135.0, 10));
+        e.addSet(new ExerciseSubset(145.0, 8));
+        this.addExercise(e);
+
+        e = new Exercise();
+        //add skullcrushers
+        e.setName("Skullcrushers");
+        e.addSet(new ExerciseSubset(25.0, 12));
+        e.addSet(new ExerciseSubset(30.0, 10));
+        e.addSet(new ExerciseSubset(35.0, 8));
+        this.addExercise(e);
+
+        //add tricep pulldown
+        e = new Exercise();
+        e.setName("Tricep pulldown");
+        e.addSet(new ExerciseSubset(35.0, 12));
+        e.addSet(new ExerciseSubset(40.0, 10));
+        e.addSet(new ExerciseSubset(45.0, 8));
+        this.addExercise(e);
+
+        //add shoulder press
+        e = new Exercise();
+        e.setName("Shoulder press");
+        e.addSet(new ExerciseSubset(25.0, 10));
+        e.addSet(new ExerciseSubset(25.0, 10));
+        e.addSet(new ExerciseSubset(25.0, 10));
+        this.addExercise(e);
+
+    }
 
 
 }
