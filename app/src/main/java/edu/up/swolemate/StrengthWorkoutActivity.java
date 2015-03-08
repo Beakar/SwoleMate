@@ -17,6 +17,19 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+
+import java.net.ContentHandler;
+import java.sql.SQLException;
+
+
 
 public class StrengthWorkoutActivity extends Activity  implements View.OnClickListener {
 
@@ -29,6 +42,11 @@ public class StrengthWorkoutActivity extends Activity  implements View.OnClickLi
     Button finishButton;
     ExerciseDialogFragment createDialog;
     FragmentManager fragManager;
+
+    /**
+     * References the current workout being created
+     */
+    protected StrengthWorkout currentWorkout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +98,7 @@ public class StrengthWorkoutActivity extends Activity  implements View.OnClickLi
 
         return super.onOptionsItemSelected(item);
     }
+
 
     public static class ExerciseDialogFragment extends DialogFragment {
         @Override
@@ -137,4 +156,85 @@ public class StrengthWorkoutActivity extends Activity  implements View.OnClickLi
 //
 //    }
 
+    /**
+     * Inserts the current workout into the database
+     */
+    private void insertCurrentWorkout() {
+
+        SQLiteDatabase db = new FitnessDatabaseHelper(this).getWritableDatabase();
+
+        //ContentValues links field names to values for each field
+        ContentValues vals = new ContentValues();
+
+        vals.put("displayName", currentWorkout.getDisplayName());
+        vals.put("dateCompleted", System.currentTimeMillis() / 1000);
+        long workoutId = db.insert("StrengthWorkouts", null, vals);
+
+        //there was some error
+        if(workoutId == -1) {
+            Log.e("Invalid database query", "Something went wrong with the database query");
+            return;
+        }
+
+        //add each exercise for the workout
+        for(Exercise e : currentWorkout.getExercises()) {
+            vals.clear();
+            vals.put("displayName", e.getName());
+            long exerciseId = db.insert("Exercises", null, vals);
+
+
+            for(ExerciseSubset set : e.getSets()) {
+                //add each set for the exercise
+                vals.clear();
+                vals.put("weight", set.getWeight());
+                vals.put("numReps", set.getNumReps());
+                long subsetId = db.insert("ExerciseSubsets", null, vals);
+
+                //link subset to exercise it came from
+                vals.clear();
+                vals.put("subsetId", subsetId);
+                vals.put("exerciseId", exerciseId);
+                db.insert("SubsetsToExercises", null, vals);
+            }
+
+            //link exercise to workout
+            vals.clear();
+            vals.put("exerciseId", exerciseId);
+            vals.put("workoutId", workoutId);
+            db.insert("ExercisesToWorkouts", null, vals);
+        }
+
+    }
+
+
+
+    /**
+     * Deletes all records from the StrengthWorkouts table.
+     * Test function
+     */
+    private void deleteAll() {
+        SQLiteDatabase db = new FitnessDatabaseHelper(this).getReadableDatabase();
+
+        String query = "DELETE FROM StrengthWorkouts";
+        db.execSQL(query);
+
+        Log.d("Spacer", "------------------------------------");
+        selectAll();
+        Log.d("Spacer", "------------------------------------");
+    }
+
+    /**
+     * Prints out records from the database
+     * Test function
+     */
+    private void selectAll() {
+        SQLiteDatabase db = new FitnessDatabaseHelper(this).getReadableDatabase();
+
+        String query = "SELECT * FROM StrengthWorkouts";
+        Cursor c = db.rawQuery(query, null);
+
+        while(c.moveToNext()) {
+            Log.d("Workouts in database", c.getString(0) + " : " + c.getString(1));
+        }
+    }
 }
