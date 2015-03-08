@@ -51,4 +51,10 @@ public class CustomWorkout extends BaseWorkout {
 
         this.workoutData = workoutData;
     }
+
+    @Override
+    public void initTestValues() {
+        this.displayName = "Yoga";
+        this.workoutData = "Went to a 45 minute yoga class today. Did 30 different stretches.";
+    }
 }

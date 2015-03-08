@@ -48,4 +48,6 @@ public abstract class BaseWorkout {
     public String getDisplayName() {
         return displayName;
     }
+
+    public abstract void initTestValues();
 }

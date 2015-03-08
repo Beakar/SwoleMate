@@ -1,6 +1,7 @@
 package edu.up.swolemate;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.view.Menu;
@@ -12,15 +13,40 @@ import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class HistoryTrackingActivity extends Activity {
 
+    protected List<BaseWorkout> workouts;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history_tracking);
+
+        setupSpinner();
+
+        //for testing purposes only
+        initTestWorkouts();
+    }
+
+    private void initTestWorkouts() {
+        StrengthWorkout s = new StrengthWorkout();
+        s.initTestValues();
+        workouts.add(s);
+
+        CardioWorkout ca = new CardioWorkout();
+        ca.initTestValues();
+        workouts.add(ca);
+
+        CustomWorkout cu = new CustomWorkout();
+        cu.initTestValues();
+        workouts.add(cu);
+    }
+
+    private void setupSpinner() {
         Spinner s = (Spinner)findViewById(R.id.spin_dateSelector);
+
         ArrayList<String> strings = new ArrayList<String>();
 
         strings.add("Today");
@@ -29,7 +55,6 @@ public class HistoryTrackingActivity extends Activity {
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, strings);
         s.setAdapter(adapter);
-
     }
 
 
@@ -53,5 +78,10 @@ public class HistoryTrackingActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onNewWorkoutClick(View v) {
+        Intent i = new Intent(this, CreateWorkoutActivity.class);
+        startActivity(i);
     }
 }
