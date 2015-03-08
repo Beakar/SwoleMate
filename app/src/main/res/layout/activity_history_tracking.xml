@@ -58,12 +58,26 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:weightSum="2">
-        <Button
+        <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
+            android:orientation="vertical"
             android:layout_weight="1"
-            android:text="@string/delete"
-            android:onClick="onDeleteWorkoutClick"/>
+            android:weightSum="4">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:text="@string/show"
+                android:layout_weight="1"/>
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:id="@+id/spin_workoutTypes"
+                android:layout_weight="3">
+
+            </Spinner>
+        </LinearLayout>
         <Button
             android:id="@+id/finishButton1"
             android:layout_width="0dp"
