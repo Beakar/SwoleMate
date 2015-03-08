@@ -1,6 +1,7 @@
 package edu.up.swolemate;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by Nathan on 1/21/2015.
@@ -15,6 +16,11 @@ public class FoodMeal {
      * name of the food meal
      */
     protected String name;
+
+    /**
+     * Date meal was eaten on
+     */
+    protected Date dateCompleted;
 
     /**
      * Collection of food items in the meal object

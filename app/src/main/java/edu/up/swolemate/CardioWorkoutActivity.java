@@ -1,6 +1,8 @@
 package edu.up.swolemate;
 
 import android.app.Activity;
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -8,9 +10,11 @@ import android.view.MenuItem;
 
 public class CardioWorkoutActivity extends Activity {
 
+    protected CardioWorkout currentWorkout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        currentWorkout = new CardioWorkout();
         setContentView(R.layout.activity_cardio_workout);
     }
 
@@ -35,5 +39,21 @@ public class CardioWorkoutActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    /**
+     * Inserts the current workout object into the CardioWorkouts database
+     */
+    protected void insertCurrentWorkout() {
+        SQLiteDatabase db = new FitnessDatabaseHelper(this).getWritableDatabase();
+        ContentValues vals = new ContentValues();
+
+        vals.put("displayName", currentWorkout.getDisplayName());
+        vals.put("duration", currentWorkout.getDuration());
+        vals.put("distance", currentWorkout.getDistance());
+        vals.put("dateCompleted", System.currentTimeMillis() / 1000);
+
+        db.insert("CardioWorkouts", null, vals);
     }
 }

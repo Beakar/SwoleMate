@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:ems="10"
-        android:text="Food Item" >
+        android:hint="Food name" >
 
         <requestFocus />
     </EditText>
@@ -65,16 +65,16 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:gravity="bottom">
+            android:layout_alignParentBottom="true">
 
             <EditText
                 android:id="@+id/editText7"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
                 android:ems="10"
+                android:layout_marginBottom="10dp"
                 android:hint="How much did you eat? (Servings)"/>
 
             <LinearLayout

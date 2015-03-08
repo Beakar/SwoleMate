@@ -33,7 +33,7 @@ public class MainActivity extends Activity implements OnClickListener{
             startActivity(myIntent);
         }
         else if(v.getId() == R.id.addNewFoodButton){
-            Intent myIntent = new Intent(this, FoodTrackingActivity.class);
+            Intent myIntent = new Intent(this, HistoryTrackingActivity.class);
             startActivity(myIntent);
         }
     }
@@ -63,5 +63,10 @@ public class MainActivity extends Activity implements OnClickListener{
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onViewHistoryClick(View v) {
+        Intent i = new Intent(this, HistoryTrackingActivity.class);
+        startActivity(i);
     }
 }

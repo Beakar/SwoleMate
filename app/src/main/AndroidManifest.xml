@@ -29,7 +29,7 @@
             android:label="@string/title_activity_create_workout" >
         </activity>
         <activity
-            android:name=".FoodTrackingActivity"
+            android:name=".HistoryTrackingActivity"
             android:label="@string/title_activity_food_tracking" >
         </activity>
         <activity

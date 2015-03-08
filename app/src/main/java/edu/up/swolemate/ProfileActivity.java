@@ -6,12 +6,14 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
 
 public class ProfileActivity extends Activity {
 
+    //changes the units stored in sharedpreferences
     protected CompoundButton.OnCheckedChangeListener unitChangeListener = new CompoundButton.OnCheckedChangeListener() {
         public void onCheckedChanged(CompoundButton btnView, boolean on) {
             SharedPreferences settings = getSharedPreferences("user_settings", 0);
@@ -69,5 +71,11 @@ public class ProfileActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    public void onSeeMoreClick(View v) {
+        Intent intent = new Intent(this, HistoryTrackingActivity.class);
+        startActivity(intent);
     }
 }
