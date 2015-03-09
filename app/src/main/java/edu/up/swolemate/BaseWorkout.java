@@ -1,5 +1,10 @@
 package edu.up.swolemate;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.Date;
 
 public abstract class BaseWorkout {
@@ -30,6 +35,20 @@ public abstract class BaseWorkout {
      * Source for the workout icon
      */
     protected int src;
+
+
+    public Context getContext() {
+        return context;
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
+    }
+
+    /**
+     * Context object for units
+     */
+    protected Context context;
 
     /**
      * defines an empty workout object
@@ -86,11 +105,22 @@ public abstract class BaseWorkout {
 
     private String strengthToString(StrengthWorkout workout) {
         String s = "";
+        SharedPreferences prefs = context.getSharedPreferences("user_settings", 0);
 
         for(Exercise e : workout.getExercises()) {
             s += e.getName();
             for(ExerciseSubset set : e.getSets()) {
-                s += "\n" + set.getNumReps() + " @ " + set.getWeight();
+
+                double weight = set.getWeight();
+                String weightString = "";
+
+                if(prefs.getString("units", "").equals("metric")) {
+                    weight = weight * 2.20462;
+                    weightString = new DecimalFormat("##.##").format(weight) + "kg";
+                } else {
+                    weightString = new DecimalFormat("##.##").format(weight) + "lb";
+                }
+                s += "\n" + set.getNumReps() + " @ " + weightString;
             }
             s += "\n\n";
         }
@@ -101,9 +131,24 @@ public abstract class BaseWorkout {
     private String cardioToString(CardioWorkout workout) {
         String s = "";
 
-        s += String.valueOf(workout.getDuration()) + "\n";
+        double duration = workout.getDuration();
+        int intDuration = (int)(Math.floor(duration));
+        int hours = intDuration / 3600;
+        int remainder = intDuration - (hours * 3600);
+        int minutes = remainder / 60;
+        double seconds = duration % 60.0;
+
+        String durationString = String.format("%02d", hours)
+                                + ":"
+                                + String.format("%02d", minutes)
+                                + ":"
+                                + new DecimalFormat("00.##").format(seconds);
+
+
+        s += durationString + "\n";
         s += String.valueOf(workout.getDistance());
 
         return s;
     }
+
 }

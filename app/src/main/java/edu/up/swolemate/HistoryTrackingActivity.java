@@ -151,6 +151,7 @@ public class HistoryTrackingActivity extends Activity {
 
 
     public void popupViewWorkout(BaseWorkout workout) {
+        workout.setContext(this);
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         LayoutInflater inflater = LayoutInflater.from(this);
 
@@ -164,22 +165,37 @@ public class HistoryTrackingActivity extends Activity {
 
         dialog.setTitle("View Workout");
         dialog.setView(root);
-        dialog.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+        dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-
+                //don't do anything
             }
         });
 
-        dialog.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+        dialog.setNegativeButton("Delete", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                //do delete things
+                deleteWorkout();
             }
         });
 
         dialog.create().show();
 
 
+    }
+
+    public void deleteWorkout() {
+        AlertDialog.Builder delete = new AlertDialog.Builder(this);
+        delete.setTitle("Delete");
+        delete.setMessage("Are you sure you want to delete this workout?");
+        delete.setNegativeButton("Cancel", null);
+        delete.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                //TODO: Add delete things
+            }
+        });
+
+        delete.create().show();
     }
 }

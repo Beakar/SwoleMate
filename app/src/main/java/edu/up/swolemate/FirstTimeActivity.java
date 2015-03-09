@@ -304,6 +304,7 @@ public class FirstTimeActivity extends Activity {
         editor.putString("name", name);
         editor.putString("height", height);
         editor.putString("weight", weight);
+        editor.putString("units", "imperial");
 
         editor.commit();
     }
