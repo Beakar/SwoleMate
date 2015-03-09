@@ -38,13 +38,15 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:layout_weight=".05"
-        android:text="@string/create_new_workout" />
+        android:text="@string/create_new_workout"
+        android:onClick="onCreateWorkoutClick"/>
 
     <Button
         android:id="@+id/addNewFoodButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight=".05"
-        android:text="@string/add_new_food"  />
+        android:text="@string/add_new_food"
+        android:onClick="onAddFoodClick"/>
 
 </LinearLayout>

@@ -2,10 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/app_background"
     android:orientation="vertical"
-    android:layout_marginTop="10dp"
-    android:layout_marginLeft="25dp">
+    android:layout_margin="@dimen/activity_horizontal_margin">
 
     <EditText
         android:id="@+id/cardioNameEntry"
@@ -68,9 +66,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="@dimen/activity_vertical_margin"
-            android:layout_marginRight="25dp"
             android:text="Save Workout" />
         </RelativeLayout>
 
