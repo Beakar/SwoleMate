@@ -120,7 +120,7 @@ public abstract class BaseWorkout {
                 } else {
                     weightString = new DecimalFormat("##.##").format(weight) + "lb";
                 }
-                s += "\n" + set.getNumReps() + " @ " + weightString;
+                s += "\n" + set.getNumReps() + " reps of " + weightString;
             }
             s += "\n\n";
         }
