@@ -120,7 +120,7 @@ public abstract class BaseWorkout {
                 } else {
                     weightString = new DecimalFormat("##.##").format(weight) + "lb";
                 }
-                s += "\n" + set.getNumReps() + " reps of " + weightString;
+                s += "\n" + set.getNumReps() + " x " + weightString;
             }
             s += "\n\n";
         }
@@ -130,25 +130,73 @@ public abstract class BaseWorkout {
 
     private String cardioToString(CardioWorkout workout) {
         String s = "";
+        SharedPreferences prefs = context.getSharedPreferences("user_settings", 0);
 
         double duration = workout.getDuration();
+        double distance = workout.getDistance();
+
+        //getting individual pieces to build string with time information
         int intDuration = (int)(Math.floor(duration));
         int hours = intDuration / 3600;
         int remainder = intDuration - (hours * 3600);
         int minutes = remainder / 60;
         double seconds = duration % 60.0;
 
+        DecimalFormat secsAndMills = new DecimalFormat("00.##");
+
         String durationString = String.format("%02d", hours)
                                 + ":"
                                 + String.format("%02d", minutes)
                                 + ":"
-                                + new DecimalFormat("00.##").format(seconds);
+                                + secsAndMills.format(seconds);
 
 
-        s += durationString + "\n";
-        s += String.valueOf(workout.getDistance());
+        s += "Duration: " + durationString;
+
+        String paceString = "";
+        String unitString = "";
+
+        //distance is based on units
+        if(prefs.getString("units", "").equals("metric")) {
+            unitString = "km";
+            distance *= 1.609;
+        } else {
+            unitString = "mi";
+        }
+
+        //doubles are never zero, need to check this. Sometimes the user doesn't initialize a double
+        if(!isZero(distance, 0.01)) {
+            //distance textView
+            s += "\nDistance: " + new DecimalFormat("##.##").format(distance) + unitString;
+
+            //calculate pace
+            double splitDuration = duration / distance;
+            hours = (int)(splitDuration / 3600);
+            remainder = (int)(splitDuration - (hours * 3600));
+            minutes = remainder / 60;
+            seconds = splitDuration % 60.0;
+            durationString = String.format("%02d", minutes)
+                            + ":"
+                            + secsAndMills.format(seconds);
+
+            //pace textView
+            paceString = "\nAvg Pace: " + durationString + "/" + unitString;
+        }
+
+        s += paceString;
+
 
         return s;
+    }
+
+    /**
+     * Checks to see if a double value is zero
+     * @param val
+     * @param threshold
+     * @return
+     */
+    private boolean isZero(double val, double threshold) {
+        return val >= -threshold && val <= threshold;
     }
 
 }

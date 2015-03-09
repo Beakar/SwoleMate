@@ -78,8 +78,8 @@ public class CardioWorkout extends BaseWorkout {
     @Override
     public CardioWorkout initTestValues() {
         this.displayName = "Spinning workout";
-        this.duration = 2700.53;
-        this.distance = 5000.0;
+        this.duration = 2713.53;
+        this.distance = 4.2;
         this.dateCompleted = 1425867692;
 
         return this;
