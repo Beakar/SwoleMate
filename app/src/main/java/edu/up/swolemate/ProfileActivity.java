@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
 
 
@@ -20,12 +21,20 @@ public class ProfileActivity extends Activity {
             SharedPreferences.Editor editor = settings.edit();
 
             if(on) {
-                editor.putString("units", "imperial");
-            } else {
                 editor.putString("units", "metric");
+            } else {
+                editor.putString("units", "imperial");
             }
+
+            editor.commit();
         }
     };
+
+    /**
+     * Switch for app units
+     */
+    Switch unitSwitch;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +43,16 @@ public class ProfileActivity extends Activity {
         TextView nameView = (TextView)findViewById(R.id.userNameText);
         TextView heightView = (TextView)findViewById(R.id.userHeight);
         TextView weightView = (TextView)findViewById(R.id.userWeight);
+
+        unitSwitch = (Switch)findViewById(R.id.switch_unit);
+        unitSwitch.setOnCheckedChangeListener(unitChangeListener);
+
         SharedPreferences settings = getSharedPreferences("user_settings", 0);
+
+        if(settings.getString("units", "").equals("metric")) {
+            unitSwitch.setChecked(true);
+        }
+
 
         nameView.setText(settings.getString("name", ""));
         heightView.setText(settings.getString("height", ""));

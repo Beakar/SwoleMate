@@ -39,8 +39,9 @@
                 <Switch
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textOn="IMP"
-                    android:textOff="MET"/>
+                    android:textOn="MET"
+                    android:textOff="IMP"
+                    android:id="@+id/switch_unit"/>
             </LinearLayout>
 
         </RelativeLayout>
