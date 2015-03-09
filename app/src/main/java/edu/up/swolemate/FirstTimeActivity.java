@@ -20,6 +20,7 @@ import java.util.regex.Pattern;
  */
 public class FirstTimeActivity extends Activity {
 
+
     private EditText nameEditText;
     private EditText heightEditText;
     private EditText weightEditText;
@@ -40,16 +41,23 @@ public class FirstTimeActivity extends Activity {
     * */
     private String weight;
 
+    private SharedPreferences settings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first_time);
+        settings = getSharedPreferences("user_settings", 0);
+
+        if(settings.contains("name")) {
+            goToHomeActivity();
+        }
 
         nameEditText = (EditText)findViewById(R.id.nameEntry);
         heightEditText = (EditText)findViewById(R.id.heightEntry);
         weightEditText = (EditText)findViewById(R.id.weightEntry);
         createButton = (Button)findViewById(R.id.createButton);
+
     }
 
 
@@ -299,7 +307,6 @@ public class FirstTimeActivity extends Activity {
     private void saveUserInput(String name, String height, String weight){
         boolean success = false;
 
-        SharedPreferences settings = getSharedPreferences("user_settings", 0);
         SharedPreferences.Editor editor = settings.edit();
         editor.putString("name", name);
         editor.putString("height", height);

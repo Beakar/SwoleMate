@@ -65,8 +65,24 @@ public class MainActivity extends Activity implements OnClickListener{
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * OnClick method for history button click
+     * @param v
+     */
     public void onViewHistoryClick(View v) {
         Intent i = new Intent(this, HistoryTrackingActivity.class);
         startActivity(i);
+    }
+
+    /**
+     * This is overriden to disallow users from "backing" into the first time activity
+     */
+    @Override
+    public void onBackPressed() {
+        finish();
+        Intent homeIntent = new Intent(Intent.ACTION_MAIN);
+        homeIntent.addCategory( Intent.CATEGORY_HOME );
+        homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(homeIntent);
     }
 }
