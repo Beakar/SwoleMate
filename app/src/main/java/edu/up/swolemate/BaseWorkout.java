@@ -67,4 +67,43 @@ public abstract class BaseWorkout {
     }
 
     public abstract BaseWorkout initTestValues();
+
+    @Override
+    public String toString() {
+        String stringRep = "";
+
+        if(this instanceof StrengthWorkout) {
+            stringRep += strengthToString((StrengthWorkout)this);
+        } else if(this instanceof CardioWorkout) {
+            stringRep += cardioToString((CardioWorkout)this);
+        } else if(this instanceof CustomWorkout) {
+            CustomWorkout workout = (CustomWorkout)this;
+            stringRep += workout.getWorkoutData();
+        }
+
+        return stringRep;
+    }
+
+    private String strengthToString(StrengthWorkout workout) {
+        String s = "";
+
+        for(Exercise e : workout.getExercises()) {
+            s += e.getName();
+            for(ExerciseSubset set : e.getSets()) {
+                s += "\n" + set.getNumReps() + " @ " + set.getWeight();
+            }
+            s += "\n\n";
+        }
+
+        return s;
+    }
+
+    private String cardioToString(CardioWorkout workout) {
+        String s = "";
+
+        s += String.valueOf(workout.getDuration()) + "\n";
+        s += String.valueOf(workout.getDistance());
+
+        return s;
+    }
 }

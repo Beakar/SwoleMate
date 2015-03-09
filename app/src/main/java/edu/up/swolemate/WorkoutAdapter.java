@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -42,9 +43,16 @@ public class WorkoutAdapter extends ArrayAdapter<BaseWorkout> {
         TextView displayName = (TextView)(root.findViewById(R.id.workout_list_display_name));
         TextView dateCompleted = (TextView)(root.findViewById(R.id.workout_list_date_completed));
 
+        //set the items for the layout
         icon.setBackgroundResource(workout.getSrc());
         displayName.setText(workout.getDisplayName());
-        dateCompleted.setText(String.valueOf(workout.getDateCompleted()));
+
+        //tried to do this inline, for some reason it didn't agree
+        long date = workout.getDateCompleted();
+        date = date * 1000;
+        Date dateObject = new Date(date);
+        String dateString = dateObject.toString().substring(0,10);
+        dateCompleted.setText(dateString);
 
         return root;
     }

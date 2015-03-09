@@ -47,7 +47,7 @@
             android:layout_marginBottom="@dimen/activity_vertical_margin"
             android:dividerHeight="1dp"
             android:focusable="false"
-            android:stackFromBottom="false" >
+            android:stackFromBottom="false">
 
         </ListView>
 
