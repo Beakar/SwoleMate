@@ -1,5 +1,6 @@
 package edu.up.swolemate;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,7 +29,7 @@ public class Exercise {
      * initializes an empty exercise object
      */
     public Exercise() {
-
+        sets = new ArrayList<ExerciseSubset>();
     }
 
     /**
@@ -37,6 +38,7 @@ public class Exercise {
      */
     public Exercise(String exerciseName) {
         this.displayName = exerciseName;
+        sets = new ArrayList<ExerciseSubset>();
     }
 
     /**

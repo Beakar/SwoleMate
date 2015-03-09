@@ -15,15 +15,20 @@ public class StrengthWorkout extends BaseWorkout {
 
     public StrengthWorkout() {
         super();
+        exercises = new ArrayList<Exercise>();
+        src = R.drawable.ic_launcher;
     }
 
     public StrengthWorkout(String displayName) {
         this.displayName = displayName;
+        exercises = new ArrayList<Exercise>();
+        src = R.drawable.ic_launcher;
     }
 
     public StrengthWorkout(String displayName, List<Exercise> exercises) {
         this(displayName);
         this.exercises = exercises;
+        src = R.drawable.ic_launcher;
     }
 
     /**
@@ -77,7 +82,10 @@ public class StrengthWorkout extends BaseWorkout {
 
     //Creates and returns a strength workout object for testing purposes.
     @Override
-    public void initTestValues() {
+    public StrengthWorkout initTestValues() {
+
+        this.displayName = "Chest workout";
+        this.dateCompleted = 1425867692;
         Exercise e = new Exercise();
 
         //add bench press
@@ -111,6 +119,7 @@ public class StrengthWorkout extends BaseWorkout {
         e.addSet(new ExerciseSubset(25.0, 10));
         this.addExercise(e);
 
+        return this;
     }
 
 

@@ -20,6 +20,7 @@ public class CardioWorkout extends BaseWorkout {
      */
     public CardioWorkout() {
         super();
+        this.src = R.drawable.ic_launcher;
     }
 
     /**
@@ -28,6 +29,7 @@ public class CardioWorkout extends BaseWorkout {
      */
     public CardioWorkout(String name) {
         super(name);
+        this.src = R.drawable.ic_launcher;
     }
 
     /**
@@ -74,9 +76,12 @@ public class CardioWorkout extends BaseWorkout {
     }
 
     @Override
-    public void initTestValues() {
+    public CardioWorkout initTestValues() {
         this.displayName = "Spinning workout";
         this.duration = 2700.53;
         this.distance = 5000.0;
+        this.dateCompleted = 1425867692;
+
+        return this;
     }
 }

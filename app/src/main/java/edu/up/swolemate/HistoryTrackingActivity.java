@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 
@@ -24,27 +25,29 @@ public class HistoryTrackingActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history_tracking);
 
-        setupSpinner();
+        workouts = new ArrayList<BaseWorkout>();
+        setupSpinners();
 
         //for testing purposes only
         initTestWorkouts();
+
+        WorkoutAdapter workoutAdapter = new WorkoutAdapter(this, R.layout.list_item_workout, workouts);
+        ListView workoutListView = (ListView)findViewById(R.id.lv_history);
+        workoutListView.setAdapter(workoutAdapter);
     }
 
     private void initTestWorkouts() {
-        StrengthWorkout s = new StrengthWorkout();
-        s.initTestValues();
+        StrengthWorkout s = new StrengthWorkout().initTestValues();
         workouts.add(s);
 
-        CardioWorkout ca = new CardioWorkout();
-        ca.initTestValues();
+        CardioWorkout ca = new CardioWorkout().initTestValues();
         workouts.add(ca);
 
-        CustomWorkout cu = new CustomWorkout();
-        cu.initTestValues();
+        CustomWorkout cu = new CustomWorkout().initTestValues();
         workouts.add(cu);
     }
 
-    private void setupSpinner() {
+    private void setupSpinners() {
         Spinner s = (Spinner)findViewById(R.id.spin_dateSelector);
 
         ArrayList<String> strings = new ArrayList<String>();
@@ -55,6 +58,18 @@ public class HistoryTrackingActivity extends Activity {
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, strings);
         s.setAdapter(adapter);
+
+
+        Spinner types = (Spinner)findViewById(R.id.spin_workoutTypes);
+        ArrayList<String> workoutTypes = new ArrayList<String>();
+
+        workoutTypes.add("All");
+        workoutTypes.add("Strength");
+        workoutTypes.add("Cardio");
+        workoutTypes.add("Custom");
+
+        ArrayAdapter<String> workoutTypesAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, workoutTypes);
+        types.setAdapter(workoutTypesAdapter);
     }
 
 

@@ -13,10 +13,23 @@ public abstract class BaseWorkout {
      */
     protected String displayName;
 
+    public int getDateCompleted() {
+        return dateCompleted;
+    }
+
+    public void setDateCompleted(int dateCompleted) {
+        this.dateCompleted = dateCompleted;
+    }
+
     /**
      * Date the workout was completed on
      */
-    protected Date dateCompleted;
+    protected int dateCompleted;
+
+    /**
+     * Source for the workout icon
+     */
+    protected int src;
 
     /**
      * defines an empty workout object
@@ -49,5 +62,9 @@ public abstract class BaseWorkout {
         return displayName;
     }
 
-    public abstract void initTestValues();
+    public int getSrc() {
+        return this.src;
+    }
+
+    public abstract BaseWorkout initTestValues();
 }
