@@ -23,6 +23,11 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
         super(ctx, DB_NAME, null, DB_VERSION);
     }
 
+    @Override
+    public void onOpen(SQLiteDatabase db) {
+        //enable foreign key constraints
+        db.execSQL("PRAGMA foreign_keys=ON");
+    }
     /**
      * when the database is created, we want to create all the tables we'll need
      *
@@ -30,6 +35,8 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
      */
     @Override
     public void onCreate(SQLiteDatabase db) {
+
+
         createWorkoutTables(db);
         createFoodTables(db);
     }
