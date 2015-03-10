@@ -58,14 +58,6 @@ public class HistoryTrackingActivity extends Activity {
     private void initTestWorkouts() {
         StrengthWorkout s = new StrengthWorkout().initTestValues();
         FitnessDatabaseHelper db = new FitnessDatabaseHelper(this);
-
-        workouts.add(s);
-        workouts.add(s);
-        workouts.add(s);
-        workouts.add(s);
-
-        db.testExerciseSelect();
-
         workouts.addAll(db.getAllWorkouts());
     }
 
