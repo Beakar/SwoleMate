@@ -28,6 +28,7 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
         //enable foreign key constraints
         db.execSQL("PRAGMA foreign_keys=ON");
     }
+
     /**
      * when the database is created, we want to create all the tables we'll need
      *
@@ -35,8 +36,6 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
      */
     @Override
     public void onCreate(SQLiteDatabase db) {
-
-
         createWorkoutTables(db);
         createFoodTables(db);
     }
@@ -135,10 +134,10 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
 
         String workoutDeleteTrigger =
                 "CREATE TRIGGER workoutDeleteTrigger AFTER DELETE ON ExercisesToWorkouts " +
-                "FOR EACH ROW " +
-                "BEGIN " +
-                "DELETE FROM SubsetsToExercises WHERE exerciseId=OLD.exerciseId; " +
-                "END;";
+                        "FOR EACH ROW " +
+                        "BEGIN " +
+                        "DELETE FROM SubsetsToExercises WHERE exerciseId=OLD.exerciseId; " +
+                        "END;";
 
 
         db.execSQL(workoutDeleteTrigger);
@@ -232,42 +231,43 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * Checks if a string is null or empty.
-     *
-     * @param s
-     * @return
+     * Tests to make sure entries were deleted from a database
      */
-    private boolean isNullOrEmpty(String s) {
-        if (s.equals("") || s == null) {
-            return true;
-        }
-
-        return false;
-    }
-
     public void testExerciseSelect() {
         Cursor c = getReadableDatabase().rawQuery("SELECT * FROM ExercisesToWorkouts", null);
 
-        while(c.moveToNext()) {
+        while (c.moveToNext()) {
             Log.d("ExercisesToWorkouts entry", c.getInt(1) + " : " + c.getInt(2));
         }
 
     }
 
     /**
-     * Inserts a workout
+     * Inserts a workout to its respective database
+     *
      * @param workout
      * @return
      */
     public int insertWorkout(BaseWorkout workout) {
         int id = -1;
-        if(workout instanceof StrengthWorkout) {
-            id = insertStrength((StrengthWorkout)workout);
+
+        //safe cast
+        if (workout instanceof StrengthWorkout) {
+            id = insertStrength((StrengthWorkout) workout);
+        } else if(workout instanceof CardioWorkout) {
+            id = insertCardio((CardioWorkout)workout);
+        } else if(workout instanceof CustomWorkout) {
+            id = insertCustom((CustomWorkout)workout);
         }
 
         return id;
     }
 
+    /**
+     * Inserts a strength workout into its respective table
+     * @param workout
+     * @return
+     */
     private int insertStrength(StrengthWorkout workout) {
         SQLiteDatabase db = getWritableDatabase();
 
@@ -279,19 +279,19 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
         long workoutId = db.insert("StrengthWorkouts", null, vals);
 
         //there was some error
-        if(workoutId == -1) {
+        if (workoutId == -1) {
             Log.e("Invalid database query", "Something went wrong with the database query");
             return -1;
         }
 
         //add each exercise for the workout
-        for(Exercise e : workout.getExercises()) {
+        for (Exercise e : workout.getExercises()) {
             vals.clear();
             vals.put("displayName", e.getName());
             long exerciseId = db.insert("Exercises", null, vals);
 
 
-            for(ExerciseSubset set : e.getSets()) {
+            for (ExerciseSubset set : e.getSets()) {
                 //add each set for the exercise
                 vals.clear();
                 vals.put("weight", set.getWeight());
@@ -312,9 +312,45 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
             db.insert("ExercisesToWorkouts", null, vals);
         }
 
-        return (int)workoutId;
+        return (int) workoutId;
     }
 
+    /**
+     * Inserts a cardio workout into the database
+     * @param workout
+     */
+    private int insertCardio(CardioWorkout workout) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues vals = new ContentValues();
+
+        vals.put("displayName", workout.getDisplayName());
+        vals.put("duration", workout.getDuration());
+        vals.put("distance", workout.getDistance());
+        vals.put("dateCompleted", System.currentTimeMillis() / 1000);
+
+        return (int)(db.insert("CardioWorkouts", null, vals));
+    }
+
+    /**
+     * Inserts a custom workout into the database
+     * @param workout
+     * @return
+     */
+    private int insertCustom(CustomWorkout workout) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues vals = new ContentValues();
+
+        vals.put("displayName", workout.getDisplayName());
+        vals.put("workoutData", workout.getWorkoutData());
+        vals.put("dateCompleted", System.currentTimeMillis() / 1000);
+
+        return (int)(db.insert("CustomWorkouts", null, vals));
+    }
+
+    /**
+     * Gets all workouts
+     * @return
+     */
     public List<BaseWorkout> getAllWorkouts() {
         ArrayList<BaseWorkout> workouts = new ArrayList<BaseWorkout>();
         workouts.addAll(selectStrengthWorkouts());
@@ -324,6 +360,10 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
         return workouts;
     }
 
+    /**
+     * Deletes a StrengthWorkout
+     * @param id
+     */
     public void deleteStrengthWorkout(int id) {
         SQLiteDatabase db = getWritableDatabase();
 
@@ -331,16 +371,40 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
         db.delete("StrengthWorkouts", "id=" + id, null);
     }
 
+    /**
+     * Deletes a Cardio Workout
+     * @param id
+     */
+    public void deleteCardioWorkout(int id) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        db.delete("CardioWorkouts", "id=" + id, null);
+    }
+
+    /**
+     * Deletes a Custom workout
+     * @param id
+     */
+    public void deleteCustomWorkout(int id) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        db.delete("CustomWorkouts", "id=" + id, null);
+    }
+
+    /**
+     * Selects all CardioWorkout objects from the database
+     * @return
+     */
     private List<CardioWorkout> selectCardioWorkouts() {
         SQLiteDatabase db = getReadableDatabase();
         ArrayList<CardioWorkout> workouts = new ArrayList<CardioWorkout>();
 
         String query = "SELECT *" +
-                       "FROM CardioWorkouts;";
+                "FROM CardioWorkouts;";
 
         Cursor c = db.rawQuery(query, null);
 
-        while(c.moveToNext()) {
+        while (c.moveToNext()) {
             CardioWorkout cw = new CardioWorkout();
             cw.setId(c.getInt(0));
             cw.setDisplayName(c.getString(1));
@@ -356,6 +420,7 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
 
     /**
      * Select query for custom workouts
+     *
      * @return
      */
     private List<CustomWorkout> selectCustomWorkouts() {
@@ -363,11 +428,11 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
         ArrayList<CustomWorkout> workouts = new ArrayList<CustomWorkout>();
 
         String query = "SELECT * " +
-                       "FROM CustomWorkouts;";
+                "FROM CustomWorkouts;";
 
         Cursor c = db.rawQuery(query, null);
 
-        while(c.moveToNext()) {
+        while (c.moveToNext()) {
             CustomWorkout cw = new CustomWorkout();
             cw.setId(c.getInt(0));
             cw.setDisplayName(c.getString(1));
@@ -389,10 +454,11 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
         ArrayList<StrengthWorkout> workouts = new ArrayList<StrengthWorkout>();
 
         String query = "SELECT * " +
-                       "FROM StrengthWorkouts;";
+                "FROM StrengthWorkouts;";
+
         Cursor c = db.rawQuery(query, null);
 
-        while(c.moveToNext()) {
+        while (c.moveToNext()) {
             StrengthWorkout sw = new StrengthWorkout();
             sw.setId(c.getInt(0));
             sw.setDisplayName(c.getString(1));
@@ -409,15 +475,15 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
         ArrayList<Exercise> exercises = new ArrayList<Exercise>();
 
         String query = "SELECT Exercises.id, Exercises.displayName " +
-                       "FROM Exercises " +
-                       "LEFT OUTER JOIN ExercisesToWorkouts ON Exercises.id=ExercisesToWorkouts.exerciseId " +
-                       "LEFT OUTER JOIN StrengthWorkouts ON ExercisesToWorkouts.workoutId=StrengthWorkouts.id " +
-                       "WHERE StrengthWorkouts.id=" + workoutId + " " +
-                       "ORDER BY Exercises.id;";
+                "FROM Exercises " +
+                "LEFT OUTER JOIN ExercisesToWorkouts ON Exercises.id=ExercisesToWorkouts.exerciseId " +
+                "LEFT OUTER JOIN StrengthWorkouts ON ExercisesToWorkouts.workoutId=StrengthWorkouts.id " +
+                "WHERE StrengthWorkouts.id=" + workoutId + " " +
+                "ORDER BY Exercises.id;";
 
         Cursor c = getReadableDatabase().rawQuery(query, null);
 
-        while(c.moveToNext()) {
+        while (c.moveToNext()) {
             Exercise e = new Exercise();
             e.setName(c.getString(1));
             e.setSets(selectSets(c.getInt(0)));
@@ -430,6 +496,7 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
 
     /**
      * Helper method that returns the sets associated with an exercisef
+     *
      * @param exerciseId
      * @return
      */
@@ -437,16 +504,16 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
         ArrayList<ExerciseSubset> sets = new ArrayList<ExerciseSubset>();
 
         String query = "SELECT ExerciseSubsets.id, ExerciseSubsets.weight, ExerciseSubsets.numReps " +
-                       "FROM ExerciseSubsets " +
-                       "LEFT OUTER JOIN SubsetsToExercises ON ExerciseSubsets.id=SubsetsToExercises.subsetId " +
-                       "LEFT OUTER JOIN Exercises ON SubsetsToExercises.exerciseId=Exercises.id " +
-                       "WHERE Exercises.id=" + exerciseId + " " +
-                       "ORDER BY ExerciseSubsets.id;";
+                "FROM ExerciseSubsets " +
+                "LEFT OUTER JOIN SubsetsToExercises ON ExerciseSubsets.id=SubsetsToExercises.subsetId " +
+                "LEFT OUTER JOIN Exercises ON SubsetsToExercises.exerciseId=Exercises.id " +
+                "WHERE Exercises.id=" + exerciseId + " " +
+                "ORDER BY ExerciseSubsets.id;";
 
         Cursor c = getReadableDatabase().rawQuery(query, null);
 
         //populate set fields
-        while(c.moveToNext()) {
+        while (c.moveToNext()) {
             ExerciseSubset set = new ExerciseSubset(c.getDouble(1), c.getInt(2));
             set.setId(c.getInt(1));
             sets.add(set);
@@ -457,6 +524,7 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
 
     /**
      * Checks if a record exists.
+     *
      * @param e
      * @return
      */
@@ -464,7 +532,7 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
         String query = "SELECT EXISTS(SELECT 1 FROM Exercises WHERE displayName=" + e.getName() + " LIMIT 1);";
         Cursor c = getReadableDatabase().rawQuery(query, null);
 
-        while(c.moveToNext()) {
+        while (c.moveToNext()) {
             return c.getInt(0) != 0;
         }
 
@@ -473,18 +541,33 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
 
     /**
      * Checks if an exercise exists
+     *
      * @param set
      * @return
      */
     private boolean setExists(ExerciseSubset set) {
         String query = "SELECT EXISTS(SELECT 1 FROM ExerciseSubsets" +
-                       "WHERE weight=" + set.getWeight() + " AND numReps=" + set.getNumReps() +
-                       " LIMIT 1);";
+                "WHERE weight=" + set.getWeight() + " AND numReps=" + set.getNumReps() +
+                " LIMIT 1);";
 
         Cursor c = getReadableDatabase().rawQuery(query, null);
 
-        while(c.moveToNext()) {
+        while (c.moveToNext()) {
             return c.getInt(0) != 0;
+        }
+
+        return false;
+    }
+
+    /**
+     * Checks if a string is null or empty.
+     *
+     * @param s
+     * @return
+     */
+    private boolean isNullOrEmpty(String s) {
+        if (s.equals("") || s == null) {
+            return true;
         }
 
         return false;

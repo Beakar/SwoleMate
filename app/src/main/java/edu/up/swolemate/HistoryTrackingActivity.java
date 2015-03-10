@@ -55,12 +55,20 @@ public class HistoryTrackingActivity extends Activity {
 
     }
 
+    /**
+     * Initializes workouts for testing
+     */
     private void initTestWorkouts() {
         StrengthWorkout s = new StrengthWorkout().initTestValues();
         FitnessDatabaseHelper db = new FitnessDatabaseHelper(this);
         workouts.addAll(db.getAllWorkouts());
     }
 
+
+    /**
+     * Sets up spinners in the application
+     * TODO: Sets spinners up for the activity
+     */
     private void setupSpinners() {
         dateSelector = (Spinner)findViewById(R.id.spin_dateSelector);
 
@@ -109,6 +117,10 @@ public class HistoryTrackingActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Handles the click event for a new workout
+     * @param v
+     */
     public void onNewWorkoutClick(View v) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater li = LayoutInflater.from(this);
@@ -148,6 +160,10 @@ public class HistoryTrackingActivity extends Activity {
         builder.create().show();
     }
 
+    /**
+     * Redirects the user to a specified workout activity.
+     * @param activity
+     */
     private void goToWorkoutActivity(Class<?> activity) {
         Intent intent = new Intent(this, activity);
         startActivity(intent);
@@ -182,7 +198,10 @@ public class HistoryTrackingActivity extends Activity {
         });
     }
 
-
+    /**
+     * Pops up when the user selects a workout from the ListView
+     * @param workout
+     */
     public void popupViewWorkout(BaseWorkout workout) {
         workout.setContext(this);
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
@@ -219,6 +238,11 @@ public class HistoryTrackingActivity extends Activity {
 
     }
 
+    /**
+     * Dialog for workout deletion popup
+     * @param id
+     * @param type
+     */
     public void deleteWorkout(final int id, final String type) {
         AlertDialog.Builder delete = new AlertDialog.Builder(this);
         delete.setTitle("Delete");
@@ -229,13 +253,12 @@ public class HistoryTrackingActivity extends Activity {
             public void onClick(DialogInterface dialogInterface, int i) {
                 //TODO: Add delete things
                 if(type.equals("StrengthWorkout")) {
-                } else if(type.equals("StrengthWorkout")) {
-
+                    dbDeleteStrength(id);
+                } else if(type.equals("CardioWorkout")) {
+                    dbDeleteCardio(id);
                 } else if(type.equals("CustomWorkout")) {
-
+                    dbDeleteCustom(id);
                 }
-
-                dbDeleteWorkout(id);
 
             }
         });
@@ -243,14 +266,50 @@ public class HistoryTrackingActivity extends Activity {
         delete.create().show();
     }
 
-    private void dbDeleteWorkout(int id) {
+
+    /**
+     * Helper method that deletes a cardio workout from the database
+     * @param id
+     */
+    private void dbDeleteCardio(int id) {
+        FitnessDatabaseHelper db = new FitnessDatabaseHelper(this);
+        db.deleteCardioWorkout(id);
+
+        for(BaseWorkout workout : workouts) {
+            if(workout.getId() == id && workout instanceof CardioWorkout) {
+                workoutAdapter.remove(workout);
+                break;
+            }
+        }
+    }
+
+    /**
+     * Helper method that deletes a cardio workout from the database
+     * @param id
+     */
+    private void dbDeleteCustom(int id) {
+        FitnessDatabaseHelper db = new FitnessDatabaseHelper(this);
+        db.deleteCustomWorkout(id);
+
+        for(BaseWorkout workout : workouts) {
+            if(workout.getId() == id && workout instanceof CustomWorkout) {
+                workoutAdapter.remove(workout);
+                break;
+            }
+        }
+    }
+
+    /**
+     * Helper method taht deletes a custom workout from the database
+     * @param id
+     */
+    private void dbDeleteStrength(int id) {
         FitnessDatabaseHelper db = new FitnessDatabaseHelper(this);
         db.deleteStrengthWorkout(id);
 
         for(BaseWorkout workout : workouts) {
-            if(workout.getId() == id) {
+            if(workout.getId() == id && workout instanceof StrengthWorkout) {
                 workoutAdapter.remove(workout);
-                workoutListView.deferNotifyDataSetChanged();
                 break;
             }
         }
