@@ -69,24 +69,5 @@ public class StrengthWorkoutActivity extends Activity {
 
         String query = "DELETE FROM StrengthWorkouts";
         db.execSQL(query);
-
-        Log.d("Spacer", "------------------------------------");
-        selectAll();
-        Log.d("Spacer", "------------------------------------");
-    }
-
-    /**
-     * Prints out records from the database
-     * Test function
-     */
-    private void selectAll() {
-        SQLiteDatabase db = new FitnessDatabaseHelper(this).getReadableDatabase();
-
-        String query = "SELECT * FROM StrengthWorkouts";
-        Cursor c = db.rawQuery(query, null);
-
-        while(c.moveToNext()) {
-            Log.d("Workouts in database", c.getString(0) + " : " + c.getString(1));
-        }
     }
 }

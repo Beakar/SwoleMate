@@ -8,11 +8,13 @@ public class ForeignKeyHelper {
     public String fieldName;
     public String homeTable;
     public String homeProperty;
+    public String constraints;
 
-    public ForeignKeyHelper(String fieldName, String homeTable, String homeProperty) {
+    public ForeignKeyHelper(String fieldName, String homeTable, String homeProperty, String constraints) {
         this.fieldName = fieldName;
         this.homeTable = homeTable;
         this.homeProperty = homeProperty;
+        this.constraints = constraints;
     }
 
 }

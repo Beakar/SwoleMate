@@ -4,20 +4,17 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -55,17 +52,16 @@ public class HistoryTrackingActivity extends Activity {
         workoutListView = (ListView)findViewById(R.id.lv_history);
         setHistoryListener();
         workoutListView.setAdapter(workoutAdapter);
+
     }
 
     private void initTestWorkouts() {
         StrengthWorkout s = new StrengthWorkout().initTestValues();
-        workouts.add(s);
+        FitnessDatabaseHelper db = new FitnessDatabaseHelper(this);
 
-        CardioWorkout ca = new CardioWorkout().initTestValues();
-        workouts.add(ca);
+        db.testExerciseSelect();
 
-        CustomWorkout cu = new CustomWorkout().initTestValues();
-        workouts.add(cu);
+        workouts.addAll(db.getAllWorkouts());
     }
 
     private void setupSpinners() {
@@ -212,10 +208,12 @@ public class HistoryTrackingActivity extends Activity {
             }
         });
 
+        final int id = workout.getId();
+        final String type = workout.getClass().getName();
         dialog.setNegativeButton("Delete", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                deleteWorkout();
+                deleteWorkout(id, type);
             }
         });
 
@@ -224,7 +222,7 @@ public class HistoryTrackingActivity extends Activity {
 
     }
 
-    public void deleteWorkout() {
+    public void deleteWorkout(final int id, final String type) {
         AlertDialog.Builder delete = new AlertDialog.Builder(this);
         delete.setTitle("Delete");
         delete.setMessage("Are you sure you want to delete this workout?");
@@ -233,9 +231,24 @@ public class HistoryTrackingActivity extends Activity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 //TODO: Add delete things
+                if(type.equals("StrengthWorkout")) {
+                } else if(type.equals("StrengthWorkout")) {
+
+                } else if(type.equals("CustomWorkout")) {
+
+                }
+
+                dbDeleteWorkout(id);
+
             }
         });
 
         delete.create().show();
+    }
+
+    private void dbDeleteWorkout(int id) {
+        FitnessDatabaseHelper db = new FitnessDatabaseHelper(this);
+        db.deleteStrengthWorkout(id);
+
     }
 }

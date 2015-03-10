@@ -33,4 +33,12 @@ public class ExerciseSubset {
     public void setNumReps(int numReps) {
         this.numReps = numReps;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

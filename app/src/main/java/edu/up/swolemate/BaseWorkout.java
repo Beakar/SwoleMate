@@ -7,11 +7,11 @@ import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.Date;
 
-public abstract class BaseWorkout {
+public abstract class BaseWorkout implements Comparable<BaseWorkout> {
     /**
      * Id of workout for database usage
      */
-    protected String id;
+    protected int id;
 
     /**
      * Display name for the workout specified by the user
@@ -199,4 +199,23 @@ public abstract class BaseWorkout {
         return val >= -threshold && val <= threshold;
     }
 
+    /**
+     * For sorting purposes
+     * @param workout
+     * @return
+     */
+    @Override
+    public int compareTo(BaseWorkout workout) {
+        Integer date1 = this.dateCompleted;
+        Integer date2 = workout.getDateCompleted();
+        return date1.compareTo(date2);
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

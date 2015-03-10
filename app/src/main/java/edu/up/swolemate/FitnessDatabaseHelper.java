@@ -2,11 +2,13 @@ package edu.up.swolemate;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Nathan on 3/2/2015.
@@ -106,8 +108,8 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
                 },
                 new PrimaryKeyHelper("id", "ASC"),
                 new ForeignKeyHelper[]{
-                        new ForeignKeyHelper("subsetId", "ExerciseSubsets", "id"),
-                        new ForeignKeyHelper("exerciseId", "Exercises", "id")
+                        new ForeignKeyHelper("subsetId", "ExerciseSubsets", "id", "ON DELETE CASCADE"),
+                        new ForeignKeyHelper("exerciseId", "Exercises", "id", "ON DELETE CASCADE")
                 });
 
         //Create ExercisesToWorkouts table
@@ -120,9 +122,20 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
                 },
                 new PrimaryKeyHelper("id", "ASC"),
                 new ForeignKeyHelper[]{
-                        new ForeignKeyHelper("exerciseId", "ExerciseSubsets", "id"),
-                        new ForeignKeyHelper("workoutId", "StrengthWorkouts", "id")
+                        new ForeignKeyHelper("exerciseId", "Exercises", "id", "ON DELETE CASCADE"),
+                        new ForeignKeyHelper("workoutId", "StrengthWorkouts", "id", "ON DELETE CASCADE")
                 });
+
+        String workoutDeleteTrigger =
+                "CREATE TRIGGER workoutDeleteTrigger AFTER DELETE ON ExercisesToWorkouts " +
+                "FOR EACH ROW " +
+                "BEGIN " +
+                "DELETE FROM SubsetsToExercises WHERE exerciseId=OLD.exerciseId; " +
+                "END;";
+
+
+        db.execSQL(workoutDeleteTrigger);
+
     }
 
 
@@ -170,8 +183,8 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
                 },
                 new PrimaryKeyHelper("id", "ASC"),
                 new ForeignKeyHelper[]{
-                        new ForeignKeyHelper("mealId", "FoodMeals", "id"),
-                        new ForeignKeyHelper("itemId", "FoodItems", "id")
+                        new ForeignKeyHelper("mealId", "FoodMeals", "id", "ON DELETE CASCADE"),
+                        new ForeignKeyHelper("itemId", "FoodItems", "id", "ON DELETE CASCADE")
                 });
     }
 
@@ -199,7 +212,7 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
         //add foreign keys
         if (fks != null) {
             for (ForeignKeyHelper key : fks) {
-                columns = columns + "FOREIGN KEY(" + key.fieldName + ") REFERENCES " + key.homeTable + "(" + key.homeProperty + "), ";
+                columns = columns + "FOREIGN KEY(" + key.fieldName + ") REFERENCES " + key.homeTable + "(" + key.homeProperty + ") " + key.constraints + ", ";
             }
         }
 
@@ -223,6 +236,15 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
         }
 
         return false;
+    }
+
+    public void testExerciseSelect() {
+        Cursor c = getReadableDatabase().rawQuery("SELECT * FROM ExercisesToWorkouts", null);
+
+        while(c.moveToNext()) {
+            Log.d("ExercisesToWorkouts entry", c.getInt(1) + " : " + c.getInt(2));
+        }
+
     }
 
     /**
@@ -284,6 +306,181 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
         }
 
         return (int)workoutId;
+    }
+
+    public List<BaseWorkout> getAllWorkouts() {
+        ArrayList<BaseWorkout> workouts = new ArrayList<BaseWorkout>();
+        workouts.addAll(selectStrengthWorkouts());
+        workouts.addAll(selectCardioWorkouts());
+        workouts.addAll(selectCustomWorkouts());
+
+        return workouts;
+    }
+
+    public void deleteStrengthWorkout(int id) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        //delete from strength workouts
+        db.delete("StrengthWorkouts", "id=" + id, null);
+    }
+
+    private List<CardioWorkout> selectCardioWorkouts() {
+        SQLiteDatabase db = getReadableDatabase();
+        ArrayList<CardioWorkout> workouts = new ArrayList<CardioWorkout>();
+
+        String query = "SELECT *" +
+                       "FROM CardioWorkouts;";
+
+        Cursor c = db.rawQuery(query, null);
+
+        while(c.moveToNext()) {
+            CardioWorkout cw = new CardioWorkout();
+            cw.setId(c.getInt(0));
+            cw.setDisplayName(c.getString(1));
+            cw.setDuration(c.getDouble(2));
+            cw.setDistance(c.getDouble(3));
+            cw.setDateCompleted(c.getInt(4));
+
+            workouts.add(cw);
+        }
+
+        return workouts;
+    }
+
+    /**
+     * Select query for custom workouts
+     * @return
+     */
+    private List<CustomWorkout> selectCustomWorkouts() {
+        SQLiteDatabase db = getReadableDatabase();
+        ArrayList<CustomWorkout> workouts = new ArrayList<CustomWorkout>();
+
+        String query = "SELECT * " +
+                       "FROM CustomWorkouts;";
+
+        Cursor c = db.rawQuery(query, null);
+
+        while(c.moveToNext()) {
+            CustomWorkout cw = new CustomWorkout();
+            cw.setId(c.getInt(0));
+            cw.setDisplayName(c.getString(1));
+            cw.setWorkoutData(c.getString(2));
+            cw.setDateCompleted(c.getInt(3));
+
+            workouts.add(cw);
+        }
+
+        return workouts;
+    }
+
+    /**
+     * Gets StrengthWorkout records from the database
+     * Test function
+     */
+    private List<StrengthWorkout> selectStrengthWorkouts() {
+        SQLiteDatabase db = getReadableDatabase();
+        ArrayList<StrengthWorkout> workouts = new ArrayList<StrengthWorkout>();
+
+        String query = "SELECT * " +
+                       "FROM StrengthWorkouts;";
+        Cursor c = db.rawQuery(query, null);
+
+        while(c.moveToNext()) {
+            StrengthWorkout sw = new StrengthWorkout();
+            sw.setId(c.getInt(0));
+            sw.setDisplayName(c.getString(1));
+            sw.setDateCompleted(c.getInt(2));
+            sw.setExercises(selectExercises(sw.getId()));
+
+            workouts.add(sw);
+        }
+
+        return workouts;
+    }
+
+    private List<Exercise> selectExercises(int workoutId) {
+        ArrayList<Exercise> exercises = new ArrayList<Exercise>();
+
+        String query = "SELECT Exercises.id, Exercises.displayName " +
+                       "FROM Exercises " +
+                       "LEFT OUTER JOIN ExercisesToWorkouts ON Exercises.id=ExercisesToWorkouts.exerciseId " +
+                       "LEFT OUTER JOIN StrengthWorkouts ON ExercisesToWorkouts.workoutId=StrengthWorkouts.id " +
+                       "WHERE StrengthWorkouts.id=" + workoutId + " " +
+                       "ORDER BY Exercises.id;";
+
+        Cursor c = getReadableDatabase().rawQuery(query, null);
+
+        while(c.moveToNext()) {
+            Exercise e = new Exercise();
+            e.setName(c.getString(1));
+            e.setSets(selectSets(c.getInt(0)));
+            e.setId(c.getInt(0));
+            exercises.add(e);
+        }
+
+        return exercises;
+    }
+
+    /**
+     * Helper method that returns the sets associated with an exercisef
+     * @param exerciseId
+     * @return
+     */
+    private List<ExerciseSubset> selectSets(int exerciseId) {
+        ArrayList<ExerciseSubset> sets = new ArrayList<ExerciseSubset>();
+
+        String query = "SELECT ExerciseSubsets.id, ExerciseSubsets.weight, ExerciseSubsets.numReps " +
+                       "FROM ExerciseSubsets " +
+                       "LEFT OUTER JOIN SubsetsToExercises ON ExerciseSubsets.id=SubsetsToExercises.subsetId " +
+                       "LEFT OUTER JOIN Exercises ON SubsetsToExercises.exerciseId=Exercises.id " +
+                       "WHERE Exercises.id=" + exerciseId + " " +
+                       "ORDER BY ExerciseSubsets.id;";
+
+        Cursor c = getReadableDatabase().rawQuery(query, null);
+
+        //populate set fields
+        while(c.moveToNext()) {
+            ExerciseSubset set = new ExerciseSubset(c.getDouble(1), c.getInt(2));
+            set.setId(c.getInt(1));
+            sets.add(set);
+        }
+
+        return sets;
+    }
+
+    /**
+     * Checks if a record exists.
+     * @param e
+     * @return
+     */
+    private boolean exerciseExists(Exercise e) {
+        String query = "SELECT EXISTS(SELECT 1 FROM Exercises WHERE displayName=" + e.getName() + " LIMIT 1);";
+        Cursor c = getReadableDatabase().rawQuery(query, null);
+
+        while(c.moveToNext()) {
+            return c.getInt(0) != 0;
+        }
+
+        return false;
+    }
+
+    /**
+     * Checks if an exercise exists
+     * @param set
+     * @return
+     */
+    private boolean setExists(ExerciseSubset set) {
+        String query = "SELECT EXISTS(SELECT 1 FROM ExerciseSubsets" +
+                       "WHERE weight=" + set.getWeight() + " AND numReps=" + set.getNumReps() +
+                       " LIMIT 1);";
+
+        Cursor c = getReadableDatabase().rawQuery(query, null);
+
+        while(c.moveToNext()) {
+            return c.getInt(0) != 0;
+        }
+
+        return false;
     }
 
 

@@ -6,11 +6,6 @@ import java.util.List;
  * Created by Nathan on 1/21/2015.
  */
 public class StrengthWorkout extends BaseWorkout {
-    /**
-     * Id for this workout object (for database usage)
-     */
-    protected int id;
-
     protected List<Exercise> exercises;
 
     public StrengthWorkout() {
