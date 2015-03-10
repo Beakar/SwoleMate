@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
@@ -116,8 +117,47 @@ public class HistoryTrackingActivity extends Activity {
     }
 
     public void onNewWorkoutClick(View v) {
-        Intent i = new Intent(this, CreateWorkoutActivity.class);
-        startActivity(i);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater li = LayoutInflater.from(this);
+
+        View root = li.inflate(R.layout.dialog_choose_workout_type, null);
+
+        //get buttons from custom dialog
+        Button strengthWorkout = (Button)root.findViewById(R.id.btn_choose_strength);
+        Button cardioWorkout = (Button)root.findViewById(R.id.btn_choose_cardio);
+        Button customWorkout = (Button)root.findViewById(R.id.btn_choose_custom);
+
+        strengthWorkout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToWorkoutActivity(StrengthWorkoutActivity.class);
+            }
+        });
+
+        cardioWorkout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToWorkoutActivity(CardioWorkoutActivity.class);
+            }
+        });
+
+        customWorkout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToWorkoutActivity(CustomWorkoutActivity.class);
+            }
+        });
+
+        builder.setView(root);
+
+        builder.setTitle("Choose workout type");
+
+        builder.create().show();
+    }
+
+    private void goToWorkoutActivity(Class<?> activity) {
+        Intent intent = new Intent(this, activity);
+        startActivity(intent);
     }
 
 

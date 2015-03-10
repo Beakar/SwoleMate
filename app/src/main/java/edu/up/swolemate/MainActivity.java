@@ -105,6 +105,7 @@ public class MainActivity extends Activity{
         Intent intent = new Intent(this, MealEntryActivity.class);
         startActivity(intent);
     }
+
     /**
      * Takes the user to a workout activity
      */

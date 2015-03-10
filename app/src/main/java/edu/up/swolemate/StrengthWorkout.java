@@ -16,19 +16,19 @@ public class StrengthWorkout extends BaseWorkout {
     public StrengthWorkout() {
         super();
         exercises = new ArrayList<Exercise>();
-        src = R.drawable.ic_launcher;
+        src = R.drawable.ic_strength_workout;
     }
 
     public StrengthWorkout(String displayName) {
         this.displayName = displayName;
         exercises = new ArrayList<Exercise>();
-        src = R.drawable.ic_launcher;
+        src = R.drawable.ic_strength_workout;
     }
 
     public StrengthWorkout(String displayName, List<Exercise> exercises) {
         this(displayName);
         this.exercises = exercises;
-        src = R.drawable.ic_launcher;
+        src = R.drawable.ic_strength_workout;
     }
 
     /**

@@ -20,7 +20,7 @@ public class CardioWorkout extends BaseWorkout {
      */
     public CardioWorkout() {
         super();
-        this.src = R.drawable.ic_launcher;
+        this.src = R.drawable.ic_cardio_workout;
     }
 
     /**
@@ -29,7 +29,7 @@ public class CardioWorkout extends BaseWorkout {
      */
     public CardioWorkout(String name) {
         super(name);
-        this.src = R.drawable.ic_launcher;
+        this.src = R.drawable.ic_cardio_workout;
     }
 
     /**

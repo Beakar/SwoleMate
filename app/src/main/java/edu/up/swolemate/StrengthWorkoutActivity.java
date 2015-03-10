@@ -54,50 +54,8 @@ public class StrengthWorkoutActivity extends Activity {
      * Inserts the current workout into the database
      */
     private void insertCurrentWorkout() {
-
-        SQLiteDatabase db = new FitnessDatabaseHelper(this).getWritableDatabase();
-
-        //ContentValues links field names to values for each field
-        ContentValues vals = new ContentValues();
-
-        vals.put("displayName", currentWorkout.getDisplayName());
-        vals.put("dateCompleted", System.currentTimeMillis() / 1000);
-        long workoutId = db.insert("StrengthWorkouts", null, vals);
-
-        //there was some error
-        if(workoutId == -1) {
-            Log.e("Invalid database query", "Something went wrong with the database query");
-            return;
-        }
-
-        //add each exercise for the workout
-        for(Exercise e : currentWorkout.getExercises()) {
-            vals.clear();
-            vals.put("displayName", e.getName());
-            long exerciseId = db.insert("Exercises", null, vals);
-
-
-            for(ExerciseSubset set : e.getSets()) {
-                //add each set for the exercise
-                vals.clear();
-                vals.put("weight", set.getWeight());
-                vals.put("numReps", set.getNumReps());
-                long subsetId = db.insert("ExerciseSubsets", null, vals);
-
-                //link subset to exercise it came from
-                vals.clear();
-                vals.put("subsetId", subsetId);
-                vals.put("exerciseId", exerciseId);
-                db.insert("SubsetsToExercises", null, vals);
-            }
-
-            //link exercise to workout
-            vals.clear();
-            vals.put("exerciseId", exerciseId);
-            vals.put("workoutId", workoutId);
-            db.insert("ExercisesToWorkouts", null, vals);
-        }
-
+        FitnessDatabaseHelper db = new FitnessDatabaseHelper(this);
+        db.insertWorkout(currentWorkout);
     }
 
 

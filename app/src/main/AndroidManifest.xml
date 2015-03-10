@@ -25,10 +25,6 @@
             android:label="@string/title_activity_profile" >
         </activity>
         <activity
-            android:name=".CreateWorkoutActivity"
-            android:label="@string/title_activity_create_workout" >
-        </activity>
-        <activity
             android:name=".HistoryTrackingActivity"
             android:label="@string/title_activity_food_tracking" >
         </activity>
@@ -43,6 +39,9 @@
         <activity
             android:name=".CustomWorkoutActivity"
             android:label="@string/title_activity_custom_workout" >
+        </activity>
+        <activity android:name=".MealEntryActivity"
+            android:label="Meal entry">
         </activity>
     </application>
 

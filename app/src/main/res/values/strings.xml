@@ -24,14 +24,14 @@
     <string name="view_eating_habits">View eating habits</string>
     <string name="view_workout_history">View past workouts</string>
     <string name="welcome">Hello and welcome!</string>
-    <string name="title_activity_main">MainActivity</string>
     <string name="unit_switch">App Units</string>
     <string name="hello_world">Hello world!</string>
-    <string name="title_activity_profile">ProfileActivity</string>
-    <string name="title_activity_create_workout">CreateWorkoutActivity</string>
-    <string name="title_activity_food_tracking">FoodTrackingActivity</string>
-    <string name="title_activity_strength_workout">StrengthWorkoutActivity</string>
-    <string name="title_activity_cardio_workout">CardioWorkoutActivity</string>
+
+    <string name="title_activity_main">Main menu</string>
+    <string name="title_activity_profile">Profile</string>
+    <string name="title_activity_food_tracking">Food Tracking</string>
+    <string name="title_activity_strength_workout">Strength Workout</string>
+    <string name="title_activity_cardio_workout">Cardio Workout</string>
     <string name="title_activity_custom_workout">CustomWorkoutActivity</string>
 
     <string name="calories">Calories</string>

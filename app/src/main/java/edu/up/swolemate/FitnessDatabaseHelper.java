@@ -1,8 +1,10 @@
 package edu.up.swolemate;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -221,6 +223,67 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
         }
 
         return false;
+    }
+
+    /**
+     * Inserts a workout
+     * @param workout
+     * @return
+     */
+    public int insertWorkout(BaseWorkout workout) {
+        int id = -1;
+        if(workout instanceof StrengthWorkout) {
+            id = insertStrength((StrengthWorkout)workout);
+        }
+
+        return id;
+    }
+
+    private int insertStrength(StrengthWorkout workout) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        //ContentValues links field names to values for each field
+        ContentValues vals = new ContentValues();
+
+        vals.put("displayName", workout.getDisplayName());
+        vals.put("dateCompleted", System.currentTimeMillis() / 1000);
+        long workoutId = db.insert("StrengthWorkouts", null, vals);
+
+        //there was some error
+        if(workoutId == -1) {
+            Log.e("Invalid database query", "Something went wrong with the database query");
+            return -1;
+        }
+
+        //add each exercise for the workout
+        for(Exercise e : workout.getExercises()) {
+            vals.clear();
+            vals.put("displayName", e.getName());
+            long exerciseId = db.insert("Exercises", null, vals);
+
+
+            for(ExerciseSubset set : e.getSets()) {
+                //add each set for the exercise
+                vals.clear();
+                vals.put("weight", set.getWeight());
+                vals.put("numReps", set.getNumReps());
+                long subsetId = db.insert("ExerciseSubsets", null, vals);
+
+                //link subset to exercise it came from
+                vals.clear();
+                vals.put("subsetId", subsetId);
+                vals.put("exerciseId", exerciseId);
+                db.insert("SubsetsToExercises", null, vals);
+            }
+
+            //link exercise to workout
+            vals.clear();
+            vals.put("exerciseId", exerciseId);
+            vals.put("workoutId", workoutId);
+            db.insert("ExercisesToWorkouts", null, vals);
+        }
+
+        return (int)workoutId;
     }
 
 
