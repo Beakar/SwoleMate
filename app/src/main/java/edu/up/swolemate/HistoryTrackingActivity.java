@@ -59,6 +59,11 @@ public class HistoryTrackingActivity extends Activity {
         StrengthWorkout s = new StrengthWorkout().initTestValues();
         FitnessDatabaseHelper db = new FitnessDatabaseHelper(this);
 
+        workouts.add(s);
+        workouts.add(s);
+        workouts.add(s);
+        workouts.add(s);
+
         db.testExerciseSelect();
 
         workouts.addAll(db.getAllWorkouts());
@@ -249,6 +254,16 @@ public class HistoryTrackingActivity extends Activity {
     private void dbDeleteWorkout(int id) {
         FitnessDatabaseHelper db = new FitnessDatabaseHelper(this);
         db.deleteStrengthWorkout(id);
+
+        for(BaseWorkout workout : workouts) {
+            if(workout.getId() == id) {
+                workoutAdapter.remove(workout);
+                workoutListView.deferNotifyDataSetChanged();
+                break;
+            }
+        }
+
+
 
     }
 }
