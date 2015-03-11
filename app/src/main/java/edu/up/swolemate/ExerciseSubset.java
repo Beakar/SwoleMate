@@ -5,7 +5,7 @@ package edu.up.swolemate;
  */
 public class ExerciseSubset {
     protected int id;
-
+    protected int setNum;  //what number this set is inside the exercise (i.e. first set, second set...)
     /**
      * Weight for subset
      */
@@ -16,6 +16,10 @@ public class ExerciseSubset {
     public ExerciseSubset(double weight, int numReps) {
         this.weight = weight;
         this.numReps = numReps;
+    }
+
+    public void setSetNum(int num){
+        setNum = num;
     }
 
     public double getWeight() {
