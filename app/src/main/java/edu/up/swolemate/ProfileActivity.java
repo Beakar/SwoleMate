@@ -15,11 +15,13 @@ public class ProfileActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_activity);
+        //get the user info TextViews
         TextView nameView = (TextView)findViewById(R.id.userNameText);
         TextView heightView = (TextView)findViewById(R.id.userHeight);
         TextView weightView = (TextView)findViewById(R.id.userWeight);
+        //get the user's stored information
         SharedPreferences settings = getSharedPreferences("user_settings", 0);
-
+        //display the user's information
         nameView.setText(settings.getString("name", ""));
         heightView.setText(settings.getString("height", ""));
         weightView.setText(settings.getString("weight", ""));
