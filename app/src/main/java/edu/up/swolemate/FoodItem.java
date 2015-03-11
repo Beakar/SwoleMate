@@ -41,7 +41,7 @@ public class FoodItem {
     }
 
     /**
-     * Initialisesa food item with the specified name
+     * Initialises a food item with the specified name
      * @param name
      */
     public FoodItem(String name) {
