@@ -5,6 +5,7 @@ import java.util.Date;
 
 /**
  * Created by Nathan on 1/21/2015.
+ * TODO: Add isTemplate field to class to test whether the workout object being created is a template or not
  */
 public class FoodMeal {
     /**
@@ -79,5 +80,37 @@ public class FoodMeal {
      */
     public void removeFood(FoodItem foodItem) {
         this.foodItems.remove(foodItem);
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Date getDateCompleted() {
+        return dateCompleted;
+    }
+
+    public void setDateCompleted(Date dateCompleted) {
+        this.dateCompleted = dateCompleted;
+    }
+
+    public ArrayList<FoodItem> getFoodItems() {
+        return foodItems;
+    }
+
+    public void setFoodItems(ArrayList<FoodItem> foodItems) {
+        this.foodItems = foodItems;
     }
 }

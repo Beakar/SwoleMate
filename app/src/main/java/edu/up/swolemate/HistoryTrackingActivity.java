@@ -67,7 +67,7 @@ public class HistoryTrackingActivity extends Activity {
 
     /**
      * Sets up spinners in the application
-     * TODO: Sets spinners up for the activity
+     *
      */
     private void setupSpinners() {
         dateSelector = (Spinner)findViewById(R.id.spin_dateSelector);
@@ -251,7 +251,6 @@ public class HistoryTrackingActivity extends Activity {
         delete.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                //TODO: Add delete things
                 if(type.equals("StrengthWorkout")) {
                     dbDeleteStrength(id);
                 } else if(type.equals("CardioWorkout")) {
@@ -300,7 +299,7 @@ public class HistoryTrackingActivity extends Activity {
     }
 
     /**
-     * Helper method taht deletes a custom workout from the database
+     * Helper method that deletes a custom workout from the database
      * @param id
      */
     private void dbDeleteStrength(int id) {

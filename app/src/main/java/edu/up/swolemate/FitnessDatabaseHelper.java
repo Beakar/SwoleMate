@@ -243,6 +243,46 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
     }
 
     /**
+     * Inserts a food meal object into the database
+     * @param meal
+     * @return
+     */
+    public int insertMeal(FoodMeal meal) {
+        SQLiteDatabase db = getWritableDatabase();
+        int id = -1;
+        for(FoodItem item : meal.getFoodItems()) {
+            insertFoodItem(item);
+        }
+
+        ContentValues vals = new ContentValues();
+        vals.put("displayName", meal.getName());
+        vals.put("dateCompleted", System.currentTimeMillis() / 1000);
+
+        return (int)(db.insert("FoodMeals", null, vals));
+    }
+
+    /**
+     * Inserts a food item object into the database
+     * @param item
+     * @return
+     */
+    private int insertFoodItem(FoodItem item) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        ContentValues vals = new ContentValues();
+
+        vals.put("foodType", item.getFoodType());
+        vals.put("servingSize", item.getServingSize());
+        vals.put("calories", item.getCalories());
+        vals.put("fat", item.getFat());
+        vals.put("carbs", item.getCarbs());
+        vals.put("protein", item.getProtein());
+
+
+        return (int)(db.insert("FoodItems", null, vals));
+    }
+
+    /**
      * Inserts a workout to its respective database
      *
      * @param workout

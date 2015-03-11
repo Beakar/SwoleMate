@@ -4,6 +4,7 @@ import java.util.List;
 
 /**
  * Created by Nathan on 1/21/2015.
+ * TODO: Add isTemplate field to class to test whether the workout object being created is a template or not
  */
 public class StrengthWorkout extends BaseWorkout {
     protected List<Exercise> exercises;
