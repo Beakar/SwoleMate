@@ -18,4 +18,24 @@
         android:layout_height="wrap_content" >
     </ExpandableListView>
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add_set_button_text"
+            android:id="@+id/new_set_button" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/save_exercise_button_text"
+            android:id="@+id/button" />
+    </LinearLayout>
+
 </LinearLayout>

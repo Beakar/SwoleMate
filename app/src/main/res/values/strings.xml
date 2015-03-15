@@ -39,5 +39,9 @@
     <string name="fat">Fat</string>
     <string name="carbs">Carbs</string>
     <string name="protein">Protein</string>
+    <string name="number_of_reps"># of Reps</string>
+    <string name="save_set">Save set</string>
+    <string name="add_set_button_text">Add new set</string>
+    <string name="save_exercise_button_text">Save exercise</string>
 
 </resources>

@@ -40,7 +40,7 @@ import java.util.List;
 
 public class StrengthWorkoutActivity extends Activity  implements View.OnClickListener {
 
-    //    #######################################################################################
+//    #######################################################################################
 //    DELETE THESE EVENTUALLY, BUT THEY'RE HELPFUL FOR NOW
 //    http://www.vogella.com/tutorials/AndroidListView/article.html#androidlists_inputtype
 //    http://www.codelearn.org/android-tutorial/android-listview
