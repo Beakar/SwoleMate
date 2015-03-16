@@ -32,7 +32,7 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
     /**
      * when the database is created, we want to create all the tables we'll need
      *
-     * @param db
+     * @param db database object
      */
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -41,9 +41,9 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * Creates workout-related tables in the datbase
+     * Creates workout-related tables in the database
      *
-     * @param db
+     * @param db database object
      */
     private void createWorkoutTables(SQLiteDatabase db) {
         //create StrengthWorkouts table
@@ -149,7 +149,7 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
      * Helper method that creates food-related database tables
      * cleans up code in the onCreate method
      *
-     * @param db
+     * @param db datbase
      */
     private void createFoodTables(SQLiteDatabase db) {
         //create FoodItems table
@@ -244,8 +244,8 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
 
     /**
      * Inserts a food meal object into the database
-     * @param meal
-     * @return
+     * @param meal meal to insert
+     * @return id of inserted meal
      */
     public int insertMeal(FoodMeal meal) {
         SQLiteDatabase db = getWritableDatabase();
@@ -263,8 +263,9 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
 
     /**
      * Inserts a food item object into the database
-     * @param item
-     * @return
+     * TODO: return id of food if it already exists in database
+     * @param item item to insert
+     * @return id of inserted food
      */
     private int insertFoodItem(FoodItem item) {
         SQLiteDatabase db = getWritableDatabase();
@@ -283,10 +284,112 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
     }
 
     /**
+     * Retrives a list of food names
+     * @return list of food names for autocorrect control
+     */
+    public List<String> selectFoodNames() {
+        SQLiteDatabase db = getReadableDatabase();
+        ArrayList<String> names = new ArrayList<String>();
+
+        String query = "SELECT foodType FROM FoodItems;";
+
+        Cursor c = db.rawQuery(query, null);
+
+        while(c.moveToNext()) {
+            names.add(c.getString(0));
+        }
+
+        return names;
+    }
+
+    /**
+     * Retrieves all meal items from the database.
+     * @return meal items
+     */
+    public List<FoodMeal> selectAllMeals() {
+        SQLiteDatabase db = getReadableDatabase();
+        ArrayList<FoodMeal> meals = new ArrayList<FoodMeal>();
+
+        String query = "SELECT * From FoodMeal";
+
+        Cursor c = db.rawQuery(query, null);
+        while(c.moveToNext()) {
+            FoodMeal meal = new FoodMeal();
+            meal.setName(c.getString(1));
+            meal.setDateCompleted(c.getInt(2));
+            meal.setFoodItems(selectFoodItems(c.getInt(0)));
+
+            meals.add(meal);
+        }
+
+        return meals;
+    }
+
+    /**
+     * Retrieves a list of FoodItems associated with a meal
+     * @param mealId id of meal to select food items for
+     * @return list of food items
+     */
+    public List<FoodItem> selectFoodItems(int mealId) {
+        SQLiteDatabase db = getReadableDatabase();
+        ArrayList<FoodItem> items = new ArrayList<FoodItem>();
+
+        String query = "SELECT FoodItems.foodType, FoodItems.servingSize, foodItems.calories, foodItems.fat, foodItems.carbs, foodItems.protein " +
+                       "FROM FoodItems " +
+                       "LEFT OUTER JOIN ItemsToMeals ON FoodItems.id=ItemsToMeals.itemId " +
+                       "LEFT OUTER JOIN FoodMeals ON ItemsToMeals.mealId=FoodMeals.id " +
+                       "WHERE FoodMeals.id=" + mealId;
+
+        Cursor c = db.rawQuery(query, null);
+
+        while(c.moveToNext()) {
+            FoodItem item = new FoodItem();
+
+            item.setFoodType(c.getString(0));
+            item.setServingSize(c.getDouble(1));
+            item.setCalories(c.getInt(2));
+            item.setFat(c.getDouble(3));
+            item.setCarbs(c.getDouble(4));
+            item.setProtein(c.getDouble(5));
+
+            items.add(item);
+        }
+
+        return items;
+    }
+
+    /**
+     * Retrieves a food item from the database with the specified name
+     * @param name name of food to retrieve
+     * @return FoodItem object with information from the database. Returns null if not found.
+     *
+     */
+    public FoodItem selectFoodByName(String name) {
+        SQLiteDatabase db = getReadableDatabase();
+        FoodItem item = new FoodItem();
+
+        String query = "SELECT * FROM FoodItem WHERE foodType=" + name;
+
+        Cursor c = db.rawQuery(query, null);
+
+        if(c.moveToNext()) {
+            item.setFoodType(c.getString(1));
+            item.setServingSize(c.getDouble(2));
+            item.setCalories(c.getInt(3));
+            item.setFat(c.getDouble(4));
+            item.setCarbs(c.getDouble(5));
+            item.setProtein(c.getDouble(6));
+            return item;
+        }
+
+        return null;
+    }
+
+    /**
      * Inserts a workout to its respective database
      *
-     * @param workout
-     * @return
+     * @param workout workout to insert
+     * @return id of inserted workout
      */
     public int insertWorkout(BaseWorkout workout) {
         int id = -1;
@@ -305,8 +408,8 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
 
     /**
      * Inserts a strength workout into its respective table
-     * @param workout
-     * @return
+     * @param workout workout to insert
+     * @return id of inserted workout
      */
     private int insertStrength(StrengthWorkout workout) {
         SQLiteDatabase db = getWritableDatabase();
@@ -357,7 +460,8 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
 
     /**
      * Inserts a cardio workout into the database
-     * @param workout
+     * @param workout workout to insert
+     * @return id of inserted workout
      */
     private int insertCardio(CardioWorkout workout) {
         SQLiteDatabase db = getWritableDatabase();
@@ -373,8 +477,8 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
 
     /**
      * Inserts a custom workout into the database
-     * @param workout
-     * @return
+     * @param workout workout to insert
+     * @return id of inserted workout
      */
     private int insertCustom(CustomWorkout workout) {
         SQLiteDatabase db = getWritableDatabase();
@@ -389,7 +493,7 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
 
     /**
      * Gets all workouts
-     * @return
+     * @return list of all workouts
      */
     public List<BaseWorkout> getAllWorkouts() {
         ArrayList<BaseWorkout> workouts = new ArrayList<BaseWorkout>();
@@ -402,7 +506,7 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
 
     /**
      * Deletes a StrengthWorkout
-     * @param id
+     * @param id id of workout to delete
      */
     public void deleteStrengthWorkout(int id) {
         SQLiteDatabase db = getWritableDatabase();
@@ -413,7 +517,7 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
 
     /**
      * Deletes a Cardio Workout
-     * @param id
+     * @param id id of workout to delete
      */
     public void deleteCardioWorkout(int id) {
         SQLiteDatabase db = getWritableDatabase();
@@ -423,7 +527,7 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
 
     /**
      * Deletes a Custom workout
-     * @param id
+     * @param id id of workout to delete
      */
     public void deleteCustomWorkout(int id) {
         SQLiteDatabase db = getWritableDatabase();
@@ -461,7 +565,7 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
     /**
      * Select query for custom workouts
      *
-     * @return
+     * @return list of all custom workouts
      */
     private List<CustomWorkout> selectCustomWorkouts() {
         SQLiteDatabase db = getReadableDatabase();
@@ -511,6 +615,11 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
         return workouts;
     }
 
+    /**
+     * Retrieves exercises associated with a database
+     * @param workoutId id of workout to get exercises for
+     * @return list of exercises
+     */
     private List<Exercise> selectExercises(int workoutId) {
         ArrayList<Exercise> exercises = new ArrayList<Exercise>();
 
@@ -535,10 +644,10 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * Helper method that returns the sets associated with an exercisef
+     * Helper method that returns the sets associated with an exercise
      *
-     * @param exerciseId
-     * @return
+     * @param exerciseId exercise to retrieve sets for
+     * @return list of sets
      */
     private List<ExerciseSubset> selectSets(int exerciseId) {
         ArrayList<ExerciseSubset> sets = new ArrayList<ExerciseSubset>();
@@ -565,8 +674,8 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
     /**
      * Checks if a record exists.
      *
-     * @param e
-     * @return
+     * @param e exercise
+     * @return whether the exercise exists
      */
     private boolean exerciseExists(Exercise e) {
         String query = "SELECT EXISTS(SELECT 1 FROM Exercises WHERE displayName=" + e.getName() + " LIMIT 1);";
@@ -582,8 +691,8 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
     /**
      * Checks if an exercise exists
      *
-     * @param set
-     * @return
+     * @param set set
+     * @return whether the set exists
      */
     private boolean setExists(ExerciseSubset set) {
         String query = "SELECT EXISTS(SELECT 1 FROM ExerciseSubsets" +
@@ -602,8 +711,8 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
     /**
      * Checks if a string is null or empty.
      *
-     * @param s
-     * @return
+     * @param s String to check
+     * @return whether the string is null or empty
      */
     private boolean isNullOrEmpty(String s) {
         if (s.equals("") || s == null) {

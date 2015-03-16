@@ -2,6 +2,7 @@ package edu.up.swolemate;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Nathan on 1/21/2015.
@@ -21,12 +22,12 @@ public class FoodMeal {
     /**
      * Date meal was eaten on
      */
-    protected Date dateCompleted;
+    protected int dateCompleted;
 
     /**
      * Collection of food items in the meal object
      */
-    protected ArrayList<FoodItem> foodItems;
+    protected List<FoodItem> foodItems;
 
     /**
      * Initializes an empty food meal
@@ -98,19 +99,19 @@ public class FoodMeal {
         this.name = name;
     }
 
-    public Date getDateCompleted() {
+    public int getDateCompleted() {
         return dateCompleted;
     }
 
-    public void setDateCompleted(Date dateCompleted) {
+    public void setDateCompleted(int dateCompleted) {
         this.dateCompleted = dateCompleted;
     }
 
-    public ArrayList<FoodItem> getFoodItems() {
+    public List<FoodItem> getFoodItems() {
         return foodItems;
     }
 
-    public void setFoodItems(ArrayList<FoodItem> foodItems) {
+    public void setFoodItems(List<FoodItem> foodItems) {
         this.foodItems = foodItems;
     }
 }
