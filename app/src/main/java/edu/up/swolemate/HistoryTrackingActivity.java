@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -40,6 +41,9 @@ public class HistoryTrackingActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history_tracking);
 
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setDisplayShowHomeEnabled(true);
+
         //initialize
         workouts = new ArrayList<BaseWorkout>();
         setupSpinners();
@@ -59,9 +63,30 @@ public class HistoryTrackingActivity extends Activity {
      * Initializes workouts for testing
      */
     private void initTestWorkouts() {
-        StrengthWorkout s = new StrengthWorkout().initTestValues();
+
         FitnessDatabaseHelper db = new FitnessDatabaseHelper(this);
-        workouts.addAll(db.getAllWorkouts());
+
+        //insertTestWorkouts(db);
+
+        workouts.addAll(db.selectAllWorkouts());
+    }
+
+    private void insertTestWorkouts(FitnessDatabaseHelper db) {
+        StrengthWorkout s = new StrengthWorkout().initTestValues();
+        CardioWorkout ca = new CardioWorkout().initTestValues();
+        CustomWorkout cu = new CustomWorkout().initTestValues();
+
+        db.insertWorkout(s);
+        db.insertWorkout(ca);
+        db.insertWorkout(cu);
+
+        db.insertWorkout(s);
+        db.insertWorkout(ca);
+        db.insertWorkout(cu);
+
+        db.insertWorkout(s);
+        db.insertWorkout(ca);
+        db.insertWorkout(cu);
     }
 
 
@@ -109,9 +134,12 @@ public class HistoryTrackingActivity extends Activity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            case R.id.action_settings:
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -251,11 +279,11 @@ public class HistoryTrackingActivity extends Activity {
         delete.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                if(type.equals("StrengthWorkout")) {
+                if(type.contains("StrengthWorkout")) {
                     dbDeleteStrength(id);
-                } else if(type.equals("CardioWorkout")) {
+                } else if(type.contains("CardioWorkout")) {
                     dbDeleteCardio(id);
-                } else if(type.equals("CustomWorkout")) {
+                } else if(type.contains("CustomWorkout")) {
                     dbDeleteCustom(id);
                 }
 
@@ -277,6 +305,7 @@ public class HistoryTrackingActivity extends Activity {
         for(BaseWorkout workout : workouts) {
             if(workout.getId() == id && workout instanceof CardioWorkout) {
                 workoutAdapter.remove(workout);
+                workoutAdapter.notifyDataSetChanged();
                 break;
             }
         }
@@ -293,6 +322,7 @@ public class HistoryTrackingActivity extends Activity {
         for(BaseWorkout workout : workouts) {
             if(workout.getId() == id && workout instanceof CustomWorkout) {
                 workoutAdapter.remove(workout);
+                workoutAdapter.notifyDataSetChanged();
                 break;
             }
         }
@@ -309,6 +339,7 @@ public class HistoryTrackingActivity extends Activity {
         for(BaseWorkout workout : workouts) {
             if(workout.getId() == id && workout instanceof StrengthWorkout) {
                 workoutAdapter.remove(workout);
+                workoutAdapter.notifyDataSetChanged();
                 break;
             }
         }

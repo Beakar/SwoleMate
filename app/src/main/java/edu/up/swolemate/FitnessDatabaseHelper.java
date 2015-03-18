@@ -194,6 +194,7 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
                 });
     }
 
+    
     /**
      * Creates a table in the SQLite database with the specified properties
      *
@@ -230,6 +231,7 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(query);
     }
 
+    
     /**
      * Tests to make sure entries were deleted from a database
      */
@@ -242,6 +244,7 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+    
     /**
      * Inserts a food meal object into the database
      * @param meal meal to insert
@@ -261,6 +264,7 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
         return (int)(db.insert("FoodMeals", null, vals));
     }
 
+    
     /**
      * Inserts a food item object into the database
      * TODO: return id of food if it already exists in database
@@ -283,6 +287,7 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
         return (int)(db.insert("FoodItems", null, vals));
     }
 
+    
     /**
      * Retrives a list of food names
      * @return list of food names for autocorrect control
@@ -302,6 +307,7 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
         return names;
     }
 
+    
     /**
      * Retrieves all meal items from the database.
      * @return meal items
@@ -325,6 +331,7 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
         return meals;
     }
 
+    
     /**
      * Retrieves a list of FoodItems associated with a meal
      * @param mealId id of meal to select food items for
@@ -358,6 +365,7 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
         return items;
     }
 
+    
     /**
      * Retrieves a food item from the database with the specified name
      * @param name name of food to retrieve
@@ -385,6 +393,7 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
         return null;
     }
 
+    
     /**
      * Inserts a workout to its respective database
      *
@@ -406,6 +415,7 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
         return id;
     }
 
+    
     /**
      * Inserts a strength workout into its respective table
      * @param workout workout to insert
@@ -458,6 +468,7 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
         return (int) workoutId;
     }
 
+    
     /**
      * Inserts a cardio workout into the database
      * @param workout workout to insert
@@ -475,6 +486,7 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
         return (int)(db.insert("CardioWorkouts", null, vals));
     }
 
+    
     /**
      * Inserts a custom workout into the database
      * @param workout workout to insert
@@ -491,11 +503,12 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
         return (int)(db.insert("CustomWorkouts", null, vals));
     }
 
+    
     /**
      * Gets all workouts
      * @return list of all workouts
      */
-    public List<BaseWorkout> getAllWorkouts() {
+    public List<BaseWorkout> selectAllWorkouts() {
         ArrayList<BaseWorkout> workouts = new ArrayList<BaseWorkout>();
         workouts.addAll(selectStrengthWorkouts());
         workouts.addAll(selectCardioWorkouts());
@@ -504,6 +517,7 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
         return workouts;
     }
 
+    
     /**
      * Deletes a StrengthWorkout
      * @param id id of workout to delete
@@ -515,6 +529,7 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
         db.delete("StrengthWorkouts", "id=" + id, null);
     }
 
+    
     /**
      * Deletes a Cardio Workout
      * @param id id of workout to delete
@@ -525,6 +540,7 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
         db.delete("CardioWorkouts", "id=" + id, null);
     }
 
+    
     /**
      * Deletes a Custom workout
      * @param id id of workout to delete
@@ -535,6 +551,7 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
         db.delete("CustomWorkouts", "id=" + id, null);
     }
 
+    
     /**
      * Selects all CardioWorkout objects from the database
      * @return
@@ -562,6 +579,7 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
         return workouts;
     }
 
+    
     /**
      * Select query for custom workouts
      *
@@ -589,6 +607,7 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
         return workouts;
     }
 
+    
     /**
      * Gets StrengthWorkout records from the database
      * Test function
@@ -615,6 +634,7 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
         return workouts;
     }
 
+    
     /**
      * Retrieves exercises associated with a database
      * @param workoutId id of workout to get exercises for
@@ -643,6 +663,7 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
         return exercises;
     }
 
+    
     /**
      * Helper method that returns the sets associated with an exercise
      *
@@ -671,6 +692,7 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
         return sets;
     }
 
+    
     /**
      * Checks if a record exists.
      *
@@ -688,6 +710,7 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
         return false;
     }
 
+    
     /**
      * Checks if an exercise exists
      *
@@ -708,6 +731,7 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
         return false;
     }
 
+    
     /**
      * Checks if a string is null or empty.
      *

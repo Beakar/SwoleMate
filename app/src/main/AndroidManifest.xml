@@ -9,7 +9,7 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".FirstTimeActivity"
-            android:label="@string/app_name"
+            android:label="@string/title_activity_first_time"
             android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,7 +26,7 @@
         </activity>
         <activity
             android:name=".HistoryTrackingActivity"
-            android:label="@string/title_activity_food_tracking" >
+            android:label="@string/title_activity_history_tracking" >
         </activity>
         <activity
             android:name=".StrengthWorkoutActivity"
@@ -41,7 +41,7 @@
             android:label="@string/title_activity_custom_workout" >
         </activity>
         <activity android:name=".MealEntryActivity"
-            android:label="Meal entry">
+            android:label="@string/title_activity_meal_entry">
         </activity>
     </application>
 
