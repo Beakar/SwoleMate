@@ -248,15 +248,7 @@ public class FoodPresets {
 
 
     /**
-     * Creates the food presets and stores them into the foodPresets ArrayList.
-     */
-    protected void createFoodPresets(){
-
-    }
-
-
-    /**
-     * Returns the ArrayList of foodType names of foodPresets.
+     * Returns the ArrayList of FoodType names of foodPresets.
      * @return -- The ArrayList of foodTypes (String)
      */
     protected ArrayList<String> getFoodTypes(){

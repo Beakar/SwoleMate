@@ -1,6 +1,7 @@
 package edu.up.swolemate;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,12 +14,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import java.util.Hashtable;
-import java.util.List;
+import java.util.ArrayList;
 
 public class FoodTrackingActivity extends Activity implements OnClickListener, AdapterView.OnItemClickListener {
     AutoCompleteTextView foodAutoEditText;
-    Spinner foodSpinner;
     EditText srvSizeEditText;
     EditText calEditText;
     EditText fatEditText;
@@ -26,9 +25,17 @@ public class FoodTrackingActivity extends Activity implements OnClickListener, A
     EditText proteinEditText;
     EditText servingsEditText;
     ArrayAdapter arrayAdapter;
-    List<String> names;
+    ArrayList<String> names;
     Button saveButton;
     Button delPresetButton;
+
+
+    private boolean alertUnsaved(String foodName){
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+        alertBuilder.setTitle("Unsaved information");
+        alertBuilder.setMessage("You have unsaved information. Are you sure you want to leave this page?");
+        return false;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +52,7 @@ public class FoodTrackingActivity extends Activity implements OnClickListener, A
         arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, names);
         foodAutoEditText.setAdapter(arrayAdapter);
         foodAutoEditText.setOnItemClickListener(this);
+
         //initialize all of the EditTexts
         srvSizeEditText = (EditText)findViewById(R.id.servingSizeEditText);
         calEditText = (EditText)findViewById(R.id.caloriesEditText);
@@ -52,6 +60,7 @@ public class FoodTrackingActivity extends Activity implements OnClickListener, A
         carbsEditText = (EditText)findViewById(R.id.carbsEditText);
         proteinEditText = (EditText)findViewById(R.id.proteinEditText);
         servingsEditText = (EditText)findViewById(R.id.servingsEditText);
+
         //initialize the buttons and set the onClickListener
         saveButton = (Button)findViewById(R.id.saveButton);
         saveButton.setOnClickListener(this);
@@ -61,12 +70,11 @@ public class FoodTrackingActivity extends Activity implements OnClickListener, A
 
     @Override
     public void onClick(View v){
-        if(v.getId() == R.id.foodAutoEditText && !foodAutoEditText.getText().toString().equals("")){
-            FoodPresets presets = new FoodPresets();
-            presets.initPresetsTable();
-            Hashtable<String, FoodItem> table = presets.getPresetsTable();
-            FoodItem food = table.get(foodAutoEditText.getText().toString());
-            srvSizeEditText.setText("" + food.getServingSize());
+        if(v.getId() == R.id.saveButton){
+
+        }
+        else if(v.getId() == R.id.deletePresetButton){
+
         }
     }
 
@@ -82,13 +90,14 @@ public class FoodTrackingActivity extends Activity implements OnClickListener, A
     @Override
     public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg4){
         FoodPresets presets = new FoodPresets();
+        //get the selected Food Item
         FoodItem food = presets.foodPresets.get(position);
+        //set the text fields
         srvSizeEditText.setText("" + food.getServingSize() + "oz.");
         calEditText.setText("" + food.getCalories());
         fatEditText.setText("" + food.getFat());
         carbsEditText.setText("" + food.getCarbs());
         proteinEditText.setText("" + food.getProtein());
-
     }
 
     @Override
@@ -101,6 +110,9 @@ public class FoodTrackingActivity extends Activity implements OnClickListener, A
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        }
+        else if(id == R.id.profile){
+            //CHECK IF THERE IS UNENTERED INFORMATION HERE
         }
 
         return super.onOptionsItemSelected(item);
