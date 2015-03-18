@@ -192,6 +192,8 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
                         new ForeignKeyHelper("mealId", "FoodMeals", "id", "ON DELETE CASCADE"),
                         new ForeignKeyHelper("itemId", "FoodItems", "id", "ON DELETE CASCADE")
                 });
+
+
     }
 
     

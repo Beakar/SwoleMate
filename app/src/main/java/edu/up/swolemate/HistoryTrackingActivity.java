@@ -41,6 +41,7 @@ public class HistoryTrackingActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history_tracking);
 
+        //enables back button on app icon
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setDisplayShowHomeEnabled(true);
 
@@ -117,6 +118,9 @@ public class HistoryTrackingActivity extends Activity {
 
         ArrayAdapter<String> workoutTypesAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, workoutTypes);
         workoutTypeSelector.setAdapter(workoutTypesAdapter);
+
+
+        setSpinnerListeners();
     }
 
 
@@ -126,6 +130,7 @@ public class HistoryTrackingActivity extends Activity {
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -144,6 +149,7 @@ public class HistoryTrackingActivity extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
+
 
     /**
      * Handles the click event for a new workout
@@ -188,6 +194,7 @@ public class HistoryTrackingActivity extends Activity {
         builder.create().show();
     }
 
+
     /**
      * Redirects the user to a specified workout activity.
      * @param activity
@@ -201,7 +208,7 @@ public class HistoryTrackingActivity extends Activity {
     /**
      * Initialize the listener for the history item click
      */
-    public void setHistoryListener() {
+    private void setHistoryListener() {
         workoutListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -225,6 +232,38 @@ public class HistoryTrackingActivity extends Activity {
             }
         });
     }
+
+
+    private void setSpinnerListeners() {
+        workoutTypeSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                int pos = (int)l;
+                switch(pos) {
+                    case 0:
+                        showAllWorkouts();
+                        break;
+                    case 1:
+                        showStrengthWorkouts();
+                        break;
+                    case 2:
+                        showCardioWorkouts();
+                        break;
+                    case 3:
+                        showCustomWorkouts();
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+    }
+
 
     /**
      * Pops up when the user selects a workout from the ListView
@@ -266,6 +305,7 @@ public class HistoryTrackingActivity extends Activity {
 
     }
 
+
     /**
      * Dialog for workout deletion popup
      * @param id
@@ -305,11 +345,14 @@ public class HistoryTrackingActivity extends Activity {
         for(BaseWorkout workout : workouts) {
             if(workout.getId() == id && workout instanceof CardioWorkout) {
                 workoutAdapter.remove(workout);
+                //remove it from the list as well
+                workouts.remove(workout);
                 workoutAdapter.notifyDataSetChanged();
                 break;
             }
         }
     }
+
 
     /**
      * Helper method that deletes a cardio workout from the database
@@ -322,11 +365,13 @@ public class HistoryTrackingActivity extends Activity {
         for(BaseWorkout workout : workouts) {
             if(workout.getId() == id && workout instanceof CustomWorkout) {
                 workoutAdapter.remove(workout);
+                workouts.remove(workout);
                 workoutAdapter.notifyDataSetChanged();
                 break;
             }
         }
     }
+
 
     /**
      * Helper method that deletes a custom workout from the database
@@ -339,12 +384,63 @@ public class HistoryTrackingActivity extends Activity {
         for(BaseWorkout workout : workouts) {
             if(workout.getId() == id && workout instanceof StrengthWorkout) {
                 workoutAdapter.remove(workout);
+                workouts.remove(workout);
                 workoutAdapter.notifyDataSetChanged();
                 break;
             }
         }
+    }
 
 
+    /**
+     * Updates the display adapter to show only strength workouts
+     */
+    private void showStrengthWorkouts() {
+        ArrayList<BaseWorkout> strengthWorkouts = new ArrayList<BaseWorkout>();
+        for(BaseWorkout workout : workouts) {
+            if(workout instanceof StrengthWorkout) {
+                strengthWorkouts.add(workout);
+            }
+        }
 
+        workoutAdapter = new WorkoutAdapter(this, R.layout.list_item_workout, strengthWorkouts);
+        workoutListView.setAdapter(workoutAdapter);
+    }
+
+    /**
+     * Updates the display adapter to show only cardio workouts
+     */
+    private void showCardioWorkouts() {
+        ArrayList<BaseWorkout> cardioWorkouts = new ArrayList<BaseWorkout>();
+        for(BaseWorkout workout : workouts) {
+            if(workout instanceof CardioWorkout) {
+                cardioWorkouts.add(workout);
+            }
+        }
+
+        workoutAdapter = new WorkoutAdapter(this, R.layout.list_item_workout, cardioWorkouts);
+        workoutListView.setAdapter(workoutAdapter);
+    }
+
+    /**
+     * Updates the display adapter to show only custom workouts
+     */
+    private void showCustomWorkouts() {
+
+        ArrayList<BaseWorkout> customWorkouts = new ArrayList<BaseWorkout>();
+        for(BaseWorkout workout : workouts) {
+            if(workout instanceof CustomWorkout) {
+                customWorkouts.add(workout);
+            }
+        }
+
+        workoutAdapter = new WorkoutAdapter(this, R.layout.list_item_workout, customWorkouts);
+        workoutListView.setAdapter(workoutAdapter);
+    }
+
+
+    private void showAllWorkouts() {
+        workoutAdapter = new WorkoutAdapter(this, R.layout.list_item_workout, workouts);
+        workoutListView.setAdapter(workoutAdapter);
     }
 }

@@ -284,4 +284,5 @@ public class FoodPresets {
         food.setProtein(protein);
         food.setServingSize(servingSize);
     }
+
 }
