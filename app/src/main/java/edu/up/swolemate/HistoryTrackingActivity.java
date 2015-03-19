@@ -27,13 +27,21 @@ import java.util.List;
 
 
 public class HistoryTrackingActivity extends Activity {
+    private final int DISPLAY_WORKOUTS_ALL = 0;
+    private final int DISPLAY_WORKOUTS_STRENGTH = 1;
+    private final int DISPLAY_WORKOUTS_CARDIO = 2;
+    private final int DISPLAY_WORKOUTS_CUSTOM = 3;
+    private final int DISPLAY_MEALS = 4;
+
+    private final boolean DEBUG = false;
+
+    private int currentDisplay = DISPLAY_WORKOUTS_ALL;
 
     protected List<BaseWorkout> workouts;
     protected List<FoodMeal> meals;
 
     protected WorkoutAdapter workoutAdapter;
     protected FoodAdapter foodAdapter;
-
 
     protected ListView historyListView;
 
@@ -51,8 +59,6 @@ public class HistoryTrackingActivity extends Activity {
         workouts = new ArrayList<BaseWorkout>();
         meals = new ArrayList<FoodMeal>();
 
-        setupSpinners();
-
         //for testing purposes only
         initTestValues();
 
@@ -65,12 +71,52 @@ public class HistoryTrackingActivity extends Activity {
         historyListView.setAdapter(workoutAdapter);
     }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        switch (id) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            case R.id.action_settings:
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
+
+
+    /*-------------------------------------------------------------
+     * Initialization helpers
+     --------------------------------------------------------------*/
+
     /**
      * Initializes workouts for testing
      */
     private void initTestValues() {
 
         FitnessDatabaseHelper db = new FitnessDatabaseHelper(this);
+
+        if(DEBUG) {
+            insertTestMeals(db);
+            insertTestWorkouts(db);
+        }
+
 
         workouts.addAll(db.selectAllWorkouts());
         meals.addAll(db.selectAllMeals());
@@ -111,222 +157,238 @@ public class HistoryTrackingActivity extends Activity {
     }
 
 
+
+
+    /*-------------------------------------------------------------
+     * Database helpers
+     --------------------------------------------------------------*/
+
     /**
-     * Sets up spinners in the application
-     *
+     * Helper method that deletes a cardio workout from the database
+     * @param id
      */
-    private void setupSpinners() {
+    private void dbDeleteCardio(int id) {
+        FitnessDatabaseHelper db = new FitnessDatabaseHelper(this);
+        db.deleteCardioWorkout(id);
+
+        for(BaseWorkout workout : workouts) {
+            if(workout.getId() == id && workout instanceof CardioWorkout) {
+                workoutAdapter.remove(workout);
+                //remove it from the list as well
+                workouts.remove(workout);
+                workoutAdapter.notifyDataSetChanged();
+                break;
+            }
+        }
+    }
+
+
+    /**
+     * Helper method that deletes a cardio workout from the database
+     * @param id
+     */
+    private void dbDeleteCustom(int id) {
+        FitnessDatabaseHelper db = new FitnessDatabaseHelper(this);
+        db.deleteCustomWorkout(id);
+
+        for(BaseWorkout workout : workouts) {
+            if(workout.getId() == id && workout instanceof CustomWorkout) {
+                workoutAdapter.remove(workout);
+                workouts.remove(workout);
+                workoutAdapter.notifyDataSetChanged();
+                break;
+            }
+        }
+    }
+
+
+    /**
+     * Helper method that deletes a custom workout from the database
+     * @param id
+     */
+    private void dbDeleteStrength(int id) {
+        FitnessDatabaseHelper db = new FitnessDatabaseHelper(this);
+        db.deleteStrengthWorkout(id);
+
+        for(BaseWorkout workout : workouts) {
+            if(workout.getId() == id && workout instanceof StrengthWorkout) {
+                workoutAdapter.remove(workout);
+                workouts.remove(workout);
+                workoutAdapter.notifyDataSetChanged();
+                break;
+            }
+        }
+    }
+
+
+
+
+    /*-------------------------------------------------------------
+     * Sorting helpers
+     --------------------------------------------------------------*/
+
+    /**
+     * Updates the display adapter to show only strength workouts
+     */
+    private void showStrengthWorkouts() {
+        ArrayList<BaseWorkout> strengthWorkouts = getStrengthWorkouts();
+
+        workoutAdapter = new WorkoutAdapter(this, R.layout.list_item_workout, strengthWorkouts);
+        historyListView.setAdapter(workoutAdapter);
+        currentDisplay = DISPLAY_WORKOUTS_STRENGTH;
+    }
+
+
+    /**
+     * Updates the display adapter to show only cardio workouts
+     */
+    private void showCardioWorkouts() {
+        ArrayList<BaseWorkout> cardioWorkouts = getCardioWorkouts();
+
+        workoutAdapter = new WorkoutAdapter(this, R.layout.list_item_workout, cardioWorkouts);
+        historyListView.setAdapter(workoutAdapter);
+        currentDisplay = DISPLAY_WORKOUTS_CARDIO;
 
     }
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return true;
+    /**
+     * Updates the display adapter to show only custom workouts
+     */
+    private void showCustomWorkouts() {
+
+        ArrayList<BaseWorkout> customWorkouts = getCustomWorkouts();
+
+        workoutAdapter = new WorkoutAdapter(this, R.layout.list_item_workout, customWorkouts);
+        historyListView.setAdapter(workoutAdapter);
+        currentDisplay = DISPLAY_WORKOUTS_CUSTOM;
     }
 
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+    /**
+     * Shows all workouts in list display
+     */
+    private void showAllWorkouts() {
+        workoutAdapter = new WorkoutAdapter(this, R.layout.list_item_workout, workouts);
+        historyListView.setAdapter(workoutAdapter);
+        currentDisplay = DISPLAY_WORKOUTS_ALL;
+    }
 
-        switch (id) {
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-            case R.id.action_settings:
-                return true;
+
+    /**
+     * Shows all food items in list display
+     */
+    private void showAllFood() {
+        foodAdapter = new FoodAdapter(this, R.layout.list_item_food, meals);
+        historyListView.setAdapter(foodAdapter);
+
+        currentDisplay = DISPLAY_MEALS;
+    }
+
+
+    /**
+     * Displays workouts occurring after a specified start date
+     * @param start
+     */
+    private void showWorkoutsFrom(int start) {
+        ArrayList<BaseWorkout> newWorkouts = null;
+
+        switch(currentDisplay) {
+            case DISPLAY_WORKOUTS_ALL:
+                newWorkouts = (ArrayList<BaseWorkout>)workouts;
+                break;
+            case DISPLAY_WORKOUTS_STRENGTH:
+                newWorkouts = getStrengthWorkouts();
+                break;
+            case DISPLAY_WORKOUTS_CARDIO:
+                newWorkouts = getCardioWorkouts();
+                break;
+            case DISPLAY_WORKOUTS_CUSTOM:
+                newWorkouts = getCustomWorkouts();
+                break;
+            default:
+                newWorkouts = (ArrayList<BaseWorkout>)workouts;
+                break;
         }
 
-        return super.onOptionsItemSelected(item);
+        ArrayList<BaseWorkout> sortedWorkouts = new ArrayList<BaseWorkout>();
+
+        for(BaseWorkout workout : newWorkouts) {
+            if(workout.getDateCompleted() >= start) {
+                sortedWorkouts.add(workout);
+            }
+        }
+
+        workoutAdapter = new WorkoutAdapter(this, R.layout.list_item_workout, sortedWorkouts);
+        historyListView.setAdapter(workoutAdapter);
     }
 
 
     /**
-     * Handles the click event for a new workout
-     * @param v
+     * Shows workouts between a start and an end date
+     * @param start
+     * @param end
+     * @throws Exception
      */
-    public void onNewWorkoutClick(View v) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        LayoutInflater li = LayoutInflater.from(this);
-
-        View root = li.inflate(R.layout.dialog_choose_workout_type, null);
-
-        //get buttons from custom dialog
-        Button strengthWorkout = (Button)root.findViewById(R.id.btn_choose_strength);
-        Button cardioWorkout = (Button)root.findViewById(R.id.btn_choose_cardio);
-        Button customWorkout = (Button)root.findViewById(R.id.btn_choose_custom);
-
-        strengthWorkout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                goToWorkoutActivity(StrengthWorkoutActivity.class);
-            }
-        });
-
-        cardioWorkout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                goToWorkoutActivity(CardioWorkoutActivity.class);
-            }
-        });
-
-        customWorkout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                goToWorkoutActivity(CustomWorkoutActivity.class);
-            }
-        });
-
-        builder.setView(root);
-
-        builder.create().show();
+    private void showWorkoutsFrom(int start, int end) throws Exception{
+        throw new Exception("Not implemented yet");
     }
 
 
-    public void onNewMealClick(View v) {
-        Intent intent = new Intent(this, MealEntryActivity.class);
-        startActivity(intent);
+
+    /**
+     * Gets a list of strength workouts from the current list of workouts
+     * @return
+     */
+    private ArrayList<BaseWorkout> getStrengthWorkouts() {
+        ArrayList<BaseWorkout> sWorkouts = new ArrayList<BaseWorkout>();
+
+        for(BaseWorkout workout : this.workouts) {
+            if(workout instanceof StrengthWorkout) {
+                sWorkouts.add(workout);
+            }
+        }
+        return sWorkouts;
     }
 
-    public void onSortClick(View v) {
-        Button clicked = (Button)v;
 
-        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        LayoutInflater inflater = LayoutInflater.from(this);
+    /**
+     * Gets a list of cardio workouts from the current list of workouts
+     * @return
+     */
+    private ArrayList<BaseWorkout> getCardioWorkouts() {
+        ArrayList<BaseWorkout> cWorkouts = new ArrayList<BaseWorkout>();
 
-        View root = inflater.inflate(R.layout.dialog_history_sort, null);
-
-        Button all = (Button)root.findViewById(R.id.btn_sort_all);
-        Button day = (Button)root.findViewById(R.id.btn_sort_today);
-        Button week = (Button)root.findViewById(R.id.btn_sort_week);
-        Button month = (Button)root.findViewById(R.id.btn_sort_month);
-
-        dialog.setView(root);
-
-        Dialog dg = dialog.create();
-
-        WindowManager.LayoutParams lp = dg.getWindow().getAttributes();
-
-        TypedValue tv = new TypedValue();
-        getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true);
-        //change
-        lp.gravity = Gravity.LEFT | Gravity.TOP;
-        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        lp.y = (int)(clicked.getY() + clicked.getHeight() + getActionBar().getHeight());
-
-        dg.show();
-        dg.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
-
-
-
-        final Dialog d = dg;
-
-        all.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                d.dismiss();
+        for(BaseWorkout workout : this.workouts) {
+            if(workout instanceof CardioWorkout) {
+                cWorkouts.add(workout);
             }
-        });
+        }
 
-        day.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                d.dismiss();
-            }
-        });
-
-        week.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                d.dismiss();
-            }
-        });
-
-        month.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                d.dismiss();
-            }
-        });
-
-        d.show();
+        return cWorkouts;
     }
 
-    public void onWorkoutTypeClick(View v) {
-        Button clicked = (Button)v;
 
-        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        LayoutInflater inflater = LayoutInflater.from(this);
+    /**
+     * Gets a list of custom workouts from the current list of workouts
+     * @return
+     */
+    private ArrayList<BaseWorkout> getCustomWorkouts() {
+        ArrayList<BaseWorkout> cWorkouts = new ArrayList<BaseWorkout>();
 
-        View root = inflater.inflate(R.layout.dialog_workout_type_sort, null);
-
-        Button all = (Button)root.findViewById(R.id.btn_sort_workout_all);
-        Button strength = (Button)root.findViewById(R.id.btn_sort_workout_strength);
-        Button cardio = (Button)root.findViewById(R.id.btn_sort_workout_cardio);
-        Button custom = (Button)root.findViewById(R.id.btn_sort_workout_custom);
-
-        dialog.setView(root);
-
-        Dialog dg = dialog.create();
-
-        WindowManager.LayoutParams lp = dg.getWindow().getAttributes();
-
-        TypedValue tv = new TypedValue();
-        getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true);
-        //change
-        lp.gravity = Gravity.LEFT | Gravity.TOP;
-        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        lp.y = (int)(clicked.getY() + clicked.getHeight() + getActionBar().getHeight());
-
-        dg.show();
-        dg.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
-
-
-
-        final Dialog d = dg;
-
-        all.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showAllWorkouts();
-                d.dismiss();
+        for(BaseWorkout workout : this.workouts) {
+            if(workout instanceof CardioWorkout) {
+                cWorkouts.add(workout);
             }
-        });
+        }
 
-        strength.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showStrengthWorkouts();
-                d.dismiss();
-            }
-        });
-
-        cardio.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showCardioWorkouts();
-                d.dismiss();
-            }
-        });
-
-        custom.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showCustomWorkouts();
-                d.dismiss();
-            }
-        });
-
-        d.show();
+        return cWorkouts;
     }
+
+
+    /*-------------------------------------------------------------
+     * Click behavior helpers
+     --------------------------------------------------------------*/
 
     /**
      * Redirects the user to a specified workout activity.
@@ -413,6 +475,7 @@ public class HistoryTrackingActivity extends Activity {
         dialog.create().show();
     }
 
+
     private void popupViewMeal(FoodMeal meal) {
 
     }
@@ -446,120 +509,195 @@ public class HistoryTrackingActivity extends Activity {
     }
 
 
-    /**
-     * Helper method that deletes a cardio workout from the database
-     * @param id
-     */
-    private void dbDeleteCardio(int id) {
-        FitnessDatabaseHelper db = new FitnessDatabaseHelper(this);
-        db.deleteCardioWorkout(id);
 
-        for(BaseWorkout workout : workouts) {
-            if(workout.getId() == id && workout instanceof CardioWorkout) {
-                workoutAdapter.remove(workout);
-                //remove it from the list as well
-                workouts.remove(workout);
-                workoutAdapter.notifyDataSetChanged();
-                break;
-            }
-        }
-    }
 
+    /*-------------------------------------------------------------
+     * Click handlers
+     --------------------------------------------------------------*/
 
     /**
-     * Helper method that deletes a cardio workout from the database
-     * @param id
+     * Handles the click event for a new workout
+     * @param v
      */
-    private void dbDeleteCustom(int id) {
-        FitnessDatabaseHelper db = new FitnessDatabaseHelper(this);
-        db.deleteCustomWorkout(id);
+    public void onNewWorkoutClick(View v) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater li = LayoutInflater.from(this);
 
-        for(BaseWorkout workout : workouts) {
-            if(workout.getId() == id && workout instanceof CustomWorkout) {
-                workoutAdapter.remove(workout);
-                workouts.remove(workout);
-                workoutAdapter.notifyDataSetChanged();
-                break;
+        View root = li.inflate(R.layout.dialog_choose_workout_type, null);
+
+        //get buttons from custom dialog
+        Button strengthWorkout = (Button)root.findViewById(R.id.btn_choose_strength);
+        Button cardioWorkout = (Button)root.findViewById(R.id.btn_choose_cardio);
+        Button customWorkout = (Button)root.findViewById(R.id.btn_choose_custom);
+
+        strengthWorkout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToWorkoutActivity(StrengthWorkoutActivity.class);
             }
-        }
-    }
+        });
 
-
-    /**
-     * Helper method that deletes a custom workout from the database
-     * @param id
-     */
-    private void dbDeleteStrength(int id) {
-        FitnessDatabaseHelper db = new FitnessDatabaseHelper(this);
-        db.deleteStrengthWorkout(id);
-
-        for(BaseWorkout workout : workouts) {
-            if(workout.getId() == id && workout instanceof StrengthWorkout) {
-                workoutAdapter.remove(workout);
-                workouts.remove(workout);
-                workoutAdapter.notifyDataSetChanged();
-                break;
+        cardioWorkout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToWorkoutActivity(CardioWorkoutActivity.class);
             }
-        }
-    }
+        });
 
-
-    /**
-     * Updates the display adapter to show only strength workouts
-     */
-    private void showStrengthWorkouts() {
-        ArrayList<BaseWorkout> strengthWorkouts = new ArrayList<BaseWorkout>();
-        for(BaseWorkout workout : workouts) {
-            if(workout instanceof StrengthWorkout) {
-                strengthWorkouts.add(workout);
+        customWorkout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToWorkoutActivity(CustomWorkoutActivity.class);
             }
-        }
+        });
 
-        workoutAdapter = new WorkoutAdapter(this, R.layout.list_item_workout, strengthWorkouts);
-        historyListView.setAdapter(workoutAdapter);
+        builder.setView(root);
+
+        builder.create().show();
     }
 
-    /**
-     * Updates the display adapter to show only cardio workouts
-     */
-    private void showCardioWorkouts() {
-        ArrayList<BaseWorkout> cardioWorkouts = new ArrayList<BaseWorkout>();
-        for(BaseWorkout workout : workouts) {
-            if(workout instanceof CardioWorkout) {
-                cardioWorkouts.add(workout);
+
+    public void onNewMealClick(View v) {
+        Intent intent = new Intent(this, MealEntryActivity.class);
+        startActivity(intent);
+    }
+
+
+    public void onSortClick(View v) {
+        Button clicked = (Button)v;
+
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        LayoutInflater inflater = LayoutInflater.from(this);
+
+        View root = inflater.inflate(R.layout.dialog_history_sort, null);
+
+        Button all = (Button)root.findViewById(R.id.btn_sort_all);
+        Button day = (Button)root.findViewById(R.id.btn_sort_today);
+        Button week = (Button)root.findViewById(R.id.btn_sort_week);
+        Button month = (Button)root.findViewById(R.id.btn_sort_month);
+
+        dialog.setView(root);
+
+        Dialog dg = dialog.create();
+
+        WindowManager.LayoutParams lp = dg.getWindow().getAttributes();
+
+        TypedValue tv = new TypedValue();
+        getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true);
+        //change
+        lp.gravity = Gravity.LEFT | Gravity.TOP;
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.y = (int)(clicked.getY() + clicked.getHeight() + getActionBar().getHeight());
+
+        dg.show();
+        dg.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+
+
+
+        final Dialog d = dg;
+
+        all.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                d.dismiss();
             }
-        }
+        });
 
-        workoutAdapter = new WorkoutAdapter(this, R.layout.list_item_workout, cardioWorkouts);
-        historyListView.setAdapter(workoutAdapter);
-    }
-
-    /**
-     * Updates the display adapter to show only custom workouts
-     */
-    private void showCustomWorkouts() {
-
-        ArrayList<BaseWorkout> customWorkouts = new ArrayList<BaseWorkout>();
-        for(BaseWorkout workout : workouts) {
-            if(workout instanceof CustomWorkout) {
-                customWorkouts.add(workout);
+        day.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                d.dismiss();
             }
-        }
+        });
 
-        workoutAdapter = new WorkoutAdapter(this, R.layout.list_item_workout, customWorkouts);
-        historyListView.setAdapter(workoutAdapter);
+        week.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                d.dismiss();
+            }
+        });
+
+        month.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                d.dismiss();
+            }
+        });
+
+        d.show();
     }
 
 
-    private void showAllWorkouts() {
-        workoutAdapter = new WorkoutAdapter(this, R.layout.list_item_workout, workouts);
-        historyListView.setAdapter(workoutAdapter);
+    public void onWorkoutTypeClick(View v) {
+        Button clicked = (Button)v;
+
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        LayoutInflater inflater = LayoutInflater.from(this);
+
+        View root = inflater.inflate(R.layout.dialog_workout_type_sort, null);
+
+        Button all = (Button)root.findViewById(R.id.btn_sort_workout_all);
+        Button strength = (Button)root.findViewById(R.id.btn_sort_workout_strength);
+        Button cardio = (Button)root.findViewById(R.id.btn_sort_workout_cardio);
+        Button custom = (Button)root.findViewById(R.id.btn_sort_workout_custom);
+
+        dialog.setView(root);
+
+        Dialog dg = dialog.create();
+
+        WindowManager.LayoutParams lp = dg.getWindow().getAttributes();
+
+        TypedValue tv = new TypedValue();
+        getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true);
+        //change
+        lp.gravity = Gravity.LEFT | Gravity.TOP;
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.y = (int)(clicked.getY() + clicked.getHeight() + getActionBar().getHeight());
+
+        dg.show();
+        dg.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+
+
+
+        final Dialog d = dg;
+
+        all.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showAllWorkouts();
+                d.dismiss();
+            }
+        });
+
+        strength.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showStrengthWorkouts();
+                d.dismiss();
+            }
+        });
+
+        cardio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showCardioWorkouts();
+                d.dismiss();
+            }
+        });
+
+        custom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showCustomWorkouts();
+                d.dismiss();
+            }
+        });
+
+        d.show();
     }
 
-    private void showAllFood() {
-        foodAdapter = new FoodAdapter(this, R.layout.list_item_food, meals);
-        historyListView.setAdapter(foodAdapter);
-    }
 
     public void onToggleViewClick(View v) {
         Button b = (Button)v;
@@ -578,5 +716,4 @@ public class HistoryTrackingActivity extends Activity {
         }
         isWorkout = !isWorkout;
     }
-
 }
