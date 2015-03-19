@@ -2,14 +2,19 @@ package edu.up.swolemate;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -32,11 +37,7 @@ public class HistoryTrackingActivity extends Activity {
 
     protected ListView historyListView;
 
-    protected Spinner dateSelector;
-
-    protected Spinner workoutTypeSelector;
-
-    protected boolean isWorkout = false;
+    protected boolean isWorkout = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +62,7 @@ public class HistoryTrackingActivity extends Activity {
 
         historyListView = (ListView)findViewById(R.id.lv_history);
         setHistoryListener();
-        historyListView.setAdapter(foodAdapter);
+        historyListView.setAdapter(workoutAdapter);
     }
 
     /**
@@ -184,11 +185,148 @@ public class HistoryTrackingActivity extends Activity {
 
         builder.setView(root);
 
-        builder.setTitle("Choose workout type");
-
         builder.create().show();
     }
 
+
+    public void onNewMealClick(View v) {
+        Intent intent = new Intent(this, MealEntryActivity.class);
+        startActivity(intent);
+    }
+
+    public void onSortClick(View v) {
+        Button clicked = (Button)v;
+
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        LayoutInflater inflater = LayoutInflater.from(this);
+
+        View root = inflater.inflate(R.layout.dialog_history_sort, null);
+
+        Button all = (Button)root.findViewById(R.id.btn_sort_all);
+        Button day = (Button)root.findViewById(R.id.btn_sort_today);
+        Button week = (Button)root.findViewById(R.id.btn_sort_week);
+        Button month = (Button)root.findViewById(R.id.btn_sort_month);
+
+        dialog.setView(root);
+
+        Dialog dg = dialog.create();
+
+        WindowManager.LayoutParams lp = dg.getWindow().getAttributes();
+
+        TypedValue tv = new TypedValue();
+        getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true);
+        //change
+        lp.gravity = Gravity.LEFT | Gravity.TOP;
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.y = (int)(clicked.getY() + clicked.getHeight() + getActionBar().getHeight());
+
+        dg.show();
+        dg.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+
+
+
+        final Dialog d = dg;
+
+        all.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                d.dismiss();
+            }
+        });
+
+        day.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                d.dismiss();
+            }
+        });
+
+        week.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                d.dismiss();
+            }
+        });
+
+        month.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                d.dismiss();
+            }
+        });
+
+        d.show();
+    }
+
+    public void onWorkoutTypeClick(View v) {
+        Button clicked = (Button)v;
+
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        LayoutInflater inflater = LayoutInflater.from(this);
+
+        View root = inflater.inflate(R.layout.dialog_workout_type_sort, null);
+
+        Button all = (Button)root.findViewById(R.id.btn_sort_workout_all);
+        Button strength = (Button)root.findViewById(R.id.btn_sort_workout_strength);
+        Button cardio = (Button)root.findViewById(R.id.btn_sort_workout_cardio);
+        Button custom = (Button)root.findViewById(R.id.btn_sort_workout_custom);
+
+        dialog.setView(root);
+
+        Dialog dg = dialog.create();
+
+        WindowManager.LayoutParams lp = dg.getWindow().getAttributes();
+
+        TypedValue tv = new TypedValue();
+        getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true);
+        //change
+        lp.gravity = Gravity.LEFT | Gravity.TOP;
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.y = (int)(clicked.getY() + clicked.getHeight() + getActionBar().getHeight());
+
+        dg.show();
+        dg.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+
+
+
+        final Dialog d = dg;
+
+        all.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showAllWorkouts();
+                d.dismiss();
+            }
+        });
+
+        strength.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showStrengthWorkouts();
+                d.dismiss();
+            }
+        });
+
+        cardio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showCardioWorkouts();
+                d.dismiss();
+            }
+        });
+
+        custom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showCustomWorkouts();
+                d.dismiss();
+            }
+        });
+
+        d.show();
+    }
 
     /**
      * Redirects the user to a specified workout activity.
@@ -417,4 +555,28 @@ public class HistoryTrackingActivity extends Activity {
         workoutAdapter = new WorkoutAdapter(this, R.layout.list_item_workout, workouts);
         historyListView.setAdapter(workoutAdapter);
     }
+
+    private void showAllFood() {
+        foodAdapter = new FoodAdapter(this, R.layout.list_item_food, meals);
+        historyListView.setAdapter(foodAdapter);
+    }
+
+    public void onToggleViewClick(View v) {
+        Button b = (Button)v;
+        Button sortByWorkout = (Button)findViewById(R.id.btn_workout_type);
+
+        if(isWorkout) {
+            showAllFood();
+            b.setBackgroundColor(Color.parseColor("#005500"));
+            b.setText("food");
+            sortByWorkout.setClickable(false);
+        } else {
+            showAllWorkouts();
+            b.setBackgroundColor(Color.parseColor("#000055"));
+            b.setText("workouts");
+            sortByWorkout.setClickable(true);
+        }
+        isWorkout = !isWorkout;
+    }
+
 }

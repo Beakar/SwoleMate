@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:weightSum="4">
+    <edu.up.swolemate.FontButton
+        android:layout_height="50dp"
+        android:layout_width="0dp"
+        android:background="#aaaaaa"
+        android:textColor="#ffffff"
+        android:layout_weight="1"
+        android:text="all"
+        android:id="@+id/btn_sort_all"/>
+    <edu.up.swolemate.FontButton
+        android:layout_height="50dp"
+        android:layout_width="0dp"
+        android:background="#bbbbbb"
+        android:textColor="#ffffff"
+        android:layout_weight="1"
+        android:text="today"
+        android:id="@+id/btn_sort_today"/>
+    <edu.up.swolemate.FontButton
+        android:layout_height="50dp"
+        android:layout_width="0dp"
+        android:background="#cccccc"
+        android:textColor="#ffffff"
+        android:layout_weight="1"
+        android:text="this week"
+        android:id="@+id/btn_sort_week"/>
+    <edu.up.swolemate.FontButton
+        android:layout_height="50dp"
+        android:layout_width="0dp"
+        android:background="#dddddd"
+        android:textColor="#ffffff"
+        android:layout_weight="1"
+        android:text="this month"
+        android:id="@+id/btn_sort_month"/>
+</LinearLayout>

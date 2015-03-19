@@ -80,6 +80,8 @@ public class FoodMeal {
      * @return
      */
     public FoodMeal initTestValues() {
+        setName("Dinner of gods");
+
         FoodItem item = new FoodItem();
         item.setServingSize(8);
         item.setCalories(100);

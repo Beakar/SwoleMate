@@ -17,7 +17,8 @@
     <string name="delete">delete</string>
     <string name="show">show</string>
     <string name="sort">sort</string>
-    <string name="misc">misc</string>
+    <string name="type">type</string>
+    <string name="create">create</string>
     <string name="hello_user">hello, user</string>
     <string name="workout_name">workout name</string>
     <string name="other">other</string>
