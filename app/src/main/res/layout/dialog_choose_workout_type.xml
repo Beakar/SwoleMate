@@ -5,25 +5,30 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_margin="@dimen/activity_horizontal_margin">
+        android:orientation="vertical">
 
-        <Button
+        <edu.up.swolemate.FontButton
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="75dp"
             android:text="@string/strength"
+            android:background="#aaaaaa"
+            android:textColor="#ffffff"
             android:id="@+id/btn_choose_strength" />
 
-        <Button
+        <edu.up.swolemate.FontButton
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="75dp"
             android:text="@string/cardio"
+            android:background="#bbbbbb"
+            android:textColor="#ffffff"
             android:id="@+id/btn_choose_cardio" />
 
-        <Button
+        <edu.up.swolemate.FontButton
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="75dp"
             android:text="@string/custom"
+            android:background="#cccccc"
+            android:textColor="#ffffff"
             android:id="@+id/btn_choose_custom" />
 
     </LinearLayout>

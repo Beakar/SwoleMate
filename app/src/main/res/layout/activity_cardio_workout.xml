@@ -3,25 +3,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_margin="@dimen/activity_horizontal_margin">
+>
 
-    <EditText
+    <edu.up.swolemate.FontEditText
         android:id="@+id/cardioNameEntry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
         android:ems="10"
         android:hint="Workout Name" >
 
         <requestFocus />
-    </EditText>
+    </edu.up.swolemate.FontEditText>
 
     <CheckBox
         android:id="@+id/cardioTimerCheck"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/cardioNameEntry"
-        android:layout_below="@+id/cardioNameEntry"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:layout_marginTop="150dp"
         android:text="Use Timer"
         android:textColorHint="@color/black" />
@@ -30,43 +32,44 @@
         android:id="@+id/cardioDistanceCheck"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/checkBox1"
-        android:layout_below="@+id/durationEntry"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:layout_marginTop="15dp"
         android:text="Record Distance" />
 
-    <EditText
+    <edu.up.swolemate.FontEditText
         android:id="@+id/cardioDistanceEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/checkBox2"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:layout_marginTop="15dp"
-        android:layout_below="@+id/checkBox2"
         android:ems="10"
         android:hint="Distance"
         android:inputType="numberDecimal" />
 
 
 
-    <EditText
+    <edu.up.swolemate.FontEditText
         android:id="@+id/durationEntry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/checkBox1"
-        android:layout_below="@+id/checkBox1"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:layout_marginTop="15dp"
         android:ems="10"
         android:hint="Duration" />
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp">
-        <Button
+        android:layout_height="wrap_content">
+        <edu.up.swolemate.FontButton
             android:id="@+id/button1"
+            android:background="#aaaaaa"
+            android:textColor="#ffffff"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:text="Save Workout" />
+            android:text="@string/save_workout" />
         </RelativeLayout>
 
 

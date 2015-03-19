@@ -43,7 +43,6 @@ public class HistoryTrackingActivity extends Activity {
 
         //enables back button on app icon
         getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setDisplayShowHomeEnabled(true);
 
         //initialize
         workouts = new ArrayList<BaseWorkout>();

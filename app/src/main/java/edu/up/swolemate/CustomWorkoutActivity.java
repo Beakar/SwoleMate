@@ -17,6 +17,8 @@ public class CustomWorkoutActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_custom_workout);
         currentWorkout = new CustomWorkout();
+
+        getActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
 
@@ -36,6 +38,9 @@ public class CustomWorkoutActivity extends Activity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            return true;
+        } else if (id == android.R.id.home) {
+            onBackPressed();
             return true;
         }
 

@@ -16,7 +16,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/ic_launcher" />
-        <TextView
+        <edu.up.swolemate.FontTextView
             android:id="@+id/userNameText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_alignParentRight="true">
-                <TextView
+                <edu.up.swolemate.FontTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/unit_switch"
@@ -65,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <TextView
+                <edu.up.swolemate.FontTextView
                     android:id="@+id/textView1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -74,14 +74,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
-                    <TextView
+                    <edu.up.swolemate.FontTextView
                         android:id="@+id/userWeight"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/user_weight"
                         android:textSize="50dp" />
 
-                    <TextView
+                    <edu.up.swolemate.FontTextView
                         android:id="@+id/weight_unit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -99,14 +99,14 @@
                 android:orientation="vertical"
                 android:layout_marginLeft="20dp">
 
-                <TextView
+                <edu.up.swolemate.FontTextView
                     android:id="@+id/textView2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@+id/userHeight"
                     android:layout_alignLeft="@+id/textView1"
                     android:text="your height" />
-                <TextView
+                <edu.up.swolemate.FontTextView
                     android:id="@+id/userHeight"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -128,7 +128,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_alignParentBottom="true">
-                <TextView
+                <edu.up.swolemate.FontTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="18dp"
@@ -164,21 +164,21 @@
                 <LinearLayout
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent">
-                    <TextView
+                    <edu.up.swolemate.FontTextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="0"
                         android:layout_weight="1"
                         android:gravity="center_horizontal"
                         android:id="@+id/tv_profileWeeklyStrength"/>
-                    <TextView
+                    <edu.up.swolemate.FontTextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="0"
                         android:layout_weight="1"
                         android:gravity="center_horizontal"
                         android:id="@+id/tv_profileWeeklyCardio"/>
-                    <TextView
+                    <edu.up.swolemate.FontTextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="0"
@@ -196,28 +196,28 @@
                     android:weightSum="4"
                     android:layout_marginTop="20dp">
 
-                    <TextView
+                    <edu.up.swolemate.FontTextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="@string/calories"
                         android:layout_weight="1"
                         android:gravity="center_horizontal"
                         android:textStyle="bold"/>
-                    <TextView
+                    <edu.up.swolemate.FontTextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="@string/fat"
                         android:layout_weight="1"
                         android:gravity="center_horizontal"
                         android:textStyle="bold"/>
-                    <TextView
+                    <edu.up.swolemate.FontTextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="@string/carbs"
                         android:layout_weight="1"
                         android:gravity="center_horizontal"
                         android:textStyle="bold"/>
-                    <TextView
+                    <edu.up.swolemate.FontTextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="@string/protein"
@@ -229,28 +229,28 @@
                 <LinearLayout
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent">
-                    <TextView
+                    <edu.up.swolemate.FontTextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="0"
                         android:layout_weight="1"
                         android:gravity="center_horizontal"
                         android:id="@+id/tv_profileWeeklyCalories"/>
-                    <TextView
+                    <edu.up.swolemate.FontTextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="0g"
                         android:layout_weight="1"
                         android:gravity="center_horizontal"
                         android:id="@+id/tv_profileWeeklyFat"/>
-                    <TextView
+                    <edu.up.swolemate.FontTextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="0g"
                         android:layout_weight="1"
                         android:gravity="center_horizontal"
                         android:id="@+id/tv_profileWeeklyCarbs"/>
-                    <TextView
+                    <edu.up.swolemate.FontTextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="0g"
@@ -258,7 +258,7 @@
                         android:gravity="center_horizontal"
                         android:id="@+id/tv_profileWeeklyProtein"/>
                 </LinearLayout>
-                <Button
+                <edu.up.swolemate.FontButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#0000FF"

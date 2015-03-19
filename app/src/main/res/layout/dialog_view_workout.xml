@@ -11,7 +11,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-            <TextView
+            <edu.up.swolemate.FontBoldTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Title"
@@ -19,7 +19,7 @@
                 android:textSize="20dp"
                 android:id="@+id/tv_view_workout_title"/>
 
-            <TextView
+            <edu.up.swolemate.FontTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"

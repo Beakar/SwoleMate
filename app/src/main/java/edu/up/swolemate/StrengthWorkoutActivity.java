@@ -25,6 +25,8 @@ public class StrengthWorkoutActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_strength_workout);
+
+        getActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
 
@@ -44,6 +46,9 @@ public class StrengthWorkoutActivity extends Activity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            return true;
+        } else if (id == android.R.id.home) {
+            onBackPressed();
             return true;
         }
 
