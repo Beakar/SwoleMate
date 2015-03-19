@@ -25,6 +25,6 @@ public class FontButton extends Button{
     }
 
     private void init() {
-        setTypeface(Typeface.createFromAsset(getContext().getAssets(), "fonts/Walkaway.ttf"));
+        setTypeface(Typeface.createFromAsset(getContext().getAssets(), "fonts/Roboto-Light.ttf"));
     }
 }

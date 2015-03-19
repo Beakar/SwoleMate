@@ -167,4 +167,12 @@ public class FoodItem {
     public void setProtein(double protein) {
         this.protein = protein;
     }
+
+
+    @Override
+    public String toString() {
+        String stringRep = "";
+
+        return stringRep;
+    }
 }

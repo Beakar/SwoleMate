@@ -16,10 +16,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -27,15 +25,15 @@ import java.util.List;
 
 
 public class HistoryTrackingActivity extends Activity {
-    private final int DISPLAY_WORKOUTS_ALL = 0;
-    private final int DISPLAY_WORKOUTS_STRENGTH = 1;
-    private final int DISPLAY_WORKOUTS_CARDIO = 2;
-    private final int DISPLAY_WORKOUTS_CUSTOM = 3;
-    private final int DISPLAY_MEALS = 4;
+    public static final int DISPLAY_WORKOUTS_ALL = 0;
+    public static final int DISPLAY_WORKOUTS_STRENGTH = 1;
+    public static final int DISPLAY_WORKOUTS_CARDIO = 2;
+    public static final int DISPLAY_WORKOUTS_CUSTOM = 3;
+    public static final int DISPLAY_MEALS = 4;
 
     private final boolean DEBUG = false;
 
-    private int currentDisplay = DISPLAY_WORKOUTS_ALL;
+    private int displayMode = DISPLAY_WORKOUTS_ALL;
 
     protected List<BaseWorkout> workouts;
     protected List<FoodMeal> meals;
@@ -44,13 +42,19 @@ public class HistoryTrackingActivity extends Activity {
     protected FoodAdapter foodAdapter;
 
     protected ListView historyListView;
+    protected Button viewToggleButton;
+    protected Button sortByWorkout;
 
-    protected boolean isWorkout = true;
+    protected boolean isWorkout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history_tracking);
+
+        //Possibly redirected from other activities, this provides
+        //the capability of starting the activity in different display modes
+        displayMode = getIntent().getExtras().getInt("display_mode", 0);
 
         //enables back button on app icon
         getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -66,11 +70,36 @@ public class HistoryTrackingActivity extends Activity {
         foodAdapter = new FoodAdapter(this, R.layout.list_item_food, meals);
         workoutAdapter = new WorkoutAdapter(this, R.layout.list_item_workout, workouts);
 
+        sortByWorkout = (Button)findViewById(R.id.btn_workout_type);
+        viewToggleButton = (Button)findViewById(R.id.toggle_view);
         historyListView = (ListView)findViewById(R.id.lv_history);
-        setHistoryListener();
-        historyListView.setAdapter(workoutAdapter);
-    }
 
+        setHistoryListener();
+
+        //sets the display based on what's passed in the savedinstancestate
+        switch(displayMode) {
+            case DISPLAY_WORKOUTS_ALL:
+                isWorkout = true;
+                showAllWorkouts();
+                break;
+            case DISPLAY_WORKOUTS_STRENGTH:
+                isWorkout = true;
+                showStrengthWorkouts();
+                break;
+            case DISPLAY_WORKOUTS_CARDIO:
+                isWorkout = true;
+                showCardioWorkouts();
+                break;
+            case DISPLAY_WORKOUTS_CUSTOM:
+                isWorkout = true;
+                showCustomWorkouts();
+                break;
+            case DISPLAY_MEALS:
+                isWorkout = false;
+                showAllFood();
+                break;
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -235,7 +264,7 @@ public class HistoryTrackingActivity extends Activity {
 
         workoutAdapter = new WorkoutAdapter(this, R.layout.list_item_workout, strengthWorkouts);
         historyListView.setAdapter(workoutAdapter);
-        currentDisplay = DISPLAY_WORKOUTS_STRENGTH;
+        displayMode = DISPLAY_WORKOUTS_STRENGTH;
     }
 
 
@@ -247,7 +276,7 @@ public class HistoryTrackingActivity extends Activity {
 
         workoutAdapter = new WorkoutAdapter(this, R.layout.list_item_workout, cardioWorkouts);
         historyListView.setAdapter(workoutAdapter);
-        currentDisplay = DISPLAY_WORKOUTS_CARDIO;
+        displayMode = DISPLAY_WORKOUTS_CARDIO;
 
     }
 
@@ -261,7 +290,7 @@ public class HistoryTrackingActivity extends Activity {
 
         workoutAdapter = new WorkoutAdapter(this, R.layout.list_item_workout, customWorkouts);
         historyListView.setAdapter(workoutAdapter);
-        currentDisplay = DISPLAY_WORKOUTS_CUSTOM;
+        displayMode = DISPLAY_WORKOUTS_CUSTOM;
     }
 
 
@@ -271,7 +300,11 @@ public class HistoryTrackingActivity extends Activity {
     private void showAllWorkouts() {
         workoutAdapter = new WorkoutAdapter(this, R.layout.list_item_workout, workouts);
         historyListView.setAdapter(workoutAdapter);
-        currentDisplay = DISPLAY_WORKOUTS_ALL;
+
+        viewToggleButton.setBackgroundColor(Color.parseColor("#000055"));
+        viewToggleButton.setText("workouts");
+        sortByWorkout.setClickable(true);
+        displayMode = DISPLAY_WORKOUTS_ALL;
     }
 
 
@@ -282,7 +315,10 @@ public class HistoryTrackingActivity extends Activity {
         foodAdapter = new FoodAdapter(this, R.layout.list_item_food, meals);
         historyListView.setAdapter(foodAdapter);
 
-        currentDisplay = DISPLAY_MEALS;
+        viewToggleButton.setBackgroundColor(Color.parseColor("#005500"));
+        viewToggleButton.setText("food");
+        sortByWorkout.setClickable(false);
+        displayMode = DISPLAY_MEALS;
     }
 
 
@@ -293,7 +329,7 @@ public class HistoryTrackingActivity extends Activity {
     private void showWorkoutsFrom(int start) {
         ArrayList<BaseWorkout> newWorkouts = null;
 
-        switch(currentDisplay) {
+        switch(displayMode) {
             case DISPLAY_WORKOUTS_ALL:
                 newWorkouts = (ArrayList<BaseWorkout>)workouts;
                 break;
@@ -325,15 +361,48 @@ public class HistoryTrackingActivity extends Activity {
 
 
     /**
+     * Shows food eaten from a specified start date
+     * @param start
+     */
+    private void showFoodFrom(int start) {
+        //invalid case
+        if(displayMode != DISPLAY_MEALS) {
+            return;
+        }
+
+        ArrayList<FoodMeal> sortedMeals = new ArrayList<FoodMeal>();
+
+        for(FoodMeal meal : meals) {
+            if(meal.getDateCompleted() >= start) {
+                sortedMeals.add(meal);
+            }
+        }
+
+        foodAdapter = new FoodAdapter(this, R.layout.list_item_food, sortedMeals);
+    }
+
+
+    /**
      * Shows workouts between a start and an end date
      * @param start
      * @param end
      * @throws Exception
      */
-    private void showWorkoutsFrom(int start, int end) throws Exception{
-        throw new Exception("Not implemented yet");
+    private void showWorkoutsFrom(int start, int end) {
     }
 
+
+    /**
+     * Shows the correct type of workout occurring after the specified start date
+     * @param start
+     */
+    private void showDataFrom(int start) {
+        if(isWorkout) {
+            showWorkoutsFrom(start);
+        } else {
+            showFoodFrom(start);
+        }
+    }
 
 
     /**
@@ -454,7 +523,6 @@ public class HistoryTrackingActivity extends Activity {
         titleTextView.setText(workout.getDisplayName());
         descriptionTextView.setText(workout.toString());
 
-        dialog.setTitle("View Workout");
         dialog.setView(root);
         dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
@@ -597,9 +665,11 @@ public class HistoryTrackingActivity extends Activity {
 
         final Dialog d = dg;
 
+        //each of these buttons should change the display
         all.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                showDataFrom(0);
                 d.dismiss();
             }
         });
@@ -607,6 +677,8 @@ public class HistoryTrackingActivity extends Activity {
         day.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                int today = (int)((System.currentTimeMillis() / 1000) - 86400);
+                showDataFrom(today);
                 d.dismiss();
             }
         });
@@ -614,6 +686,8 @@ public class HistoryTrackingActivity extends Activity {
         week.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                int thisWeek = (int)((System.currentTimeMillis() / 1000) - 604800);
+                showDataFrom(thisWeek);
                 d.dismiss();
             }
         });
@@ -621,6 +695,8 @@ public class HistoryTrackingActivity extends Activity {
         month.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                int thisMonth = (int)((System.currentTimeMillis() / 1000) - 2629740);
+                showDataFrom(thisMonth);
                 d.dismiss();
             }
         });
@@ -700,19 +776,13 @@ public class HistoryTrackingActivity extends Activity {
 
 
     public void onToggleViewClick(View v) {
-        Button b = (Button)v;
-        Button sortByWorkout = (Button)findViewById(R.id.btn_workout_type);
+
 
         if(isWorkout) {
             showAllFood();
-            b.setBackgroundColor(Color.parseColor("#005500"));
-            b.setText("food");
-            sortByWorkout.setClickable(false);
+
         } else {
             showAllWorkouts();
-            b.setBackgroundColor(Color.parseColor("#000055"));
-            b.setText("workouts");
-            sortByWorkout.setClickable(true);
         }
         isWorkout = !isWorkout;
     }

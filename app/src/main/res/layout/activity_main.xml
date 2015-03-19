@@ -13,32 +13,42 @@
         android:text="@string/hello_user"
         android:textSize="@dimen/title_text_size"/>
 
-    <edu.up.swolemate.FontButton
-        android:id="@+id/viewWorkoutHistoryButton"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight=".4"
-        android:text="@string/view_workout_history"
-        android:background="#aaaaaa"
-        android:textColor="#ffffff"
-        android:gravity="bottom|right"
-        android:onClick="onViewHistoryClick"/>
+        android:orientation="horizontal"
+        android:layout_weight="1">
 
-    <edu.up.swolemate.FontButton
-        android:id="@+id/viewFoodHistoryButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight=".4"
-        android:background="#bbbbbb"
-        android:textColor="#ffffff"
-        android:text="@string/view_eating_habits"
-        android:gravity="bottom|left"/>
+        <edu.up.swolemate.FontButton
+            android:id="@+id/viewWorkoutHistoryButton"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/view_workout_history"
+            android:background="#aaaaaa"
+            android:textColor="#ffffff"
+            android:gravity="bottom|left"
+            android:onClick="onViewWorkoutHistoryClick"/>
+
+        <edu.up.swolemate.FontButton
+            android:id="@+id/viewFoodHistoryButton"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#bbbbbb"
+            android:textColor="#ffffff"
+            android:text="@string/view_eating_habits"
+            android:gravity="bottom|right"
+            android:onClick="onViewFoodHistoryClick"/>
+
+    </LinearLayout>
+
 
     <edu.up.swolemate.FontButton
         android:id="@+id/createNewWorkoutButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight=".1"
+        android:layout_weight="1"
         android:background="#cccccc"
         android:textColor="#ffffff"
         android:text="@string/create_new_workout"
@@ -49,7 +59,7 @@
         android:id="@+id/addNewFoodButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight=".1"
+        android:layout_weight="1"
         android:background="#dddddd"
         android:textColor="#ffffff"
         android:text="@string/add_new_food"

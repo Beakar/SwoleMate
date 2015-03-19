@@ -25,7 +25,7 @@
         android:background="#cccccc"
         android:textColor="#ffffff"
         android:layout_weight="1"
-        android:text="this week"
+        android:text="week"
         android:id="@+id/btn_sort_week"/>
     <edu.up.swolemate.FontButton
         android:layout_height="50dp"
@@ -33,6 +33,6 @@
         android:background="#dddddd"
         android:textColor="#ffffff"
         android:layout_weight="1"
-        android:text="this month"
+        android:text="month"
         android:id="@+id/btn_sort_month"/>
 </LinearLayout>

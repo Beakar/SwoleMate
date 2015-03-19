@@ -25,6 +25,6 @@ public class FontBoldTextView extends TextView {
     }
 
     private void init() {
-        setTypeface(Typeface.createFromAsset(getContext().getAssets(), "fonts/Walkway_Bold.ttf"));
+        setTypeface(Typeface.createFromAsset(getContext().getAssets(), "fonts/Roboto-Light.ttf"));
     }
 }

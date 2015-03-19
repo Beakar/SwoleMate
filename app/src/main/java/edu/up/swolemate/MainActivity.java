@@ -23,10 +23,6 @@ public class MainActivity extends Activity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        TextView userWelcome = (TextView)findViewById(R.id.userGreeting);
-        userWelcome.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/Walkaway.ttf"));
-        userWelcome.setText("hello, " + getSharedPreferences("user_settings", 0).getString("name", ""));
     }
 
     @Override
@@ -59,8 +55,15 @@ public class MainActivity extends Activity{
      * OnClick method for history button click
      * @param v
      */
-    public void onViewHistoryClick(View v) {
+    public void onViewWorkoutHistoryClick(View v) {
         Intent intent = new Intent(this, HistoryTrackingActivity.class);
+        intent.putExtra("display_mode", HistoryTrackingActivity.DISPLAY_WORKOUTS_ALL);
+        startActivity(intent);
+    }
+
+    public void onViewFoodHistoryClick(View v) {
+        Intent intent = new Intent (this, HistoryTrackingActivity.class);
+        intent.putExtra("display_mode", HistoryTrackingActivity.DISPLAY_MEALS);
         startActivity(intent);
     }
 
@@ -101,8 +104,6 @@ public class MainActivity extends Activity{
         });
 
         builder.setView(root);
-
-        builder.setTitle("Choose workout type");
 
         builder.create().show();
 
