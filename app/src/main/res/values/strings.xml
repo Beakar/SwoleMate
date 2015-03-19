@@ -6,6 +6,7 @@
     <string name="cardio">cardio</string>
     <string name="custom">custom</string>
     <string name="strength">strength</string>
+    <string name="new_meal">new meal</string>
     <string name="new_workout">new workout</string>
     <string name="save_workout">save workout</string>
     <string name="create_new_workout">create new workout</string>
@@ -15,6 +16,8 @@
     <string name="open">open</string>
     <string name="delete">delete</string>
     <string name="show">show</string>
+    <string name="sort">sort</string>
+    <string name="misc">misc</string>
     <string name="hello_user">hello, user</string>
     <string name="workout_name">workout name</string>
     <string name="other">other</string>

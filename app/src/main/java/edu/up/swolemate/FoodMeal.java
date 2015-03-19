@@ -6,7 +6,6 @@ import java.util.List;
 
 /**
  * Created by Nathan on 1/21/2015.
- * TODO: Add isTemplate field to class to test whether the workout object being created is a template or not
  */
 public class FoodMeal {
     /**
@@ -33,7 +32,7 @@ public class FoodMeal {
      * Initializes an empty food meal
      */
     public FoodMeal() {
-
+        foodItems = new ArrayList<FoodItem>();
     }
 
     /**
@@ -42,6 +41,7 @@ public class FoodMeal {
      */
     public FoodMeal(String name) {
         this.name = name;
+        foodItems = new ArrayList<FoodItem>();
     }
 
     /**
@@ -76,6 +76,53 @@ public class FoodMeal {
     }
 
     /**
+     * Initializes the test values for a meal object
+     * @return
+     */
+    public FoodMeal initTestValues() {
+        FoodItem item = new FoodItem();
+        item.setServingSize(8);
+        item.setCalories(100);
+        item.setFat(5);
+        item.setCarbs(20);
+        item.setProtein(7);
+        item.setFoodType("Potato");
+        addFood(item);
+
+        FoodItem item2 = new FoodItem();
+        item2.setServingSize(8);
+        item2.setCalories(100);
+        item2.setFat(5);
+        item2.setCarbs(20);
+        item2.setProtein(7);
+        item2.setFoodType("Tomato");
+        addFood(item2);
+
+        FoodItem item3 = new FoodItem();
+        item3.setServingSize(8);
+        item3.setCalories(100);
+        item3.setFat(5);
+        item3.setCarbs(20);
+        item3.setProtein(7);
+        item3.setFoodType("Fritata");
+        addFood(item3);
+
+
+        FoodItem item4 = new FoodItem();
+        item4.setServingSize(8);
+        item4.setCalories(100);
+        item4.setFat(5);
+        item4.setCarbs(20);
+        item4.setProtein(7);
+        item4.setFoodType("Churro");
+        addFood(item4);
+
+
+        return this;
+    }
+
+
+    /**
      * removes a food item from the list
      * @param foodItem
      */
@@ -83,35 +130,51 @@ public class FoodMeal {
         this.foodItems.remove(foodItem);
     }
 
+
     public int getId() {
         return id;
     }
+
 
     public void setId(int id) {
         this.id = id;
     }
 
+
     public String getName() {
         return name;
     }
+
 
     public void setName(String name) {
         this.name = name;
     }
 
+
     public int getDateCompleted() {
         return dateCompleted;
     }
+
 
     public void setDateCompleted(int dateCompleted) {
         this.dateCompleted = dateCompleted;
     }
 
+
     public List<FoodItem> getFoodItems() {
         return foodItems;
     }
 
+
     public void setFoodItems(List<FoodItem> foodItems) {
         this.foodItems = foodItems;
+    }
+
+
+    @Override
+    public String toString() {
+        String stringRep = "";
+
+        return stringRep;
     }
 }

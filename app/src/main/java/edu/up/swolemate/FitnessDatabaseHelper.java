@@ -318,7 +318,7 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         ArrayList<FoodMeal> meals = new ArrayList<FoodMeal>();
 
-        String query = "SELECT * From FoodMeal";
+        String query = "SELECT * From FoodMeals";
 
         Cursor c = db.rawQuery(query, null);
         while(c.moveToNext()) {
