@@ -1,5 +1,4 @@
 package edu.up.swolemate;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,21 +7,13 @@ import java.util.List;
  */
 public class Exercise {
 
-    /**
-     * id of the exercise, for database usage
-     */
+     //id of the exercise, for database usage
     protected int id;
-
-    /**
-     * display name of the exercise
-     */
+    // the number of sets in this exercise
+    private int numSets = 0;
+    //display name of the exercise
     protected String displayName;
-
-
-
-    /**
-     * sets for the exercise
-     */
+    //sets for the exercise
     protected List<ExerciseSubset> sets;
 
     /**
@@ -62,6 +53,8 @@ public class Exercise {
      * @param set
      */
     public void addSet(ExerciseSubset set) {
+        numSets++;
+        set.setSetNum(numSets);
         this.sets.add(set);
     }
 

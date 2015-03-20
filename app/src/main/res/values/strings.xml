@@ -41,10 +41,16 @@
     <string name="title_activity_strength_workout">Strength Workout</string>
     <string name="title_activity_cardio_workout">Cardio Workout</string>
     <string name="title_activity_custom_workout">Custom Workout</string>
+    <string name="reps">Reps</string>
+    <string name="weight">Weight</string>
 
     <string name="calories">Calories</string>
     <string name="fat">Fat</string>
     <string name="carbs">Carbs</string>
     <string name="protein">Protein</string>
+    <string name="number_of_reps"># of Reps</string>
+    <string name="save_set">Save set</string>
+    <string name="add_set_button_text">Add new set</string>
+    <string name="save_exercise_button_text">Save exercise</string>
 
 </resources>

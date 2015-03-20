@@ -1,6 +1,26 @@
 package edu.up.swolemate;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.app.FragmentManager;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.BaseExpandableListAdapter;
+import android.widget.Button;
+import android.widget.ExpandableListAdapter;
+import android.widget.ExpandableListView;
+import android.widget.ListView;
+
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -9,26 +29,64 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import java.net.ContentHandler;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 
-public class StrengthWorkoutActivity extends Activity {
+public class StrengthWorkoutActivity extends Activity  implements View.OnClickListener {
 
-    /**
-     * References the current workout being created
-     */
+//    #######################################################################################
+//    DELETE THESE EVENTUALLY, BUT THEY'RE HELPFUL FOR NOW
+//    http://www.vogella.com/tutorials/AndroidListView/article.html#androidlists_inputtype
+//    http://www.codelearn.org/android-tutorial/android-listview
+//    #######################################################################################
+    Button createExerciseButton;
+    Button finishButton;
+    StrengthExerciseDialogFragment createDialog;
+    FragmentManager fragManager;
+    Context context = this;
+    //References the current workout being created
     protected StrengthWorkout currentWorkout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_strength_workout);
+<<<<<<< HEAD
 
         getActionBar().setDisplayHomeAsUpEnabled(true);
+=======
+        super.onCreate(savedInstanceState);
+        fragManager = getFragmentManager();
+
+        createDialog = new StrengthExerciseDialogFragment();
+        createExerciseButton = (Button)findViewById(R.id.newStrengthExercise);
+        finishButton = (Button)findViewById(R.id.finishButton1);
+        finishButton.setOnClickListener(this);
+        createExerciseButton.setOnClickListener(this);
+
+        currentWorkout = new StrengthWorkout("Test exercise");
+        currentWorkout.initTestValues();
+>>>>>>> carl
     }
 
+
+
+    @Override
+    public void onClick(View v){
+        if(v.getId() == R.id.finishButton1){
+            Log.e("Logged Button pressed","finish");
+
+        }
+        if(v.getId() == R.id.newStrengthExercise){
+            Log.e("logged Button pressed","Create new str exercise");
+            createDialog.show(fragManager,"Create new exercise");
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -75,4 +133,7 @@ public class StrengthWorkoutActivity extends Activity {
         String query = "DELETE FROM StrengthWorkouts";
         db.execSQL(query);
     }
+
+
+
 }
