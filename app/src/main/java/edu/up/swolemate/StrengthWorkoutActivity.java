@@ -56,10 +56,7 @@ public class StrengthWorkoutActivity extends Activity  implements View.OnClickLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_strength_workout);
-<<<<<<< HEAD
-
         getActionBar().setDisplayHomeAsUpEnabled(true);
-=======
         super.onCreate(savedInstanceState);
         fragManager = getFragmentManager();
 
@@ -71,7 +68,6 @@ public class StrengthWorkoutActivity extends Activity  implements View.OnClickLi
 
         currentWorkout = new StrengthWorkout("Test exercise");
         currentWorkout.initTestValues();
->>>>>>> carl
     }
 
 
