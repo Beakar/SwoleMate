@@ -40,7 +40,7 @@ public class MealEntryActivity extends Activity implements OnClickListener, Adap
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.food_tracking_activity);
+        setContentView(R.layout.activity_meal_entry);
 
         /*
          * This section creates an array adapter, which populates the AutoCompleteEditText
