@@ -1,4 +1,7 @@
 package edu.up.swolemate;
+import android.content.SharedPreferences;
+
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -116,6 +119,33 @@ public class StrengthWorkout extends BaseWorkout {
         this.addExercise(e);
 
         return this;
+    }
+
+
+    @Override
+    public String toString() {
+        String s = "";
+        SharedPreferences prefs = context.getSharedPreferences("user_settings", 0);
+
+        for(Exercise e : this.getExercises()) {
+            s += e.getName();
+            for(ExerciseSubset set : e.getSets()) {
+
+                double weight = set.getWeight();
+                String weightString = "";
+
+                if(prefs.getString("units", "").equals("metric")) {
+                    weight = weight * 2.20462;
+                    weightString = new DecimalFormat("##.##").format(weight) + "kg";
+                } else {
+                    weightString = new DecimalFormat("##.##").format(weight) + "lb";
+                }
+                s += "\n" + weightString + " x " + set.getNumReps();
+            }
+            s += "\n\n";
+        }
+
+        return s;
     }
 
 

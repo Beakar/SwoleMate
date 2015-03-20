@@ -61,4 +61,9 @@ public class CustomWorkout extends BaseWorkout {
 
         return this;
     }
+
+    @Override
+    public String toString() {
+        return this.workoutData;
+    }
 }
