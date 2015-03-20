@@ -24,6 +24,6 @@ public class FontEditText extends EditText{
     }
 
     private void init() {
-        setTypeface(Typeface.createFromAsset(getContext().getAssets(), "fonts/Roboto-Light.ttf"));
+        setTypeface(Typeface.createFromAsset(getContext().getAssets(), "fonts/Roboto-Regular.ttf"));
     }
 }
