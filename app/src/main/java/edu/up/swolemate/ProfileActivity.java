@@ -38,7 +38,6 @@ public class ProfileActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-<<<<<<< HEAD
 
         setContentView(R.layout.activity_profile);
         TextView nameView = (TextView)findViewById(R.id.userNameText);
@@ -54,17 +53,6 @@ public class ProfileActivity extends Activity {
             unitSwitch.setChecked(true);
         }
 
-
-=======
-        setContentView(R.layout.profile_activity);
-        //get the user info TextViews
-        TextView nameView = (TextView)findViewById(R.id.userNameText);
-        TextView heightView = (TextView)findViewById(R.id.userHeight);
-        TextView weightView = (TextView)findViewById(R.id.userWeight);
-        //get the user's stored information
-        SharedPreferences settings = getSharedPreferences("user_settings", 0);
-        //display the user's information
->>>>>>> daniel
         nameView.setText(settings.getString("name", ""));
         heightView.setText(settings.getString("height", ""));
         weightView.setText(settings.getString("weight", ""));
