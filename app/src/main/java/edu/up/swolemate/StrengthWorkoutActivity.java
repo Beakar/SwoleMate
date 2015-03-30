@@ -29,6 +29,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import java.net.ContentHandler;
@@ -50,6 +51,7 @@ public class StrengthWorkoutActivity extends Activity  implements View.OnClickLi
     StrengthExerciseDialogFragment createDialog;
     FragmentManager fragManager;
     Context context = this;
+    ExerciseListAdapter exerciseListAdapter;
     //References the current workout being created
     protected StrengthWorkout currentWorkout;
 
@@ -68,6 +70,10 @@ public class StrengthWorkoutActivity extends Activity  implements View.OnClickLi
 
         currentWorkout = new StrengthWorkout("Test exercise");
         currentWorkout.initTestValues();
+
+        ListView exerciseList = (ListView) findViewById(R.id.strength_exercise_list);
+        exerciseListAdapter = new ExerciseListAdapter(this, currentWorkout.exercises);
+        exerciseList.setAdapter(exerciseListAdapter);
     }
 
 
@@ -117,7 +123,10 @@ public class StrengthWorkoutActivity extends Activity  implements View.OnClickLi
         db.insertWorkout(currentWorkout);
     }
 
-
+    public void addExerciseToWorkout(Exercise ex){
+        currentWorkout.addExercise(ex);
+        exerciseListAdapter.notifyDataSetChanged();
+    }
 
     /**
      * Deletes all records from the StrengthWorkouts table.
@@ -130,6 +139,44 @@ public class StrengthWorkoutActivity extends Activity  implements View.OnClickLi
         db.execSQL(query);
     }
 
+    public class ExerciseListAdapter extends BaseAdapter {
+
+        List<Exercise> exerciseList;
+        LayoutInflater inflater;
+        Context context;
+
+
+        public ExerciseListAdapter(Context context, List<Exercise> myList) {
+            this.exerciseList = myList;
+            this.context = context;
+            inflater = LayoutInflater.from(this.context);        // only context can also be used
+        }
+
+        @Override
+        public int getCount() {
+            return exerciseList.size();
+        }
+
+        @Override
+        public String getItem(int position) {
+            return exerciseList.get(position).getName();
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            if(convertView == null) {
+                convertView = inflater.inflate(R.layout.list_item_strength_workout_exercises, null);
+            }
+            TextView label = (TextView) convertView.findViewById(R.id.strength_exercise_list_item);
+            label.setText(exerciseList.get(position).getName());
+            return convertView;
+        }
+    }
 
 
 }
