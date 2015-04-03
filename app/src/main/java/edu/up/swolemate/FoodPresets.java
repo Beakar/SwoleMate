@@ -3,7 +3,6 @@ package edu.up.swolemate;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.List;
 
 /**
  * Created by Daniel on 2/5/2015.
@@ -13,7 +12,7 @@ public class FoodPresets {
      * The ArrayList containing the preset food items.
      */
     protected ArrayList<FoodItem> foodPresets;
-    protected Hashtable<String, FoodItem> presetsTable;
+    protected Hashtable<String, FoodItem> foodPresetsTable;
 
     /**
      * Initializes an empty FoodPresets object
@@ -262,14 +261,12 @@ public class FoodPresets {
 
     /**
      * Returns the requested FoodItem
-     * @param item -- The FoodItem requested
+     * @param item -- The name of the FoodItem requested
      * @return -- The requested FoodItem
      */
-    protected FoodItem getFoodPreset(FoodItem item){
-        //index of the food item
-        int index = foodPresets.indexOf(item);
-
-       return this.foodPresets.get(index);
+    protected FoodItem getFoodPreset(String item){
+        //return the FoodItem with the given name
+        return this.foodPresetsTable.get(item);
     }
 
 
@@ -277,8 +274,8 @@ public class FoodPresets {
      * Gets the FoodPresets table.
      * @return -- The FoodPresets Hashtable.
      */
-    protected Hashtable getPresetsTable(){
-        return this.presetsTable;
+    protected Hashtable getFoodPresetsTable(){
+        return this.foodPresetsTable;
     }
 
 
@@ -286,9 +283,9 @@ public class FoodPresets {
      * Initializes the FoodPresets table.
      */
     protected void initPresetsTable(){
-        presetsTable = new Hashtable<String, FoodItem>();
+        foodPresetsTable = new Hashtable<String, FoodItem>();
         for(FoodItem food : foodPresets){
-            presetsTable.put(food.getFoodType(), food);
+            foodPresetsTable.put(food.getFoodType(), food);
         }
     }
 
