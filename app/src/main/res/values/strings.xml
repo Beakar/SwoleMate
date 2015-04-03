@@ -5,12 +5,14 @@
     <string name="app_name">swolemate</string>
     <string name="cardio">cardio</string>
     <string name="custom">custom</string>
+    <string name="delExerciseText">Delete Exercise</string>
     <string name="strength">strength</string>
     <string name="new_meal">new meal</string>
     <string name="new_workout">new workout</string>
     <string name="save_workout">save workout</string>
     <string name="create_new_workout">create new workout</string>
     <string name="enter_info_request">please enter some basic information below:</string>
+    <string name="exercise_search">Exercise search...</string>
     <string name="privacy_disclaimer">swolemate won\'t collect any of this data; it is purely for your own personal app experience.</string>
     <string name="finish">finish</string>
     <string name="open">open</string>

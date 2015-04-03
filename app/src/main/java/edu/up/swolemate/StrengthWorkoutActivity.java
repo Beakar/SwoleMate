@@ -13,10 +13,12 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
@@ -38,7 +40,7 @@ import java.util.HashMap;
 import java.util.List;
 
 
-public class StrengthWorkoutActivity extends Activity  implements View.OnClickListener {
+public class StrengthWorkoutActivity extends Activity  implements OnClickListener {
 
 //    #######################################################################################
 //    DELETE THESE EVENTUALLY, BUT THEY'RE HELPFUL FOR NOW

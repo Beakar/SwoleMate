@@ -12,7 +12,6 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 
 import java.util.ArrayList;
 
@@ -30,6 +29,12 @@ public class MealEntryActivity extends Activity implements OnClickListener, Adap
     Button delPresetButton;
 
 
+    /**
+     * Alerts the user that they have unsaved information, and
+     * asks if the user is sure that they want to leave the page.
+     * @param foodName
+     * @return
+     */
     private boolean alertUnsaved(String foodName){
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
         alertBuilder.setTitle("Unsaved information");

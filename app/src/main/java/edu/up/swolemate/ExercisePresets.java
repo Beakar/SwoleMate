@@ -14,6 +14,7 @@ public class ExercisePresets {
     public ExercisePresets(){
         strengthPresets = new ArrayList<Exercise>();
         aerobicPresets = new ArrayList<Exercise>();
+        exercisePresets = new ArrayList<Exercise>();
 
         /*
          * Add the strength workout presets
