@@ -41,24 +41,45 @@ public class ProfileActivity extends Activity implements View.OnClickListener{
         final FontTextView displayName = (FontTextView)findViewById(R.id.userNameText);
         final FontTextView displayHeight = (FontTextView)findViewById(R.id.userHeight);
         final FontTextView displayWeight = (FontTextView)findViewById(R.id.userWeight);
-        //final EditText heightEdit = (EditText)findViewById(R.id.edit_height);
-       // final EditText weightEdit = (EditText)findViewById(R.id.edit_weight);
+
+        final SharedPreferences settings = getSharedPreferences("user_settings", 0);
+        final SharedPreferences.Editor editor = settings.edit();
+
+        final FirstTimeActivity fta = new FirstTimeActivity();
+        final ProfileActivity profile = new ProfileActivity();
 
         alertBuilder.setView(profileEditView);
         alertBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener(){
             public void onClick(DialogInterface dialog, int id){
-                SharedPreferences.Editor editor = settings.edit();
-                //ProfileActivity profile = new ProfileActivity();
-                System.out.println(nameEdit.getText().toString());
-                editor.putString("name", nameEdit.getText().toString());
-                if(!nameEdit.getText().toString().equals("")) {
-                    displayName.setText(nameEdit.getText().toString());
+                String name = nameEdit.getText().toString();
+                String height = heightEdit.getText().toString();
+                String weight = weightEdit.getText().toString();
+
+                if(!name.equals("")) {
+                    displayName.setText(name);
+                    editor.putString("name", name);
+                    editor.putString("greeting", "Hello, " + name);
+                    editor.commit();
                 }
-                if(!heightEdit.getText().toString().equals("")) {
-                    displayHeight.setText(heightEdit.getText().toString());
+                if(!height.equals("")) {
+                    if(fta.checkHeightFormat(height)) {
+                        displayHeight.setText(height);
+                        editor.putString("height", height);
+                        editor.commit();
+                    }
+                    else{
+                        alertHeightWrong();
+                    }
                 }
-                if(!weightEdit.getText().toString().equals("")) {
-                    displayWeight.setText(weightEdit.getText().toString());
+                if(!weight.equals("")) {
+                    if(fta.checkWeightFormat(weight)) {
+                        displayWeight.setText(weightEdit.getText().toString());
+                        editor.putString("weight", weightEdit.getText().toString());
+                        editor.commit();
+                    }
+                    else{
+                        alertWeightWrong();
+                    }
                 }
             }
         });
@@ -67,11 +88,57 @@ public class ProfileActivity extends Activity implements View.OnClickListener{
         alert.show();
     }
 
+
+    /**
+     * alertHeightWrong()
+     *
+     * Description: Alerts the user they entered the height in the wrong format.
+     */
+    private void alertHeightWrong(){
+        //create the builder
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+        alertBuilder.setTitle("Incorrect height format.");
+        alertBuilder.setMessage("Your height must be entered in the following format: (ie. 5-10");
+
+        //make the "OK" button
+        alertBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener(){
+            public void onClick(DialogInterface dialog, int id){
+            }
+        });
+
+        //create the alert
+        AlertDialog alert = alertBuilder.create();
+        alert.show();
+    }
+
+
+    /**
+     * alertWeightWrong()
+     *
+     * Description: Alerts the user they entered the weight in the wrong format.
+     */
+    private void alertWeightWrong(){
+        //create the builder
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+        alertBuilder.setTitle("Incorrect weight format.");
+        alertBuilder.setMessage("Your weight must be entered in the following format: (ie. 180");
+
+        //make the "OK" button
+        alertBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener(){
+            public void onClick(DialogInterface dialog, int id){
+            }
+        });
+
+        //create the alert
+        AlertDialog alert = alertBuilder.create();
+        alert.show();
+    }
+
     @Override
     public void onClick(View v){
         if(v.getId() == R.id.edit_profile){
-System.out.println("EDIT PROFILE CLICKED");
             alertEditProfile();
+            SharedPreferences DELETE_ME = getSharedPreferences("user_settings", 0);
         }
     }
 

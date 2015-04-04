@@ -107,15 +107,15 @@ public class FirstTimeActivity extends Activity {
 
 
     /**
-     * alertHeightWrong()
+     * alertWeightWrong()
      *
-     * Description: Alerts the user they entered the height in the wrong format.
+     * Description: Alerts the user they entered the weight in the wrong format.
      */
-    private void alertHeightWrong(){
+    private void alertWeightWrong(){
         //create the builder
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
-        alertBuilder.setTitle("Incorrect height format.");
-        alertBuilder.setMessage("Your height must be entered in the following format: (ie. 5-10");
+        alertBuilder.setTitle("Incorrect weight format.");
+        alertBuilder.setMessage("Your weight must be entered in the following format: (ie. 180");
 
         //make the "OK" button
         alertBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener(){
@@ -130,15 +130,15 @@ public class FirstTimeActivity extends Activity {
 
 
     /**
-     * alertWeightWrong()
+     * alertHeightWrong()
      *
-     * Description: Alerts the user they entered the weight in the wrong format.
+     * Description: Alerts the user they entered the height in the wrong format.
      */
-    private void alertWeightWrong(){
+    private void alertHeightWrong(){
         //create the builder
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
-        alertBuilder.setTitle("Incorrect weight format.");
-        alertBuilder.setMessage("Your weight must be entered in the following format: (ie. 180");
+        alertBuilder.setTitle("Incorrect height format.");
+        alertBuilder.setMessage("Your height must be entered in the following format: (ie. 5-10");
 
         //make the "OK" button
         alertBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener(){
@@ -215,7 +215,7 @@ public class FirstTimeActivity extends Activity {
      * @param height -- The user-entered height
      * @return success/failure
      */
-    private boolean checkHeightFormat(String height){
+    protected boolean checkHeightFormat(String height){
         //regex: 1-2 digits, any whitespace, '-', any whitespace, 1-2 digits.
         Pattern regex = Pattern.compile("\\d{1,2}\\s*\\-\\s*\\d{1,2}");
         Matcher matcher = regex.matcher(height.trim());
@@ -234,7 +234,7 @@ public class FirstTimeActivity extends Activity {
      * @param weight -- The user-entered weight.
      * @return success/failure
      */
-    private boolean checkWeightFormat(String weight){
+    protected boolean checkWeightFormat(String weight){
         //regex: 1-3 digits
         Pattern regex = Pattern.compile("\\d{1,3}");
         Matcher matcher = regex.matcher(weight.trim());
@@ -291,12 +291,10 @@ public class FirstTimeActivity extends Activity {
         //if either the height or weight fields are empty, alert the
         //user and ask to proceed.
         if(heightText.equals("") || weightText.equals("")){
-            System.out.println("***** ONE OF THESE IS NOT LIKE THE OTHER");
             alertEmptyHeightWeight(nameText, heightText, weightText);
             return;
         }
         //otherwise, everything should be good to go. take user to home activity.
-        System.out.println("****!@$#RWERFGQ@#$WAGF@#W$ESD");
         goToHomeActivity();
         //saveUserInput();
     }
@@ -312,6 +310,7 @@ public class FirstTimeActivity extends Activity {
         editor.putString("height", height);
         editor.putString("weight", weight);
         editor.putString("units", "imperial");
+        editor.putString("greeting", "Hello, " + name);
 
         editor.commit();
     }
