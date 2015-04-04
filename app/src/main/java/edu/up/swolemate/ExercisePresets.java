@@ -34,7 +34,7 @@ public class ExercisePresets {
         Exercise benchPressMachine = new Exercise("Bench Press (machine)");
         strengthPresets.add(benchPressMachine);
 
-        Exercise bentOverRowBB = new Exercise("Bent OVer Row (barbell)");
+        Exercise bentOverRowBB = new Exercise("Bent Over Row (barbell)");
         strengthPresets.add(bentOverRowBB);
 
         Exercise bentOverRowBBSupinated = new Exercise("Bent Over Row (barbell, supinated grip)");

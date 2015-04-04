@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="action_settings">settings</string>
+    <string name="add_new_exercise">Add new exercise</string>
     <string name="add_new_food">add new food item</string>
     <string name="app_name">swolemate</string>
     <string name="cardio">cardio</string>
@@ -13,18 +14,18 @@
     <string name="create_new_workout">create new workout</string>
     <string name="enter_info_request">please enter some basic information below:</string>
     <string name="exercise_search">Exercise search...</string>
-    <string name="privacy_disclaimer">swolemate won\'t collect any of this data; it is purely for your own personal app experience.</string>
-    <string name="finish">finish</string>
+    <string name="privacy_disclaimer">Swolemate won\'t collect any of this data; it is purely for your own personal app experience.</string>
+    <string name="finish">Finish</string>
     <string name="open">open</string>
     <string name="delete">delete</string>
     <string name="show">show</string>
     <string name="sort">sort</string>
     <string name="type">type</string>
     <string name="create">create</string>
-    <string name="hello_user">hello, user</string>
-    <string name="workout_name">workout name</string>
-    <string name="other">other</string>
-    <string name="strength_workout">strength Workout</string>
+    <string name="hello_user">Hello, user</string>
+    <string name="workout_name">Workout name</string>
+    <string name="other">Other</string>
+    <string name="strength_workout">Strength workout</string>
     <string name="user_name">daniel</string>
 
     <string name="user_height">5&quot; 10&apos;</string>
@@ -52,7 +53,12 @@
     <string name="protein">Protein</string>
     <string name="number_of_reps"># of Reps</string>
     <string name="save_set">Save set</string>
-    <string name="add_set_button_text">Add new set</string>
+    <string name="add_set_button_text">Add set</string>
     <string name="save_exercise_button_text">Save exercise</string>
+    <string name="see_more">see more</string>
+    <string name="edit_profile">edit profile</string>
+    <string name="edit_name_text">Edit name</string>
+    <string name="edit_height_text">Edit height</string>
+    <string name="edit_weight_text">Edit weight</string>
 
 </resources>

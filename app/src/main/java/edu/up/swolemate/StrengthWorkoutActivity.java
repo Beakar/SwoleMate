@@ -47,13 +47,30 @@ public class StrengthWorkoutActivity extends Activity  implements OnClickListene
 //    http://www.vogella.com/tutorials/AndroidListView/article.html#androidlists_inputtype
 //    http://www.codelearn.org/android-tutorial/android-listview
 //    #######################################################################################
-    Button createExerciseButton;
-    Button finishButton;
-    StrengthExerciseDialogFragment createDialog;
-    FragmentManager fragManager;
-    Context context = this;
+    private Button createExerciseButton;
+    private Button finishButton;
+    private StrengthExerciseDialogFragment createDialog;
+    private FragmentManager fragManager;
+    private Context context = this;
+    private EditText workoutNameEditText;
     //References the current workout being created
     protected StrengthWorkout currentWorkout;
+
+
+    /**
+     * Alerts the user that they are trying to save a workout
+     * with an empty title.
+     */
+    private void alertUnsaved(){
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+        alertBuilder.setTitle("Empty workout name");
+        alertBuilder.setMessage("Your must enter a workout name before saving.");
+        alertBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener(){
+            public void onClick(DialogInterface dialog, int id){
+            }
+        });
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +86,9 @@ public class StrengthWorkoutActivity extends Activity  implements OnClickListene
         createExerciseButton.setOnClickListener(this);
 
         currentWorkout = new StrengthWorkout("Test exercise");
-        currentWorkout.initTestValues();
+
+        workoutNameEditText = (EditText)findViewById(R.id.enter_workout_name);
+        //currentWorkout.initTestValues();
     }
 
 
@@ -77,7 +96,11 @@ public class StrengthWorkoutActivity extends Activity  implements OnClickListene
     @Override
     public void onClick(View v){
         if(v.getId() == R.id.finishButton1){
-            Log.e("Logged Button pressed","finish");
+System.out.println("TEST");
+System.out.println(workoutNameEditText.getText().toString());
+            if(workoutNameEditText.getText().toString().equals("")){
+                alertUnsaved();
+            }
 
         }
         if(v.getId() == R.id.newStrengthExercise){
