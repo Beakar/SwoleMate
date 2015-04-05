@@ -46,9 +46,12 @@ public class StrengthExerciseDialogFragment extends DialogFragment implements On
             //currentExercise.deleteSet();
         }
         else if(v.getId() == R.id.save_exercise_button){
-           // StrengthWorkoutActivity strengthActivity = new StrengthWorkoutActivity();
-            //strengthActivity.strengthList.add(currentExercise);
-            //strengthActivity.listAdapter.notifyDataSetChanged();
+            /**
+             * THIS ISN'T WORKING!!!!!!!!!!!!!1
+             */
+            /*StrengthWorkoutActivity strengthActivity = new StrengthWorkoutActivity();
+            strengthActivity.strengthList.add(currentExercise);
+            strengthActivity.listAdapter.notifyDataSetChanged();*/
         }
     }
 
@@ -83,11 +86,17 @@ public class StrengthExerciseDialogFragment extends DialogFragment implements On
         builder.setView(view);
 
         Button addSetButton = (Button) view.findViewById(R.id.new_set_button);
-        addSetButton.setOnClickListener(new View.OnClickListener() {
+        Button saveExerciseButton = (Button)view.findViewById(R.id.save_exercise_button);
+        Button deleteExerciseButton = (Button)view.findViewById(R.id.delete_exercise_button);
+        addSetButton.setOnClickListener(this);
+        saveExerciseButton.setOnClickListener(this);
+        deleteExerciseButton.setOnClickListener(this);
+       /* addSetButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
+                currentExercise.addSet(new ExerciseSubset(0, 0));
+                setsListAdapter.notifyDataSetChanged();
             }
-        });
+        });*/
         // Create the AlertDialog object and return it
         return builder.create();
     }
