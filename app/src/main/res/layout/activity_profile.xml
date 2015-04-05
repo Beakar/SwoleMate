@@ -78,7 +78,6 @@
                         android:id="@+id/userWeight"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/user_weight"
                         android:textSize="50dp" />
 
                     <edu.up.swolemate.FontTextView
@@ -112,7 +111,6 @@
                     android:layout_height="wrap_content"
                     android:layout_alignLeft="@+id/userWeight"
                     android:layout_below="@+id/userWeight"
-                    android:text="@string/user_height"
                     android:textSize="50sp" />
             </LinearLayout>
 

@@ -18,10 +18,12 @@
     <string name="edit_name_text">Edit name</string>
     <string name="edit_weight_text">Edit weight</string>
     <string name="enter_info_request">Please enter some basic information below:</string>
+    <string name="enter_height_request">Enter your height (ft.-in.)</string>
+    <string name="enter_name_request">Enter your name</string>
+    <string name="enter_weight_request">Enter your weight (lbs)</string>
     <string name="exercise_search">Exercise search...</string>
     <string name="fat">Fat</string>
     <string name="finish">Finish</string>
-    <string name="strength">Strength</string>
     <string name="new_meal">New meal</string>
     <string name="new_workout">New workout</string>
     <string name="number_of_reps"># of Reps</string>
@@ -36,6 +38,7 @@
     <string name="see_more">See more</string>
     <string name="show">Show</string>
     <string name="sort">Sort</string>
+    <string name="strength">Strength</string>
     <string name="strength_workout">Strength workout</string>
     <string name="title_activity_cardio_workout">Cardio Workout</string>
     <string name="title_activity_custom_workout">Custom Workout</string>

@@ -259,43 +259,47 @@ public class FirstTimeActivity extends Activity {
             //The name field is empty
             if(nameText.equals("")){
                 alertName();
+                return;
             }
             else {
-                //The height is in the wrong format
-                if (!checkHeightFormat(heightText)) {
+                //if the height isn't empty, check the format
+                if(!heightText.equals("")) {
+                    //The height is in the wrong format. Alert the user
+                    if (!checkHeightFormat(heightText)) {
                         alertHeightWrong();
+                        return;
+                    }
                 }
-                //The weight is in the wrong format
-                else if (!checkWeightFormat(weightText)) {
+                //if the user entered their weight, check the format
+                if(!weightText.equals("")){
+                    //if the weight is in the wrong format, alert the user
+                    if(!checkWeightFormat(weightText)){
                         alertWeightWrong();
+                        return;
+                    }
+                    saveUserInput(nameText, heightText, weightText);
+                    Intent myIntent = new Intent(FirstTimeActivity.this, MainActivity.class);
+                    startActivity(myIntent);
                 }
                 //if either the height or weight fields are empty, alert the
                 //user and ask to proceed.
                 else if(heightText.equals("") || weightText.equals("")) {
                     alertEmptyHeightWeight(nameText, heightText,weightText);
+                    return;
                 }
                 else {
-                    saveUserInput(nameText, heightText, weightText);
-                    Intent myIntent = new Intent(FirstTimeActivity.this, MainActivity.class);
-                    startActivity(myIntent);
+
                 }
             }
         }
-        //if the user entered their weight, check the format
-        if(!weightText.equals("")){
-            if(!checkWeightFormat(weightText)){
-                alertWeightWrong();
-                return;
-            }
-        }
-        //if either the height or weight fields are empty, alert the
+/*        //if either the height or weight fields are empty, alert the
         //user and ask to proceed.
-        if(heightText.equals("") || weightText.equals("")){
+        else if(heightText.equals("") || weightText.equals("")){
             alertEmptyHeightWeight(nameText, heightText, weightText);
             return;
-        }
+        }*/
         //otherwise, everything should be good to go. take user to home activity.
-        goToHomeActivity();
+       // goToHomeActivity();
         //saveUserInput();
     }
 
@@ -303,8 +307,6 @@ public class FirstTimeActivity extends Activity {
              * saves user input to shared preferences
              */
     private void saveUserInput(String name, String height, String weight){
-        boolean success = false;
-
         SharedPreferences.Editor editor = settings.edit();
         editor.putString("name", name);
         editor.putString("height", height);
