@@ -58,6 +58,13 @@ public class Exercise {
         this.sets.add(set);
     }
 
+
+    public void deleteSet(ExerciseSubset set){
+        numSets--;
+       // set.setSetNum(numSets);
+        this.sets.remove(set);
+    }
+
     /**
      * Gets the list of sets for this exercise.
      * @return

@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
@@ -55,6 +56,9 @@ public class StrengthWorkoutActivity extends Activity  implements OnClickListene
     private EditText workoutNameEditText;
     //References the current workout being created
     protected StrengthWorkout currentWorkout;
+    protected ListView exListView;
+    protected ArrayList<Exercise> strengthList;
+    protected ArrayAdapter<Exercise> listAdapter;
 
 
     /**
@@ -69,6 +73,8 @@ public class StrengthWorkoutActivity extends Activity  implements OnClickListene
             public void onClick(DialogInterface dialog, int id){
             }
         });
+        AlertDialog alert = alertBuilder.create();
+        alert.show();
     }
 
 
@@ -88,6 +94,11 @@ public class StrengthWorkoutActivity extends Activity  implements OnClickListene
         currentWorkout = new StrengthWorkout("Test exercise");
 
         workoutNameEditText = (EditText)findViewById(R.id.enter_workout_name);
+
+        exListView = (ListView)findViewById(R.id.strengthList);
+        strengthList = new ArrayList<Exercise>();
+        listAdapter = new ArrayAdapter<Exercise>(this, android.R.layout.simple_dropdown_item_1line, strengthList);
+        exListView.setAdapter(listAdapter);
         //currentWorkout.initTestValues();
     }
 
@@ -96,10 +107,10 @@ public class StrengthWorkoutActivity extends Activity  implements OnClickListene
     @Override
     public void onClick(View v){
         if(v.getId() == R.id.finishButton1){
-System.out.println("TEST");
-System.out.println(workoutNameEditText.getText().toString());
+            //if the workout name is empty, alert the user
             if(workoutNameEditText.getText().toString().equals("")){
                 alertUnsaved();
+                return;
             }
 
         }
