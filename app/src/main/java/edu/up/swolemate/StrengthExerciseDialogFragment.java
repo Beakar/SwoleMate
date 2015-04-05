@@ -55,12 +55,14 @@ public class StrengthExerciseDialogFragment extends DialogFragment implements On
         setsListAdapter = new ExpandableSetListAdapter(getActivity(),currentExercise);
         setsListView.setAdapter(setsListAdapter);
 
+        //get the exercise presets and their names
         ExercisePresets presets = new ExercisePresets();
         ArrayList<String> names = presets.getExerciseNames(presets.exercisePresets);
-
+        //set the ArrayAdapter to search for an exercise
         arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_dropdown_item_1line, names);
         exSearchEditText = (AutoCompleteTextView)view.findViewById(R.id.exercise_search);
         exSearchEditText.setAdapter(arrayAdapter);
+
         exSearchEditText.setOnClickListener(this);
 
         // Use the Builder class for convenient dialog construction

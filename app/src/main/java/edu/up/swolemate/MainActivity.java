@@ -25,7 +25,6 @@ public class MainActivity extends Activity{
         setContentView(R.layout.activity_main);
 
         SharedPreferences settings = getSharedPreferences("user_settings", 0);
-       // SharedPreferences.Editor editor = settings.edit();
         TextView greeting = (TextView)findViewById(R.id.userGreeting);
         greeting.setText(settings.getString("greeting", "Hello, user"));
     }
