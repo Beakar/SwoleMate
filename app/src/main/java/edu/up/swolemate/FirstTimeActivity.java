@@ -236,7 +236,7 @@ public class FirstTimeActivity extends Activity {
      */
     protected boolean checkWeightFormat(String weight){
         //regex: 1-3 digits
-        Pattern regex = Pattern.compile("\\d{1,3}");
+        Pattern regex = Pattern.compile("\\d{1,4}");
         Matcher matcher = regex.matcher(weight.trim());
         if(!weight.equals("")){
             return matcher.matches();
@@ -248,7 +248,7 @@ public class FirstTimeActivity extends Activity {
 
     /**
      * Handles the click action for the button in this activity.
-     * @param view
+     * @param view -- The view parameter
      */
     public void onSaveClick(View view) {
         String nameText = nameEditText.getText().toString().trim();
@@ -287,25 +287,16 @@ public class FirstTimeActivity extends Activity {
                     alertEmptyHeightWeight(nameText, heightText,weightText);
                     return;
                 }
-                else {
-
-                }
             }
         }
-/*        //if either the height or weight fields are empty, alert the
-        //user and ask to proceed.
-        else if(heightText.equals("") || weightText.equals("")){
-            alertEmptyHeightWeight(nameText, heightText, weightText);
-            return;
-        }*/
-        //otherwise, everything should be good to go. take user to home activity.
-       // goToHomeActivity();
-        //saveUserInput();
     }
 
-            /**
-             * saves user input to shared preferences
-             */
+    /**
+     * saves user input to shared preferences
+     * @param name -- The user's name
+     * @param height -- The user's height
+     * @param weight -- The user's weight
+     */
     private void saveUserInput(String name, String height, String weight){
         SharedPreferences.Editor editor = settings.edit();
         editor.putString("name", name);
