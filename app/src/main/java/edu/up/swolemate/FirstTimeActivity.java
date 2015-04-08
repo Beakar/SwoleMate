@@ -217,7 +217,10 @@ public class FirstTimeActivity extends Activity {
      */
     protected boolean checkHeightFormat(String height){
         //regex: 1-2 digits, any whitespace, '-', any whitespace, 1-2 digits.
-        Pattern regex = Pattern.compile("\\d{1,2}\\s*\\-\\s*\\d{1,2}");
+        //Also accepts whitespace in-between the numbers and dash.
+        Pattern regex = Pattern.compile("\\s*\\d{1,32}\\s*\\-\\s*\\d{1,2}\\s*");
+        //metric regex: 1 digit, a period, followed by a max of 3 numbers.
+        //Pattern regex = Pattern.compile("\\s*\\d{1}\\.\\d{1,3}\\s*");
         Matcher matcher = regex.matcher(height.trim());
         if(!height.equals("")){
             return matcher.matches();
@@ -277,6 +280,9 @@ public class FirstTimeActivity extends Activity {
                         alertWeightWrong();
                         return;
                     }
+                    //remove all of the whitespace from the height and weight
+                    heightText.replaceAll("\\s+","");
+                    weightText.replaceAll("\\s+", "");
                     saveUserInput(nameText, heightText, weightText);
                     Intent myIntent = new Intent(FirstTimeActivity.this, MainActivity.class);
                     startActivity(myIntent);
