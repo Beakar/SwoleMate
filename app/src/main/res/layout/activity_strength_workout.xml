@@ -21,7 +21,7 @@
 
         <!--Don't want to use a static height here, messes with rotation-->
         <ListView
-            android:id="@+id/strengthList"
+            android:id="@+id/strength_exercise_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/list_border_width"

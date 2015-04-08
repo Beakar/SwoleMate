@@ -13,6 +13,10 @@ public class ExerciseSubset {
 
     protected int numReps;
 
+    public ExerciseSubset() {
+
+    }
+
     public ExerciseSubset(double weight, int numReps) {
         this.weight = weight;
         this.numReps = numReps;

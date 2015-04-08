@@ -4,12 +4,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-    <AutoCompleteTextView
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/exercise_search"
-        android:hint="@string/exercise_search"/>
+        android:layout_height="fill_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Name: "
+            android:id="@+id/exercise_label"
+            android:textSize="24dp" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/exercise_name"
+            android:textSize="24dp"
+            android:inputType="text"
+            android:hint="exercise name" />
+    </LinearLayout>
 
     <ExpandableListView
         android:id="@+id/sets_list"
@@ -34,15 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/save_exercise_button_text"
-            android:id="@+id/save_exercise_button" />
-
-        <Button
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/delExerciseText"
-            android:id="@+id/delete_exercise_button" />
-
+            android:id="@+id/save_new_strength_exercise_button" />
     </LinearLayout>
 
 </LinearLayout>
