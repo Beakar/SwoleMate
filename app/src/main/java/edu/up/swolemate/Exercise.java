@@ -21,6 +21,7 @@ public class Exercise {
      */
     public Exercise() {
         sets = new ArrayList<ExerciseSubset>();
+        sets.add(new ExerciseSubset());
     }
 
     /**

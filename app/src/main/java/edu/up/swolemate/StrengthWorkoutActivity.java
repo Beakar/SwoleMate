@@ -13,13 +13,10 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
@@ -32,6 +29,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import java.net.ContentHandler;
@@ -41,42 +39,21 @@ import java.util.HashMap;
 import java.util.List;
 
 
-public class StrengthWorkoutActivity extends Activity  implements OnClickListener {
+public class StrengthWorkoutActivity extends Activity  implements View.OnClickListener {
 
-//    #######################################################################################
+    //    #######################################################################################
 //    DELETE THESE EVENTUALLY, BUT THEY'RE HELPFUL FOR NOW
 //    http://www.vogella.com/tutorials/AndroidListView/article.html#androidlists_inputtype
 //    http://www.codelearn.org/android-tutorial/android-listview
 //    #######################################################################################
-    private Button createExerciseButton;
-    private Button finishButton;
-    private StrengthExerciseDialogFragment createDialog;
-    private FragmentManager fragManager;
-    private Context context = this;
-    private EditText workoutNameEditText;
+    Button createExerciseButton;
+    Button finishButton;
+    StrengthExerciseDialogFragment createDialog;
+    FragmentManager fragManager;
+    Context context = this;
+    ExerciseListAdapter exerciseListAdapter;
     //References the current workout being created
     protected StrengthWorkout currentWorkout;
-    protected ListView exListView;
-    protected ArrayList<Exercise> strengthList;
-    protected ArrayAdapter<Exercise> listAdapter;
-
-
-    /**
-     * Alerts the user that they are trying to save a workout
-     * with an empty title.
-     */
-    private void alertUnsaved(){
-        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
-        alertBuilder.setTitle("Empty workout name");
-        alertBuilder.setMessage("Your must enter a workout name before saving.");
-        alertBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener(){
-            public void onClick(DialogInterface dialog, int id){
-            }
-        });
-        AlertDialog alert = alertBuilder.create();
-        alert.show();
-    }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,14 +69,11 @@ public class StrengthWorkoutActivity extends Activity  implements OnClickListene
         createExerciseButton.setOnClickListener(this);
 
         currentWorkout = new StrengthWorkout("Test exercise");
+        currentWorkout.initTestValues();
 
-        workoutNameEditText = (EditText)findViewById(R.id.enter_workout_name);
-
-        exListView = (ListView)findViewById(R.id.strengthList);
-        strengthList = new ArrayList<Exercise>();
-        listAdapter = new ArrayAdapter<Exercise>(this, android.R.layout.simple_dropdown_item_1line, strengthList);
-        exListView.setAdapter(listAdapter);
-        //currentWorkout.initTestValues();
+        ListView exerciseList = (ListView) findViewById(R.id.strength_exercise_list);
+        exerciseListAdapter = new ExerciseListAdapter(this, currentWorkout.exercises);
+        exerciseList.setAdapter(exerciseListAdapter);
     }
 
 
@@ -107,11 +81,7 @@ public class StrengthWorkoutActivity extends Activity  implements OnClickListene
     @Override
     public void onClick(View v){
         if(v.getId() == R.id.finishButton1){
-            //if the workout name is empty, alert the user
-            if(workoutNameEditText.getText().toString().equals("")){
-                alertUnsaved();
-                return;
-            }
+            Log.e("Logged Button pressed","finish");
 
         }
         if(v.getId() == R.id.newStrengthExercise){
@@ -153,7 +123,10 @@ public class StrengthWorkoutActivity extends Activity  implements OnClickListene
         db.insertWorkout(currentWorkout);
     }
 
-
+    public void addExerciseToWorkout(Exercise ex){
+        currentWorkout.addExercise(ex);
+        exerciseListAdapter.notifyDataSetChanged();
+    }
 
     /**
      * Deletes all records from the StrengthWorkouts table.
@@ -166,6 +139,51 @@ public class StrengthWorkoutActivity extends Activity  implements OnClickListene
         db.execSQL(query);
     }
 
+    public class ExerciseListAdapter extends BaseAdapter {
+
+        List<Exercise> exerciseList;
+        LayoutInflater inflater;
+        Context context;
+
+
+        public ExerciseListAdapter(Context context, List<Exercise> myList) {
+            this.exerciseList = myList;
+            this.context = context;
+            inflater = LayoutInflater.from(this.context);        // only context can also be used
+        }
+
+        @Override
+        public int getCount() {
+            return exerciseList.size();
+        }
+
+        @Override
+        public String getItem(int position) {
+            return exerciseList.get(position).getName();
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(final int position, View convertView, ViewGroup parent) {
+            if(convertView == null) {
+                convertView = inflater.inflate(R.layout.list_item_strength_workout_exercises, null);
+            }
+            TextView label = (TextView) convertView.findViewById(R.id.strength_exercise_list_item);
+            Button removeButton = (Button) convertView.findViewById(R.id.remove_exercise_button);
+            removeButton.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    currentWorkout.removeExercise(getItem(position));
+                    notifyDataSetChanged();
+                }
+            });
+            label.setText(exerciseList.get(position).getName());
+            return convertView;
+        }
+    }
 
 
 }

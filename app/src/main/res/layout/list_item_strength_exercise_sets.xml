@@ -23,6 +23,13 @@
         android:paddingRight="8dp"
         android:paddingLeft="8dp" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Weight"
+        android:id="@+id/textView" />
+
     <EditText
         android:id="@+id/rep_input"
         android:layout_width="wrap_content"
@@ -33,5 +40,12 @@
         android:inputType="number|numberDecimal"
         android:paddingRight="8dp"
         android:paddingLeft="8dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="# of Reps"
+        android:id="@+id/textView3" />
 
 </LinearLayout>
