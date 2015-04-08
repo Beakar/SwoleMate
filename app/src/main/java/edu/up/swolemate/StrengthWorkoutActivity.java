@@ -168,11 +168,18 @@ public class StrengthWorkoutActivity extends Activity  implements View.OnClickLi
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, ViewGroup parent) {
             if(convertView == null) {
                 convertView = inflater.inflate(R.layout.list_item_strength_workout_exercises, null);
             }
             TextView label = (TextView) convertView.findViewById(R.id.strength_exercise_list_item);
+            Button removeButton = (Button) convertView.findViewById(R.id.remove_exercise_button);
+            removeButton.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    currentWorkout.removeExercise(getItem(position));
+                    notifyDataSetChanged();
+                }
+            });
             label.setText(exerciseList.get(position).getName());
             return convertView;
         }
