@@ -7,6 +7,7 @@ import android.app.DialogFragment;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +15,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.BaseAdapter;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
@@ -61,6 +64,9 @@ public class StrengthWorkoutActivity extends Activity  implements View.OnClickLi
         getActionBar().setDisplayHomeAsUpEnabled(true);
         super.onCreate(savedInstanceState);
         fragManager = getFragmentManager();
+
+        //lock the device in portrait mode
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         createDialog = new StrengthExerciseDialogFragment();
         createExerciseButton = (Button)findViewById(R.id.newStrengthExercise);

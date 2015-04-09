@@ -17,13 +17,12 @@
             android:id="@+id/exercise_label"
             android:textSize="24dp" />
 
-        <EditText
+        <AutoCompleteTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/exercise_name"
-            android:textSize="24dp"
-            android:inputType="text"
-            android:hint="exercise name" />
+            android:hint="@string/exercise_search"
+            android:id="@+id/exercise_search" />
+
     </LinearLayout>
 
     <ExpandableListView

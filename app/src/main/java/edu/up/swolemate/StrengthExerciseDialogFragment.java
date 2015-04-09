@@ -11,6 +11,9 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
@@ -29,6 +32,7 @@ public class StrengthExerciseDialogFragment extends DialogFragment {
     LayoutInflater inflater;
     View view;
     Exercise currentExercise;
+    AutoCompleteTextView exerciseSearchView;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -46,18 +50,20 @@ public class StrengthExerciseDialogFragment extends DialogFragment {
         setsListAdapter = new ExpandableSetListAdapter(getActivity(),currentExercise, setsListView);
         setsListView.setAdapter(setsListAdapter);
 
-        EditText exerciseName = (EditText) view.findViewById(R.id.exercise_name);
-        exerciseName.addTextChangedListener(new TextWatcher() {
-            public void afterTextChanged(Editable s) {
-            }
-
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.length() != 0) {
-                    currentExercise.setName(s.toString());
-                }
+        ExercisePresets presets = new ExercisePresets();
+        //get the names of all of the strength exercises
+        ArrayList<String> names = presets.getExerciseNames(presets.strengthPresets);
+        exerciseSearchView = (AutoCompleteTextView)view.findViewById(R.id.exercise_search);
+        //creates and then set the array adapter for the exercise names
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_dropdown_item_1line, names);
+        exerciseSearchView.setAdapter(arrayAdapter);
+        //gets the name of the exercise in the text field and sets the
+        //value of the text field and current exercise name to the chosen String.
+        exerciseSearchView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            public void onItemClick(AdapterView parent, View view, int position, long id){
+                String exName = (String)parent.getItemAtPosition(position);
+                exerciseSearchView.setText(exName);
+                currentExercise.setName(exName);
             }
         });
 
@@ -88,5 +94,13 @@ public class StrengthExerciseDialogFragment extends DialogFragment {
         // Create the AlertDialog object and return it
         return builder.create();
     }
+
+/*
+    @Override
+    public void onItemClick(AdapterView<?> arg0, View view, int position, long arg4){
+        {
+
+        }
+    }*/
 
 }

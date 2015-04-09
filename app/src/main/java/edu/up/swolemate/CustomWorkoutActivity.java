@@ -2,6 +2,7 @@ package edu.up.swolemate;
 
 import android.app.Activity;
 import android.content.ContentValues;
+import android.content.pm.ActivityInfo;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.Menu;
@@ -17,6 +18,8 @@ public class CustomWorkoutActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_custom_workout);
         currentWorkout = new CustomWorkout();
+        //lock the device in portrait mode
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         getActionBar().setDisplayHomeAsUpEnabled(true);
     }

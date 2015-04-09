@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -168,6 +169,9 @@ public class ProfileActivity extends Activity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_profile);
+
+        //lock the device in portrait mode
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         settings = getSharedPreferences("user_settings", 0);
        // nameEdit = (EditText)findViewById(R.id.edit_name);

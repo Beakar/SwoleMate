@@ -2,6 +2,7 @@ package edu.up.swolemate;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -47,6 +48,8 @@ public class MealEntryActivity extends Activity implements OnClickListener, Adap
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meal_entry);
 
+        //lock the device in portrait mode
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         /*
          * This section creates an array adapter, which populates the AutoCompleteEditText
          * with the value from the FoodPresets
