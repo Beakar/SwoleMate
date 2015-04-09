@@ -450,7 +450,7 @@ public class HistoryTrackingActivity extends Activity {
         ArrayList<BaseWorkout> cWorkouts = new ArrayList<BaseWorkout>();
 
         for(BaseWorkout workout : this.workouts) {
-            if(workout instanceof CardioWorkout) {
+            if(workout instanceof CustomWorkout) {
                 cWorkouts.add(workout);
             }
         }
