@@ -1,12 +1,9 @@
 package edu.up.swolemate;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
 import android.app.FragmentManager;
 import android.content.Context;
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,39 +13,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
-import android.widget.ExpandableListAdapter;
-import android.widget.ExpandableListView;
+import android.widget.EditText;
 import android.widget.ListView;
 
-import android.content.ContentValues;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
-import java.net.ContentHandler;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 
 public class StrengthWorkoutActivity extends Activity  implements View.OnClickListener {
 
-    //    #######################################################################################
+//    #######################################################################################
 //    DELETE THESE EVENTUALLY, BUT THEY'RE HELPFUL FOR NOW
 //    http://www.vogella.com/tutorials/AndroidListView/article.html#androidlists_inputtype
 //    http://www.codelearn.org/android-tutorial/android-listview
 //    #######################################################################################
     Button createExerciseButton;
     Button finishButton;
+    EditText nameEditText;
     StrengthExerciseDialogFragment createDialog;
     FragmentManager fragManager;
     Context context = this;
@@ -67,11 +51,11 @@ public class StrengthWorkoutActivity extends Activity  implements View.OnClickLi
         createDialog = new StrengthExerciseDialogFragment();
         createExerciseButton = (Button)findViewById(R.id.newStrengthExercise);
         finishButton = (Button)findViewById(R.id.finishButton1);
-        finishButton.setOnClickListener(this);
         createExerciseButton.setOnClickListener(this);
 
-        currentWorkout = new StrengthWorkout("Test exercise");
-        currentWorkout.initTestValues();
+        nameEditText = (EditText)findViewById(R.id.enter_workout_name);
+
+        currentWorkout = new StrengthWorkout();
 
         ListView exerciseList = (ListView) findViewById(R.id.strength_exercise_list);
         exerciseListAdapter = new ExerciseListAdapter(this, currentWorkout.exercises);
@@ -195,6 +179,18 @@ public class StrengthWorkoutActivity extends Activity  implements View.OnClickLi
             label.setText(exerciseList.get(position).getName());
             return convertView;
         }
+    }
+
+    public void onFinishWorkoutClick(View v) {
+        saveWorkout();
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    public void saveWorkout() {
+        currentWorkout.setDisplayName(nameEditText.getText().toString());
+        FitnessDatabaseHelper db = new FitnessDatabaseHelper(this);
+        db.insertWorkout(currentWorkout);
     }
 
 

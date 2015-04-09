@@ -24,8 +24,6 @@
             android:id="@+id/strength_exercise_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/list_border_width"
-            android:background="@color/list_background"
             android:divider="@color/list_divider_color"
             android:dividerHeight="1dp"
             android:focusable="false"
@@ -35,26 +33,34 @@
 
     </LinearLayout>
 
-    <Button
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/add_new_exercise"
-        android:id="@+id/newStrengthExercise"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="0dp"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:layout_gravity="bottom" />
+        android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/finishButton1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:text="@string/finish"
-        android:onClick="onFinishWorkoutClick"/>
+        <edu.up.swolemate.FontButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/add_new_exercise"
+            android:id="@+id/newStrengthExercise"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="0dp"
+            android:layout_gravity="bottom"
+            android:background="#005500"
+            android:textColor="#ffffff"
+            android:layout_weight="1"/>
+
+        <edu.up.swolemate.FontButton
+            android:id="@+id/finishButton1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/finish"
+            android:onClick="onFinishWorkoutClick"
+            android:layout_weight="1"
+            android:background="#aaaaaa"/>
+
+    </LinearLayout>
+
 
 
 </LinearLayout>
