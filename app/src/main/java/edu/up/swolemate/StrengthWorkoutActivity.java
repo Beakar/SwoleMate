@@ -72,7 +72,11 @@ public class StrengthWorkoutActivity extends Activity  implements View.OnClickLi
         createExerciseButton = (Button)findViewById(R.id.newStrengthExercise);
         finishButton = (Button)findViewById(R.id.finishButton1);
         finishButton.setOnClickListener(this);
-        createExerciseButton.setOnClickListener(this);
+        createExerciseButton.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                //ADD FOOD TO MEAL
+            }
+        });
 
         currentWorkout = new StrengthWorkout("Test exercise");
         currentWorkout.initTestValues();

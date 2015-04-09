@@ -29,7 +29,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/add_new_food"
-        android:id="@+id/newFoodItem"
+        android:id="@+id/newFoodItemButton"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="0dp"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
