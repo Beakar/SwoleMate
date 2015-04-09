@@ -12,17 +12,22 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class MainActivity extends Activity{
 
     private Button createWorkoutButton;
     private Button addFoodItemButton;
+    private Button viewWorkoutHistoryButton;
+    private LinearLayout root;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        root = (LinearLayout)findViewById(R.id.root_main);
+        viewWorkoutHistoryButton = (Button)findViewById(R.id.viewWorkoutHistoryButton);
     }
 
     @Override
@@ -58,6 +63,7 @@ public class MainActivity extends Activity{
     public void onViewWorkoutHistoryClick(View v) {
         Intent intent = new Intent(this, HistoryTrackingActivity.class);
         intent.putExtra("display_mode", HistoryTrackingActivity.DISPLAY_WORKOUTS_ALL);
+
         startActivity(intent);
     }
 

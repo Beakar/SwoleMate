@@ -139,7 +139,7 @@ public class StrengthWorkout extends BaseWorkout {
                 String weightString = "";
 
                 if(prefs.getString("units", "").equals("metric")) {
-                    weight = weight * 2.20462;
+                    weight = weight / 2.20462;
                     weightString = new DecimalFormat("##.##").format(weight) + "kg";
                 } else {
                     weightString = new DecimalFormat("##.##").format(weight) + "lb";

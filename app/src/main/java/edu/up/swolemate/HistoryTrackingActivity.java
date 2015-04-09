@@ -54,7 +54,8 @@ public class HistoryTrackingActivity extends Activity {
 
         //Possibly redirected from other activities, this provides
         //the capability of starting the activity in different display modes
-        displayMode = getIntent().getExtras().getInt("display_mode", 0);
+        if(getIntent().getExtras() != null)
+            displayMode = getIntent().getExtras().getInt("display_mode", 0);
 
         //enables back button on app icon
         getActionBar().setDisplayHomeAsUpEnabled(true);

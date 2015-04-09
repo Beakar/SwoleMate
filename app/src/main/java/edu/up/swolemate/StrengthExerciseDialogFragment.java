@@ -39,7 +39,7 @@ public class StrengthExerciseDialogFragment extends DialogFragment {
         StrengthWorkout currentWorkout = currentActivity.currentWorkout;
         currentExercise = currentWorkout.dummyExercise();
 
-        setsListView = (ExpandableListView) view.findViewById(R.id.sets_list);
+        setsListView = (ExpandableListView)view.findViewById(R.id.sets_list);
         setsListAdapter = new ExpandableSetListAdapter(getActivity(),currentExercise);
         setsListView.setAdapter(setsListAdapter);
 
