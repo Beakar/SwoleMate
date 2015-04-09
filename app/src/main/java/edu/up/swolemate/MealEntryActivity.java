@@ -99,7 +99,8 @@ public class MealEntryActivity extends Activity implements OnClickListener, Adap
     public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg4){
         FoodPresets presets = new FoodPresets();
         //get the selected Food Item
-        FoodItem food = presets.foodPresets.get(position);
+        String item = (String)arg0.getItemAtPosition(position);
+        FoodItem food = presets.foodPresetsTable.get(item);
         //set the text fields
         srvSizeEditText.setText("" + food.getServingSize() + "oz.");
         calEditText.setText("" + food.getCalories());
