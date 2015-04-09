@@ -103,7 +103,7 @@ public abstract class BaseWorkout implements Comparable<BaseWorkout> {
     public int compareTo(BaseWorkout workout) {
         Integer date1 = this.dateCompleted;
         Integer date2 = workout.getDateCompleted();
-        return date1.compareTo(date2);
+        return date2.compareTo(date1);
     }
 
     public int getId() {

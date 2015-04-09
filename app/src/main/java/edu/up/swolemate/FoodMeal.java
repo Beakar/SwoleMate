@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by Nathan on 1/21/2015.
  */
-public class FoodMeal {
+public class FoodMeal implements Comparable<FoodMeal>{
     /**
      * Id, for database usage
      */
@@ -178,5 +178,10 @@ public class FoodMeal {
         String stringRep = "";
 
         return stringRep;
+    }
+
+    @Override
+    public int compareTo(FoodMeal m) {
+        return m.getDateCompleted() - this.dateCompleted;
     }
 }
