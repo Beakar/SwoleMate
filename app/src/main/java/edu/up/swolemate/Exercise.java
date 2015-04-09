@@ -21,6 +21,7 @@ public class Exercise {
      */
     public Exercise() {
         sets = new ArrayList<ExerciseSubset>();
+        sets.add(new ExerciseSubset());
     }
 
     /**
@@ -56,6 +57,13 @@ public class Exercise {
         numSets++;
         set.setSetNum(numSets);
         this.sets.add(set);
+    }
+
+
+    public void deleteSet(ExerciseSubset set){
+        numSets--;
+       // set.setSetNum(numSets);
+        this.sets.remove(set);
     }
 
     /**

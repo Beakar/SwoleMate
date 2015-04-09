@@ -12,7 +12,6 @@
         android:id="@+id/userGreeting"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/hello_user"
         android:textSize="@dimen/title_text_size"/>
 
 

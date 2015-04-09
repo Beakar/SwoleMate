@@ -26,8 +26,10 @@ public class MainActivity extends Activity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        root = (LinearLayout)findViewById(R.id.root_main);
-        viewWorkoutHistoryButton = (Button)findViewById(R.id.viewWorkoutHistoryButton);
+
+        SharedPreferences settings = getSharedPreferences("user_settings", 0);
+        TextView greeting = (TextView)findViewById(R.id.userGreeting);
+        greeting.setText(settings.getString("greeting", "Hello, user"));
     }
 
     @Override

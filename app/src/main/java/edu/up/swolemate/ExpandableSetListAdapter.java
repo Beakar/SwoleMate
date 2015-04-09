@@ -6,6 +6,7 @@ package edu.up.swolemate;
 import java.util.HashMap;
 import java.util.List;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.text.Editable;
@@ -17,18 +18,23 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ExpandableListView;
+import android.widget.ListView;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
 public class ExpandableSetListAdapter extends BaseExpandableListAdapter {
 
     private Context context;
-
+    ExpandableListView listView;
     Exercise currentExercise;
 
-    public ExpandableSetListAdapter(Context mContext, Exercise mExercise) {
+    int currentGroupPos = -1;
+
+    public ExpandableSetListAdapter(Context mContext, Exercise mExercise, ExpandableListView ourListView ) {
         this.context = mContext;
         currentExercise = mExercise;
+        listView = ourListView;
     }
 
     @Override
@@ -52,51 +58,67 @@ public class ExpandableSetListAdapter extends BaseExpandableListAdapter {
             convertView = infalInflater.inflate(R.layout.list_item_strength_exercise_sets, null);
         }
 
-        EditText weightInput = (EditText) convertView.findViewById(R.id.weight_of_set_input);
-        Log.e("double value: ","" + currentExercise.sets.get(groupPosition).getWeight());
-//        if (currentExercise.sets.get(groupPosition).getWeight()!=null)
-//        {
-//            weightInput.setText("" + currentExercise.sets.get(groupPosition).getWeight());
-//        }
-        weightInput.addTextChangedListener(new TextWatcher() {
-            public void afterTextChanged(Editable s) {
-            }
-            public void beforeTextChanged(CharSequence s, int start,int count, int after) {
-            }
+        if(currentGroupPos == groupPosition) {
+            //only display the value if it's been set
+            EditText weightInput = (EditText) convertView.findViewById(R.id.weight_of_set_input);
+            weightInput.setText("" + currentExercise.sets.get(currentGroupPos).getWeight());
 
-            public void onTextChanged(CharSequence s, int start,int before, int count) {
-                if(s.length()!=0){
-                    int weight = Integer.parseInt(s.toString());
-                    currentExercise.sets.get(groupPosition).setWeight(weight);
+            weightInput.addTextChangedListener(new TextWatcher() {
+                public void afterTextChanged(Editable s) {
                 }
-            }
-        });
 
-        EditText repsInput = (EditText) convertView.findViewById(R.id.rep_input);
-        repsInput.setText(""+currentExercise.sets.get(groupPosition).getNumReps());
-        repsInput.addTextChangedListener(new TextWatcher() {
-            public void afterTextChanged(Editable s) {
-            }
-            public void beforeTextChanged(CharSequence s, int start,int count, int after) {
-            }
-
-            public void onTextChanged(CharSequence s, int start,int before, int count) {
-                if(s.length()!=0){
-                    int reps = Integer.parseInt(s.toString());
-                    currentExercise.sets.get(groupPosition).setNumReps(reps);
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 }
-            }
-        });
 
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    if (s.length() != 0) {
+                        double weight = Double.parseDouble(s.toString());
+                        currentExercise.sets.get(currentGroupPos).setWeight(weight);
+                    }
+                }
+            });
+
+            EditText repsInput = (EditText) convertView.findViewById(R.id.rep_input);
+            repsInput.setText("" + currentExercise.sets.get(currentGroupPos).getNumReps());
+
+            repsInput.addTextChangedListener(new TextWatcher() {
+                public void afterTextChanged(Editable s) {
+                }
+
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                }
+
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    if (s.length() != 0) {
+                        int reps = Integer.parseInt(s.toString());
+                        currentExercise.sets.get(currentGroupPos).setNumReps(reps);
+                    }
+                }
+            });
+        }
         //currentExercise.sets.get(groupPosition).setWeight(weightOfSet);
         return convertView;
     }
+
+
 
     @Override
     public int getChildrenCount(int groupPosition) {
 //        Log.e("Log method call", "getChildrenCount");
         return 1;
-        //return this.listDataChild.get(this.listDataHeader.get(groupPosition)).size();
+    }
+
+    @Override
+    public void onGroupExpanded(int groupPosition){
+        if(currentGroupPos!=groupPosition && currentGroupPos != -1)
+        {
+            if (listView.isGroupExpanded(currentGroupPos)){
+                listView.collapseGroup(currentGroupPos);
+            }
+        }
+
+        super.onGroupExpanded(groupPosition);
+        currentGroupPos = groupPosition;
     }
 
     @Override
@@ -107,7 +129,6 @@ public class ExpandableSetListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getGroupCount() {
-        Log.e("Group count", " " + this.currentExercise.sets.size());
 
         return this.currentExercise.sets.size();
 //        return this.listDataHeader.size();
@@ -120,13 +141,22 @@ public class ExpandableSetListAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public View getGroupView(int groupPosition, boolean isExpanded,View convertView, ViewGroup parent) {
+    public View getGroupView(final int groupPosition, boolean isExpanded,View convertView, ViewGroup parent) {
 //        Log.e("Log method call", "getGroupView");
-        String headerTitle = ("Set: " + getGroup(groupPosition));
+        int setNumber = groupPosition + 1;
+        String headerTitle = ("Set: " + setNumber);
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = infalInflater.inflate(R.layout.list_group_sets, null);
         }
+
+        Button deleteSetButton = (Button) convertView.findViewById(R.id.delete_set_button);
+        deleteSetButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                currentExercise.deleteSet(currentExercise.sets.get(groupPosition));
+                notifyDataSetChanged();
+            }
+        });
 
         TextView lblListHeader = (TextView) convertView
                 .findViewById(R.id.setListHeader);

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="#ffd5d5d5">
 
     <TextView
         android:layout_width="wrap_content"
@@ -23,6 +24,13 @@
         android:paddingRight="8dp"
         android:paddingLeft="8dp" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Weight"
+        android:id="@+id/textView" />
+
     <EditText
         android:id="@+id/rep_input"
         android:layout_width="wrap_content"
@@ -33,5 +41,12 @@
         android:inputType="number|numberDecimal"
         android:paddingRight="8dp"
         android:paddingLeft="8dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="# of Reps"
+        android:id="@+id/textView3" />
 
 </LinearLayout>

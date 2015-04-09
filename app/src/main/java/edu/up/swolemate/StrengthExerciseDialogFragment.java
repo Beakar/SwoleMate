@@ -6,6 +6,8 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,13 +37,28 @@ public class StrengthExerciseDialogFragment extends DialogFragment {
         inflater = getActivity().getLayoutInflater();
         view = inflater.inflate(R.layout.dialog_create_new_exercise, null);
         final StrengthWorkoutActivity currentActivity = (StrengthWorkoutActivity) getActivity();
-        //final
-        StrengthWorkout currentWorkout = currentActivity.currentWorkout;
-        currentExercise = currentWorkout.dummyExercise();
 
-        setsListView = (ExpandableListView)view.findViewById(R.id.sets_list);
-        setsListAdapter = new ExpandableSetListAdapter(getActivity(),currentExercise);
+        currentExercise = ((StrengthWorkoutActivity) getActivity()).selectedExercise;
+        //currentWorkout.dummyExercise();
+
+        setsListView = (ExpandableListView) view.findViewById(R.id.sets_list);
+        setsListAdapter = new ExpandableSetListAdapter(getActivity(),currentExercise, setsListView);
         setsListView.setAdapter(setsListAdapter);
+
+        EditText exerciseName = (EditText) view.findViewById(R.id.exercise_name);
+        exerciseName.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() != 0) {
+                    currentExercise.setName(s.toString());
+                }
+            }
+        });
 
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -55,6 +72,25 @@ public class StrengthExerciseDialogFragment extends DialogFragment {
                 setsListAdapter.notifyDataSetChanged();
             }
         });
+        Button saveButton = (Button) view.findViewById(R.id.save_new_strength_exercise_button);
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if(currentExercise.getName()==null){
+                    currentExercise.setName("Unnamed Exercise");
+                }
+
+                currentActivity.addExerciseToWorkout(currentExercise);
+
+                dismiss();
+            }
+        });
+        Button cancelButton = (Button) view.findViewById(R.id.cancel_new_exercise_dialog_button);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
+
         // Create the AlertDialog object and return it
         return builder.create();
     }
