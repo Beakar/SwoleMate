@@ -46,14 +46,14 @@ public class MealEntryActivity extends Activity implements OnClickListener, Adap
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_meal_entry);
+        setContentView(R.layout.activity_meal_entry_temp);
 
-        //lock the device in portrait mode
+        /*//lock the device in portrait mode
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        /*
+        *//*
          * This section creates an array adapter, which populates the AutoCompleteEditText
          * with the value from the FoodPresets
-         */
+         *//*
         foodAutoEditText = (AutoCompleteTextView)findViewById(R.id.foodAutoEditText);
         FoodPresets presets = new FoodPresets();
         names = presets.getFoodTypes();
@@ -73,7 +73,7 @@ public class MealEntryActivity extends Activity implements OnClickListener, Adap
         saveButton = (Button)findViewById(R.id.saveButton);
         saveButton.setOnClickListener(this);
         delPresetButton = (Button)findViewById(R.id.deletePresetButton);
-        delPresetButton.setOnClickListener(this);
+        delPresetButton.setOnClickListener(this);*/
     }
 
     @Override
