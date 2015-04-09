@@ -38,8 +38,7 @@ public class StrengthExerciseDialogFragment extends DialogFragment {
         view = inflater.inflate(R.layout.dialog_create_new_exercise, null);
         final StrengthWorkoutActivity currentActivity = (StrengthWorkoutActivity) getActivity();
 
-        StrengthWorkout currentWorkout = currentActivity.currentWorkout;
-        currentExercise = new Exercise();
+        currentExercise = ((StrengthWorkoutActivity) getActivity()).selectedExercise;
         //currentWorkout.dummyExercise();
 
         setsListView = (ExpandableListView) view.findViewById(R.id.sets_list);
@@ -85,6 +84,13 @@ public class StrengthExerciseDialogFragment extends DialogFragment {
                 dismiss();
             }
         });
+        Button cancelButton = (Button) view.findViewById(R.id.cancel_new_exercise_dialog_button);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
+
         // Create the AlertDialog object and return it
         return builder.create();
     }

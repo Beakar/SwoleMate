@@ -141,7 +141,7 @@ public class ExpandableSetListAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public View getGroupView(int groupPosition, boolean isExpanded,View convertView, ViewGroup parent) {
+    public View getGroupView(final int groupPosition, boolean isExpanded,View convertView, ViewGroup parent) {
 //        Log.e("Log method call", "getGroupView");
         int setNumber = groupPosition + 1;
         String headerTitle = ("Set: " + setNumber);
@@ -149,6 +149,14 @@ public class ExpandableSetListAdapter extends BaseExpandableListAdapter {
             LayoutInflater infalInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = infalInflater.inflate(R.layout.list_group_sets, null);
         }
+
+        Button deleteSetButton = (Button) convertView.findViewById(R.id.delete_set_button);
+        deleteSetButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                currentExercise.deleteSet(currentExercise.sets.get(groupPosition));
+                notifyDataSetChanged();
+            }
+        });
 
         TextView lblListHeader = (TextView) convertView
                 .findViewById(R.id.setListHeader);

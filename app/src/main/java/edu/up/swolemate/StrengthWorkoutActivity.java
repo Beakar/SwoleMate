@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
@@ -54,6 +55,7 @@ public class StrengthWorkoutActivity extends Activity  implements View.OnClickLi
     ExerciseListAdapter exerciseListAdapter;
     //References the current workout being created
     protected StrengthWorkout currentWorkout;
+    protected Exercise selectedExercise;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +76,15 @@ public class StrengthWorkoutActivity extends Activity  implements View.OnClickLi
         ListView exerciseList = (ListView) findViewById(R.id.strength_exercise_list);
         exerciseListAdapter = new ExerciseListAdapter(this, currentWorkout.exercises);
         exerciseList.setAdapter(exerciseListAdapter);
+
+        //if an exercise is selected from the list, open the dialog to edit it.
+        exerciseList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parentAdapter, View view, int position,long id) {
+                selectedExercise = currentWorkout.exercises.get(position);
+                createDialog.show(fragManager,"Edit exercise");
+            }
+        });
     }
 
 
@@ -86,6 +97,7 @@ public class StrengthWorkoutActivity extends Activity  implements View.OnClickLi
         }
         if(v.getId() == R.id.newStrengthExercise){
             Log.e("logged Button pressed","Create new str exercise");
+            selectedExercise = new Exercise();
             createDialog.show(fragManager,"Create new exercise");
         }
     }

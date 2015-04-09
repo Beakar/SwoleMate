@@ -13,7 +13,9 @@
             android:id="@+id/strength_exercise_list_item"
             android:textSize="30dp"
             android:text="text"
-            android:layout_alignParentLeft="true" />
+            android:layout_alignParentLeft="true"
+            android:focusable="false"
+            android:focusableInTouchMode="false" />
 
         <Button
             style="?android:attr/buttonStyleSmall"
@@ -24,7 +26,9 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:layout_alignBottom="@+id/strength_exercise_list_item" />
+            android:layout_alignBottom="@+id/strength_exercise_list_item"
+            android:focusable="false"
+            android:focusableInTouchMode="false" />
 
     </RelativeLayout>
 
