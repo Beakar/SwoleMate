@@ -226,6 +226,8 @@ public class ProfileActivity extends Activity implements View.OnClickListener{
 
     public void onSeeMoreClick(View v) {
         Intent intent = new Intent(this, HistoryTrackingActivity.class);
+        intent.putExtra("display_mode", HistoryTrackingActivity.DISPLAY_WORKOUTS_ALL);
+
         startActivity(intent);
     }
 }

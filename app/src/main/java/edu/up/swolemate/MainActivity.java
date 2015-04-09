@@ -122,6 +122,11 @@ public class MainActivity extends Activity{
         startActivity(intent);
     }
 
+    public void onViewProfileClick(View v) {
+        Intent intent = new Intent(this, ProfileActivity.class);
+        startActivity(intent);
+    }
+
     /**
      * Takes the user to a workout activity
      */
