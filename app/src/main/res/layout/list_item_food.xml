@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="75dp">
+    <ImageView android:layout_height="65dp"
+        android:layout_width="65dp"
+        android:layout_margin="5dp"
+        android:id="@+id/food_list_icon"
+        android:src="@drawable/ic_food"/>
+    <edu.up.swolemate.FontTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Food name"
+        android:textSize="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_gravity="center_vertical"
+        android:id="@+id/food_list_display_name"/>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginRight="10dp">
+        <edu.up.swolemate.FontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3/8/2015"
+            android:layout_alignParentRight="true"
+            android:id="@+id/food_list_date_completed"/>
+    </RelativeLayout>
+
+
+</LinearLayout>

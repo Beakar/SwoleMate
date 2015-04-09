@@ -7,11 +7,11 @@ import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.Date;
 
-public abstract class BaseWorkout {
+public abstract class BaseWorkout implements Comparable<BaseWorkout> {
     /**
      * Id of workout for database usage
      */
-    protected String id;
+    protected int id;
 
     /**
      * Display name for the workout specified by the user
@@ -91,112 +91,26 @@ public abstract class BaseWorkout {
     public String toString() {
         String stringRep = "";
 
-        if(this instanceof StrengthWorkout) {
-            stringRep += strengthToString((StrengthWorkout)this);
-        } else if(this instanceof CardioWorkout) {
-            stringRep += cardioToString((CardioWorkout)this);
-        } else if(this instanceof CustomWorkout) {
-            CustomWorkout workout = (CustomWorkout)this;
-            stringRep += workout.getWorkoutData();
-        }
-
         return stringRep;
     }
 
-    private String strengthToString(StrengthWorkout workout) {
-        String s = "";
-        SharedPreferences prefs = context.getSharedPreferences("user_settings", 0);
-
-        for(Exercise e : workout.getExercises()) {
-            s += e.getName();
-            for(ExerciseSubset set : e.getSets()) {
-
-                double weight = set.getWeight();
-                String weightString = "";
-
-                if(prefs.getString("units", "").equals("metric")) {
-                    weight = weight * 2.20462;
-                    weightString = new DecimalFormat("##.##").format(weight) + "kg";
-                } else {
-                    weightString = new DecimalFormat("##.##").format(weight) + "lb";
-                }
-                s += "\n" + set.getNumReps() + " x " + weightString;
-            }
-            s += "\n\n";
-        }
-
-        return s;
-    }
-
-    private String cardioToString(CardioWorkout workout) {
-        String s = "";
-        SharedPreferences prefs = context.getSharedPreferences("user_settings", 0);
-
-        double duration = workout.getDuration();
-        double distance = workout.getDistance();
-
-        //getting individual pieces to build string with time information
-        int intDuration = (int)(Math.floor(duration));
-        int hours = intDuration / 3600;
-        int remainder = intDuration - (hours * 3600);
-        int minutes = remainder / 60;
-        double seconds = duration % 60.0;
-
-        DecimalFormat secsAndMills = new DecimalFormat("00.##");
-
-        String durationString = String.format("%02d", hours)
-                                + ":"
-                                + String.format("%02d", minutes)
-                                + ":"
-                                + secsAndMills.format(seconds);
-
-
-        s += "Duration: " + durationString;
-
-        String paceString = "";
-        String unitString = "";
-
-        //distance is based on units
-        if(prefs.getString("units", "").equals("metric")) {
-            unitString = "km";
-            distance *= 1.609;
-        } else {
-            unitString = "mi";
-        }
-
-        //doubles are never zero, need to check this. Sometimes the user doesn't initialize a double
-        if(!isZero(distance, 0.01)) {
-            //distance textView
-            s += "\nDistance: " + new DecimalFormat("##.##").format(distance) + unitString;
-
-            //calculate pace
-            double splitDuration = duration / distance;
-            hours = (int)(splitDuration / 3600);
-            remainder = (int)(splitDuration - (hours * 3600));
-            minutes = remainder / 60;
-            seconds = splitDuration % 60.0;
-            durationString = String.format("%02d", minutes)
-                            + ":"
-                            + secsAndMills.format(seconds);
-
-            //pace textView
-            paceString = "\nAvg Pace: " + durationString + "/" + unitString;
-        }
-
-        s += paceString;
-
-
-        return s;
-    }
-
     /**
-     * Checks to see if a double value is zero
-     * @param val
-     * @param threshold
+     * For sorting purposes
+     * @param workout
      * @return
      */
-    private boolean isZero(double val, double threshold) {
-        return val >= -threshold && val <= threshold;
+    @Override
+    public int compareTo(BaseWorkout workout) {
+        Integer date1 = this.dateCompleted;
+        Integer date2 = workout.getDateCompleted();
+        return date1.compareTo(date2);
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

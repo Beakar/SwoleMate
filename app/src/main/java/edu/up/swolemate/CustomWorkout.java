@@ -14,7 +14,7 @@ public class CustomWorkout extends BaseWorkout {
      * initializes an empty custom workout
      */
     public CustomWorkout() {
-        this.src = R.drawable.ic_launcher;
+        this.src = R.drawable.ic_custom_workout;
     }
 
     /**
@@ -23,7 +23,7 @@ public class CustomWorkout extends BaseWorkout {
      */
     public CustomWorkout(String name) {
         super(name);
-        this.src = R.drawable.ic_launcher;
+        this.src = R.drawable.ic_custom_workout;
     }
 
     /**
@@ -60,5 +60,10 @@ public class CustomWorkout extends BaseWorkout {
         this.workoutData = "Went to a 45 minute yoga class today. Did 30 different stretches.";
 
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return this.workoutData;
     }
 }

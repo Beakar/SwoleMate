@@ -107,15 +107,15 @@ public class FirstTimeActivity extends Activity {
 
 
     /**
-     * alertHeightWrong()
+     * alertWeightWrong()
      *
-     * Description: Alerts the user they entered the height in the wrong format.
+     * Description: Alerts the user they entered the weight in the wrong format.
      */
-    private void alertHeightWrong(){
+    private void alertWeightWrong(){
         //create the builder
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
-        alertBuilder.setTitle("Incorrect height format.");
-        alertBuilder.setMessage("Your height must be entered in the following format: (ie. 5-10");
+        alertBuilder.setTitle("Incorrect weight format.");
+        alertBuilder.setMessage("Your weight must be entered in the following format: (ie. 180");
 
         //make the "OK" button
         alertBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener(){
@@ -130,15 +130,15 @@ public class FirstTimeActivity extends Activity {
 
 
     /**
-     * alertWeightWrong()
+     * alertHeightWrong()
      *
-     * Description: Alerts the user they entered the weight in the wrong format.
+     * Description: Alerts the user they entered the height in the wrong format.
      */
-    private void alertWeightWrong(){
+    private void alertHeightWrong(){
         //create the builder
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
-        alertBuilder.setTitle("Incorrect weight format.");
-        alertBuilder.setMessage("Your weight must be entered in the following format: (ie. 180");
+        alertBuilder.setTitle("Incorrect height format.");
+        alertBuilder.setMessage("Your height must be entered in the following format: (ie. 5-10");
 
         //make the "OK" button
         alertBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener(){
@@ -215,7 +215,7 @@ public class FirstTimeActivity extends Activity {
      * @param height -- The user-entered height
      * @return success/failure
      */
-    private boolean checkHeightFormat(String height){
+    protected boolean checkHeightFormat(String height){
         //regex: 1-2 digits, any whitespace, '-', any whitespace, 1-2 digits.
         Pattern regex = Pattern.compile("\\d{1,2}\\s*\\-\\s*\\d{1,2}");
         Matcher matcher = regex.matcher(height.trim());
@@ -234,9 +234,9 @@ public class FirstTimeActivity extends Activity {
      * @param weight -- The user-entered weight.
      * @return success/failure
      */
-    private boolean checkWeightFormat(String weight){
+    protected boolean checkWeightFormat(String weight){
         //regex: 1-3 digits
-        Pattern regex = Pattern.compile("\\d{1,3}");
+        Pattern regex = Pattern.compile("\\d{1,4}");
         Matcher matcher = regex.matcher(weight.trim());
         if(!weight.equals("")){
             return matcher.matches();
@@ -248,7 +248,7 @@ public class FirstTimeActivity extends Activity {
 
     /**
      * Handles the click action for the button in this activity.
-     * @param view
+     * @param view -- The view parameter
      */
     public void onSaveClick(View view) {
         String nameText = nameEditText.getText().toString().trim();
@@ -259,59 +259,51 @@ public class FirstTimeActivity extends Activity {
             //The name field is empty
             if(nameText.equals("")){
                 alertName();
+                return;
             }
             else {
-                //The height is in the wrong format
-                if (!checkHeightFormat(heightText)) {
+                //if the height isn't empty, check the format
+                if(!heightText.equals("")) {
+                    //The height is in the wrong format. Alert the user
+                    if (!checkHeightFormat(heightText)) {
                         alertHeightWrong();
+                        return;
+                    }
                 }
-                //The weight is in the wrong format
-                else if (!checkWeightFormat(weightText)) {
+                //if the user entered their weight, check the format
+                if(!weightText.equals("")){
+                    //if the weight is in the wrong format, alert the user
+                    if(!checkWeightFormat(weightText)){
                         alertWeightWrong();
+                        return;
+                    }
+                    saveUserInput(nameText, heightText, weightText);
+                    Intent myIntent = new Intent(FirstTimeActivity.this, MainActivity.class);
+                    startActivity(myIntent);
                 }
                 //if either the height or weight fields are empty, alert the
                 //user and ask to proceed.
                 else if(heightText.equals("") || weightText.equals("")) {
                     alertEmptyHeightWeight(nameText, heightText,weightText);
-                }
-                else {
-                    saveUserInput(nameText, heightText, weightText);
-                    Intent myIntent = new Intent(FirstTimeActivity.this, MainActivity.class);
-                    startActivity(myIntent);
+                    return;
                 }
             }
         }
-        //if the user entered their weight, check the format
-        if(!weightText.equals("")){
-            if(!checkWeightFormat(weightText)){
-                alertWeightWrong();
-                return;
-            }
-        }
-        //if either the height or weight fields are empty, alert the
-        //user and ask to proceed.
-        if(heightText.equals("") || weightText.equals("")){
-            System.out.println("***** ONE OF THESE IS NOT LIKE THE OTHER");
-            alertEmptyHeightWeight(nameText, heightText, weightText);
-            return;
-        }
-        //otherwise, everything should be good to go. take user to home activity.
-        System.out.println("****!@$#RWERFGQ@#$WAGF@#W$ESD");
-        goToHomeActivity();
-        //saveUserInput();
     }
 
-            /**
-             * saves user input to shared preferences
-             */
+    /**
+     * saves user input to shared preferences
+     * @param name -- The user's name
+     * @param height -- The user's height
+     * @param weight -- The user's weight
+     */
     private void saveUserInput(String name, String height, String weight){
-        boolean success = false;
-
         SharedPreferences.Editor editor = settings.edit();
         editor.putString("name", name);
         editor.putString("height", height);
         editor.putString("weight", weight);
         editor.putString("units", "imperial");
+        editor.putString("greeting", "Hello, " + name);
 
         editor.commit();
     }

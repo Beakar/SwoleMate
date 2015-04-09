@@ -1,33 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="@dimen/activity_horizontal_margin"
+    android:layout_width="match_parent"
     android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:weightSum="5">
-        <TextView
-            android:id="@+id/history_label"
+        android:weightSum="3">
+        <edu.up.swolemate.FontButton
+            android:id="@+id/toggle_view"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="50dp"
             android:layout_marginBottom="5dp"
-            android:text="Show workouts from"
-            android:layout_weight="3"
-            android:textSize="18dp"
-            android:gravity="top|right"/> <!--Scale text size based on container size?-->
+            android:text="workouts"
+            android:background="#000055"
+            android:textColor="#ffffff"
+            android:layout_weight="1"
+            android:onClick="onToggleViewClick"/> <!--Scale text size based on container size?-->
 
-        <Spinner
+        <edu.up.swolemate.FontButton
+            android:id="@+id/btn_date"
             android:layout_width="0dp"
-            android:layout_height="45dp"
-            android:layout_marginTop="-10dp"
-            android:layout_weight="2"
-            android:id="@+id/spin_dateSelector">
+            android:layout_height="50dp"
+            android:layout_marginBottom="5dp"
+            android:text="@string/sort"
+            android:background="#aaaaaa"
+            android:textColor="#ffffff"
+            android:layout_weight="1"
+            android:onClick="onSortClick"/>
 
+        <edu.up.swolemate.FontButton
+            android:id="@+id/btn_workout_type"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="5dp"
+            android:text="@string/type"
+            android:background="#cccccc"
+            android:textColor="#ffffff"
+            android:layout_weight="1"
+            android:onClick="onWorkoutTypeClick"/>
 
-        </Spinner>
     </LinearLayout>
 
 
@@ -42,7 +55,6 @@
             android:id="@+id/lv_history"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/list_background"
             android:divider="@color/list_divider_color"
             android:layout_marginBottom="@dimen/activity_vertical_margin"
             android:dividerHeight="1dp"
@@ -59,19 +71,22 @@
         android:orientation="horizontal"
         android:weightSum="2">
 
-        <Spinner
+        <edu.up.swolemate.FontButton
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/spin_workoutTypes"
-            android:layout_weight="1">
-
-        </Spinner>
-        <Button
+            android:layout_height="65dp"
+            android:layout_weight="1"
+            android:text="@string/new_meal"
+            android:background="#cccccc"
+            android:textColor="#ffffff"
+            android:onClick="onNewMealClick"/>
+        <edu.up.swolemate.FontButton
             android:id="@+id/finishButton1"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="50dp"
+            android:layout_height="65dp"
             android:text="@string/new_workout"
+            android:background="#aaaaaa"
+            android:textColor="#ffffff"
             android:onClick="onNewWorkoutClick"/>
     </LinearLayout>
 

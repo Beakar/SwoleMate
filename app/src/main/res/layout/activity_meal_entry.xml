@@ -1,44 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="fill_parent"
     android:layout_height="match_parent"
-    android:layout_margin="@dimen/activity_vertical_margin">
-    <TextView
-        android:layout_width="wrap_content"
+    android:orientation="vertical">
+
+    <AutoCompleteTextView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add a meal"
-        android:textSize="32dp"/>
+        android:hint="Food Item"
+        android:id="@+id/foodAutoEditText"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:inputType="text"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"/>
 
     <EditText
-        android:layout_width="match_parent"
+        android:id="@+id/servingSizeEditText"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:hint="Name"/>
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:ems="10"
+        android:hint="Serving Size"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"/>
 
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+    <EditText
+        android:id="@+id/caloriesEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:ems="10"
+        android:hint="Calories"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"/>
+
+    <EditText
+        android:id="@+id/fatEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:ems="10"
+        android:hint="Fat(g)"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"/>
+
+    <EditText
+        android:id="@+id/carbsEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:ems="10"
+        android:hint="Carbs(g)"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"/>
+
+    <EditText
+        android:id="@+id/proteinEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:ems="10"
+        android:hint="Protein(g)"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"/>
+
 
     <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:weightSum="2">
-            <Button
-                android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="bottom">
+
+            <EditText
+                android:id="@+id/servingsEditText"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Add Food"/>
-            <Button
-                android:layout_width="0dp"
+                android:layout_marginTop="50dp"
+                android:ems="10"
+                android:hint="How much did you eat? (Servings)"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Save"
-                android:layout_weight="1"/>
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <Button
+                    android:id="@+id/saveButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Save"
+                    android:layout_weight="1"
+                    android:background="#aaaaaa"
+                    android:textColor="#ffffff"/>
+
+                <Button
+                    android:id="@+id/deletePresetButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Delete Preset"
+                    android:layout_weight="1"
+                    android:background="#cccccc"
+                    android:textColor="#ffffff"/>
+
+            </LinearLayout>
         </LinearLayout>
 
     </RelativeLayout>
+
+
 
 </LinearLayout>

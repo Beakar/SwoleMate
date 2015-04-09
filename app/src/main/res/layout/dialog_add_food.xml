@@ -6,19 +6,16 @@
     android:layout_marginLeft="@dimen/activity_horizontal_margin"
     android:layout_marginRight="@dimen/activity_horizontal_margin">
 
-    <EditText
-        android:id="@+id/editText1"
+    <AutoCompleteTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:hint="Food Item"
+        android:id="@+id/foodAutoEditText"
         android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:ems="10"
-        android:hint="Food name" >
-
-        <requestFocus />
-    </EditText>
+        android:inputType="text" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/servingSizeEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/activity_vertical_margin"
@@ -26,7 +23,7 @@
         android:hint="Serving Size" />
 
     <EditText
-        android:id="@+id/editText3"
+        android:id="@+id/caloriesEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/activity_vertical_margin"
@@ -34,7 +31,7 @@
         android:hint="Calories" />
 
     <EditText
-        android:id="@+id/editText4"
+        android:id="@+id/fatEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/activity_vertical_margin"
@@ -42,7 +39,7 @@
         android:hint="Fat(g)" />
 
     <EditText
-        android:id="@+id/editText5"
+        android:id="@+id/carbsEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/activity_vertical_margin"
@@ -50,7 +47,7 @@
         android:hint="Carbs(g)" />
 
     <EditText
-        android:id="@+id/editText6"
+        android:id="@+id/proteinEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/activity_vertical_margin"
@@ -70,7 +67,7 @@
             android:layout_alignParentBottom="true">
 
             <EditText
-                android:id="@+id/editText7"
+                android:id="@+id/servingsEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -84,14 +81,14 @@
                 android:weightSum="2">
 
                 <Button
-                    android:id="@+id/button1"
+                    android:id="@+id/saveButton"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="Save"
                     android:layout_weight="1"/>
 
                 <Button
-                    android:id="@+id/button2"
+                    android:id="@+id/deletePresetButton"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="Delete Preset"

@@ -1,5 +1,9 @@
 package edu.up.swolemate;
 
+import android.content.SharedPreferences;
+
+import java.text.DecimalFormat;
+
 /**
  * Created by Nathan on 1/21/2015.
  */
@@ -20,7 +24,7 @@ public class CardioWorkout extends BaseWorkout {
      */
     public CardioWorkout() {
         super();
-        this.src = R.drawable.ic_launcher;
+        this.src = R.drawable.ic_cardio_workout;
     }
 
     /**
@@ -29,7 +33,7 @@ public class CardioWorkout extends BaseWorkout {
      */
     public CardioWorkout(String name) {
         super(name);
-        this.src = R.drawable.ic_launcher;
+        this.src = R.drawable.ic_cardio_workout;
     }
 
     /**
@@ -83,5 +87,78 @@ public class CardioWorkout extends BaseWorkout {
         this.dateCompleted = 1425867692;
 
         return this;
+    }
+
+
+    @Override
+    public String toString() {
+        String s = "";
+        SharedPreferences prefs = context.getSharedPreferences("user_settings", 0);
+
+        double duration = this.getDuration();
+        double distance = this.getDistance();
+
+        //getting individual pieces to build string with time information
+        int intDuration = (int)(Math.floor(duration));
+        int hours = intDuration / 3600;
+        int remainder = intDuration - (hours * 3600);
+        int minutes = remainder / 60;
+        double seconds = duration % 60.0;
+
+        DecimalFormat secsAndMills = new DecimalFormat("00.##");
+
+        String durationString = String.format("%02d", hours)
+                + ":"
+                + String.format("%02d", minutes)
+                + ":"
+                + secsAndMills.format(seconds);
+
+
+        s += "Duration: " + durationString;
+
+        String paceString = "";
+        String unitString = "";
+
+        //distance is based on units
+        if(prefs.getString("units", "").equals("metric")) {
+            unitString = "km";
+            distance *= 1.609;
+        } else {
+            unitString = "mi";
+        }
+
+        //doubles are never zero, need to check this. Sometimes the user doesn't initialize a double
+        if(!isZero(distance, 0.01)) {
+            //distance textView
+            s += "\nDistance: " + new DecimalFormat("##.##").format(distance) + unitString;
+
+            //calculate pace
+            double splitDuration = duration / distance;
+            hours = (int)(splitDuration / 3600);
+            remainder = (int)(splitDuration - (hours * 3600));
+            minutes = remainder / 60;
+            seconds = splitDuration % 60.0;
+            durationString = String.format("%02d", minutes)
+                    + ":"
+                    + secsAndMills.format(seconds);
+
+            //pace textView
+            paceString = "\nAvg Pace: " + durationString + "/" + unitString;
+        }
+
+        s += paceString;
+
+
+        return s;
+    }
+
+    /**
+     * Checks to see if a double value is zero
+     * @param val
+     * @param threshold
+     * @return
+     */
+    private boolean isZero(double val, double threshold) {
+        return val >= -threshold && val <= threshold;
     }
 }

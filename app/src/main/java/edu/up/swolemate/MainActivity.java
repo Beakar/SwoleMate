@@ -1,43 +1,36 @@
 package edu.up.swolemate;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
-public class MainActivity extends Activity implements OnClickListener{
+public class MainActivity extends Activity{
 
     private Button createWorkoutButton;
     private Button addFoodItemButton;
+    private Button viewWorkoutHistoryButton;
+    private LinearLayout root;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        createWorkoutButton = (Button)findViewById(R.id.createNewWorkoutButton);
-        createWorkoutButton.setOnClickListener(this);
-        addFoodItemButton = (Button)findViewById(R.id.addNewFoodButton);
-        addFoodItemButton.setOnClickListener(this);
+        SharedPreferences settings = getSharedPreferences("user_settings", 0);
+        TextView greeting = (TextView)findViewById(R.id.userGreeting);
+        greeting.setText(settings.getString("greeting", "Hello, user"));
     }
-
-
-    @Override
-    public void onClick(View v){
-        if(v.getId() == R.id.createNewWorkoutButton){
-            Intent myIntent = new Intent(this, CreateWorkoutActivity.class);
-            startActivity(myIntent);
-        }
-        else if(v.getId() == R.id.addNewFoodButton){
-            Intent myIntent = new Intent(this, HistoryTrackingActivity.class);
-            startActivity(myIntent);
-        }
-    }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -58,8 +51,8 @@ public class MainActivity extends Activity implements OnClickListener{
             return true;
         }
         else if(id == R.id.profile){
-            Intent myIntent = new Intent(this, ProfileActivity.class);
-            startActivity(myIntent);
+            Intent intent = new Intent(this, ProfileActivity.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);
@@ -69,20 +62,71 @@ public class MainActivity extends Activity implements OnClickListener{
      * OnClick method for history button click
      * @param v
      */
-    public void onViewHistoryClick(View v) {
-        Intent i = new Intent(this, HistoryTrackingActivity.class);
-        startActivity(i);
+    public void onViewWorkoutHistoryClick(View v) {
+        Intent intent = new Intent(this, HistoryTrackingActivity.class);
+        intent.putExtra("display_mode", HistoryTrackingActivity.DISPLAY_WORKOUTS_ALL);
+
+        startActivity(intent);
+    }
+
+    public void onViewFoodHistoryClick(View v) {
+        Intent intent = new Intent (this, HistoryTrackingActivity.class);
+        intent.putExtra("display_mode", HistoryTrackingActivity.DISPLAY_MEALS);
+        startActivity(intent);
     }
 
     /**
-     * This is overriden to disallow users from "backing" into the first time activity
+     * Fired when user selects to create a new workout
+     * @param v
      */
-    @Override
-    public void onBackPressed() {
-        finish();
-        Intent homeIntent = new Intent(Intent.ACTION_MAIN);
-        homeIntent.addCategory( Intent.CATEGORY_HOME );
-        homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(homeIntent);
+    public void onCreateWorkoutClick(View v) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater li = LayoutInflater.from(this);
+
+        View root = li.inflate(R.layout.dialog_choose_workout_type, null);
+
+        //get buttons from custom dialog
+        Button strengthWorkout = (Button)root.findViewById(R.id.btn_choose_strength);
+        Button cardioWorkout = (Button)root.findViewById(R.id.btn_choose_cardio);
+        Button customWorkout = (Button)root.findViewById(R.id.btn_choose_custom);
+
+        strengthWorkout.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToWorkoutActivity(StrengthWorkoutActivity.class);
+            }
+        });
+
+        cardioWorkout.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToWorkoutActivity(CardioWorkoutActivity.class);
+            }
+        });
+
+        customWorkout.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToWorkoutActivity(CustomWorkoutActivity.class);
+            }
+        });
+
+        builder.setView(root);
+
+        builder.create().show();
+
+    }
+
+    public void onAddFoodClick(View v) {
+        Intent intent = new Intent(this, MealEntryActivity.class);
+        startActivity(intent);
+    }
+
+    /**
+     * Takes the user to a workout activity
+     */
+    private void goToWorkoutActivity(Class<?> activity) {
+        Intent intent = new Intent(this, activity);
+        startActivity(intent);
     }
 }
