@@ -34,7 +34,7 @@ public class StrengthWorkoutActivity extends Activity  implements View.OnClickLi
     Button createExerciseButton;
     Button finishButton;
     EditText nameEditText;
-    StrengthExerciseDialogFragment createDialog;
+    public StrengthExerciseDialogFragment createDialog;
     FragmentManager fragManager;
     Context context = this;
     ExerciseListAdapter exerciseListAdapter;

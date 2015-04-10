@@ -1,8 +1,10 @@
 package edu.up.swolemate;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,9 +27,56 @@ public class StrengthExerciseDialogFragment extends DialogFragment {
     Exercise currentExercise;
     AutoCompleteTextView exerciseNameView;
 
+
+    /**
+     * Alerts the user that they tried to save an exercise with
+     * an empty name.
+     */
+    private void alertEmptyExercise(){
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getActivity());
+        alertBuilder.setTitle("Empty workout title");
+        alertBuilder.setMessage("You must enter an exercise name.");
+        alertBuilder.setPositiveButton("OK", new AlertDialog.OnClickListener(){
+            public void onClick(DialogInterface dialog, int id){
+                //just exit the dialog
+            }
+        });
+
+        AlertDialog alert = alertBuilder.create();
+        alert.show();
+    }
+
+
+    /**
+     * Alerts the user that they are trying to cancel an exercise
+     * that is not empty.
+     */
+    private void alertNonEmptySets(){
+        LayoutInflater inflater = LayoutInflater.from(getActivity());
+        View view = inflater.inflate(R.layout.dialog_add_exercise, null);
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getActivity());
+        alertBuilder.setTitle("Not an empty exercise");
+        alertBuilder.setMessage("Your exercise is not empty.\n\nAre you cure you want to cancel?");
+        alertBuilder.setView(view);
+
+        alertBuilder.setPositiveButton("Yes", new AlertDialog.OnClickListener(){
+            public void onClick(DialogInterface dialog, int id){
+                //ADD THE FUNCTIONALITY FOR CANCELLING HERE
+                Activity activity = (StrengthWorkoutActivity)getActivity();
+            }
+        });
+        alertBuilder.setNegativeButton("No", new AlertDialog.OnClickListener(){
+            public void onClick(DialogInterface dialog, int id){
+                //just cancel
+            }
+        });
+
+        AlertDialog alert = alertBuilder.create();
+        alert.show();
+    }
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-
         // Get the layout inflater
         inflater = getActivity().getLayoutInflater();
         view = inflater.inflate(R.layout.dialog_create_new_exercise, null);
@@ -72,32 +121,30 @@ public class StrengthExerciseDialogFragment extends DialogFragment {
         Button saveButton = (Button) view.findViewById(R.id.save_new_strength_exercise_button);
         saveButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if(currentExercise.getName()==null){
-                    currentExercise.setName("Unnamed Exercise");
+                if(currentExercise.getName() != null){
+                    currentActivity.addExerciseToWorkout(currentExercise);
+                    dismiss();
                 }
-
-                currentActivity.addExerciseToWorkout(currentExercise);
-
-                dismiss();
+                //tell the user they tried to save an exercise
+                //with an empty name
+                else {
+                    alertEmptyExercise();
+                }
             }
         });
         Button cancelButton = (Button) view.findViewById(R.id.cancel_new_exercise_dialog_button);
         cancelButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                dismiss();
+                if(currentExercise.sets.size() == 0) {
+                    dismiss();
+                }
+                else {
+                    alertNonEmptySets();
+                }
             }
         });
 
         // Create the AlertDialog object and return it
         return builder.create();
     }
-
-/*
-    @Override
-    public void onItemClick(AdapterView<?> arg0, View view, int position, long arg4){
-        {
-
-        }
-    }*/
-
 }
