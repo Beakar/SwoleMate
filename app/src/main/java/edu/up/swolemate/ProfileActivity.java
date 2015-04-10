@@ -1,6 +1,4 @@
 package edu.up.swolemate;
-
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -14,20 +12,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
-
-import java.util.ArrayList;
 
 
 public class ProfileActivity extends Activity implements View.OnClickListener{
     protected View editProfile;
-    //protected final View nameView = findViewById(R.id.userNameText);
-    //protected final View heightView = findViewById(R.id.userHeight);
-    //protected final View weightView = findViewById(R.id.userWeight);
     private SharedPreferences settings;
-   // protected EditText nameEdit;
+
 
     private void alertEditProfile(){
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
@@ -47,19 +39,18 @@ public class ProfileActivity extends Activity implements View.OnClickListener{
         final SharedPreferences.Editor editor = settings.edit();
 
         final FirstTimeActivity fta = new FirstTimeActivity();
-        final ProfileActivity profile = new ProfileActivity();
 
         alertBuilder.setView(profileEditView);
         alertBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener(){
             public void onClick(DialogInterface dialog, int id){
-                String name = nameEdit.getText().toString();
-                String height = heightEdit.getText().toString();
-                String weight = weightEdit.getText().toString();
+                String name = nameEdit.getText().toString().replaceAll("\\s", "");
+                String height = heightEdit.getText().toString().replaceAll("\\s", "");
+                String weight = weightEdit.getText().toString().replaceAll("\\s", "");
 
                 if(!name.equals("")) {
                     displayName.setText(name);
                     editor.putString("name", name);
-                    editor.putString("greeting", "Hello, " + name);
+                    editor.putString("greeting", "Hi, " + name);
                     editor.commit();
                 }
                 if(!height.equals("")) {
@@ -74,8 +65,8 @@ public class ProfileActivity extends Activity implements View.OnClickListener{
                 }
                 if(!weight.equals("")) {
                     if(fta.checkWeightFormat(weight)) {
-                        displayWeight.setText(weightEdit.getText().toString());
-                        editor.putString("weight", weightEdit.getText().toString());
+                        displayWeight.setText(weight);
+                        editor.putString("weight", weight);
                         editor.commit();
                     }
                     else{
