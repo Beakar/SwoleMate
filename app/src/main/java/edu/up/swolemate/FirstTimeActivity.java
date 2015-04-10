@@ -141,7 +141,7 @@ public class FirstTimeActivity extends Activity {
         //create the builder
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
         alertBuilder.setTitle("Incorrect height format.");
-        alertBuilder.setMessage("Your height must be entered in the following format: (ie. 5-10");
+        alertBuilder.setMessage("Your height must be entered in the following format: (ie. 5-10)");
 
         //make the "OK" button
         alertBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener(){
@@ -221,9 +221,9 @@ public class FirstTimeActivity extends Activity {
     protected boolean checkHeightFormat(String height){
         //regex: 1-2 digits, any whitespace, '-', any whitespace, 1-2 digits.
         //Also accepts whitespace in-between the numbers and dash.
-        Pattern regex = Pattern.compile("\\s*\\d{1,32}\\s*\\-\\s*\\d{1,2}\\s*");
+        Pattern regex = Pattern.compile("\\d+\\-\\d+");
         //metric regex: 1 digit, a period, followed by a max of 3 numbers.
-        //Pattern regex = Pattern.compile("\\s*\\d{1}\\.\\d{1,3}\\s*");
+        //Pattern regex = Pattern.compile("\\d+\\.?\\d*");
         Matcher matcher = regex.matcher(height.trim());
         if(!height.equals("")){
             return matcher.matches();
@@ -242,7 +242,7 @@ public class FirstTimeActivity extends Activity {
      */
     protected boolean checkWeightFormat(String weight){
         //regex: 1-3 digits
-        Pattern regex = Pattern.compile("\\d{1,4}");
+        Pattern regex = Pattern.compile("\\d+");
         Matcher matcher = regex.matcher(weight.trim());
         if(!weight.equals("")){
             return matcher.matches();
@@ -257,9 +257,9 @@ public class FirstTimeActivity extends Activity {
      * @param view -- The view parameter
      */
     public void onSaveClick(View view) {
-        String nameText = nameEditText.getText().toString().trim();
-        String heightText = heightEditText.getText().toString().trim();
-        String weightText = weightEditText.getText().toString().trim();
+        String nameText = nameEditText.getText().toString().trim().replaceAll("\\s", "");
+        String heightText = heightEditText.getText().toString().trim().replaceAll("\\s", "");
+        String weightText = weightEditText.getText().toString().trim().replaceAll("\\s", "");
 
         if(view.getId() == R.id.createButton){
             //The name field is empty
@@ -309,7 +309,7 @@ public class FirstTimeActivity extends Activity {
     private void saveUserInput(String name, String height, String weight){
         SharedPreferences.Editor editor = settings.edit();
         editor.putString("name", name);
-        editor.putString("height", height);
+        editor.putString("height", height.replaceAll("\\s", ""));
         editor.putString("weight", weight);
         editor.putString("units", "imperial");
         editor.putString("greeting", "Hello, " + name);

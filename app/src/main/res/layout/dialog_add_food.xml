@@ -72,7 +72,8 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:layout_marginBottom="10dp"
-                android:hint="How much did you eat? (Servings)"/>
+                android:hint="How much did you eat? (Servings)"
+                android:inputType="number"/>
 
             <LinearLayout
                 android:layout_width="match_parent"

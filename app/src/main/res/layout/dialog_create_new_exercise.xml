@@ -28,7 +28,7 @@
             <AutoCompleteTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/exercise_search"
+                android:hint="Exercise name"
                 android:id="@+id/exercise_search" />
 
             <ExpandableListView

@@ -11,14 +11,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <edu.up.swolemate.FontTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="PH:Set 1"
-            android:id="@+id/set_number"
-            android:paddingTop="2dp"
-            android:textSize="18dp" />
-
         <edu.up.swolemate.FontEditText
             android:id="@+id/weight_of_set_input"
             android:layout_width="wrap_content"

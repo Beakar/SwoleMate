@@ -34,10 +34,8 @@ public class CardioWorkoutActivity extends Activity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_cardio_workout);
-
         //lock the device in portrait mode
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
         getActionBar().setDisplayHomeAsUpEnabled(true);
         super.onCreate(savedInstanceState);
         fragManager = getFragmentManager();

@@ -21,7 +21,7 @@
     <string name="enter_height_request">Height (ft.-in.)</string>
     <string name="enter_name_request">Name</string>
     <string name="enter_weight_request">Weight (lbs)</string>
-    <string name="exercise_search">Exercise search...</string>
+    <string name="exercise_name">Exercise name</string>
     <string name="fat">Fat</string>
     <string name="finish">Finish</string>
     <string name="new_meal">New meal</string>

@@ -34,7 +34,7 @@ public class StrengthWorkoutActivity extends Activity  implements View.OnClickLi
     Button createExerciseButton;
     Button finishButton;
     EditText nameEditText;
-    StrengthExerciseDialogFragment createDialog;
+    public StrengthExerciseDialogFragment createDialog;
     FragmentManager fragManager;
     Context context = this;
     ExerciseListAdapter exerciseListAdapter;
@@ -55,6 +55,7 @@ public class StrengthWorkoutActivity extends Activity  implements View.OnClickLi
         createDialog = new StrengthExerciseDialogFragment();
         createExerciseButton = (Button)findViewById(R.id.newStrengthExercise);
         finishButton = (Button)findViewById(R.id.finishButton1);
+        createExerciseButton.setOnClickListener(this);
 
         nameEditText = (EditText)findViewById(R.id.enter_workout_name);
 
