@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ExpandableListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -30,10 +31,10 @@ public class StrengthExerciseDialogFragment extends DialogFragment {
     AutoCompleteTextView exerciseNameView;
 
 
-    /**
+/*    *//**
      * Alerts the user that they tried to save an exercise with
      * an empty name.
-     */
+     *//*
     private void alertEmptyExercise(){
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getActivity());
         alertBuilder.setTitle("Empty workout title");
@@ -46,7 +47,7 @@ public class StrengthExerciseDialogFragment extends DialogFragment {
 
         AlertDialog alert = alertBuilder.create();
         alert.show();
-    }
+    }*/
 
 
     /**
@@ -138,14 +139,12 @@ public class StrengthExerciseDialogFragment extends DialogFragment {
         Button saveButton = (Button) view.findViewById(R.id.save_new_strength_exercise_button);
         saveButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+/*                if(currentExercise.getName() == null){
+                    Toast.makeText(getActivity(), "Your exercise must have a title.", Toast.LENGTH_SHORT).show();
+                }*/
                 if(currentExercise.getName() != null){
                     currentActivity.addExerciseToWorkout(currentExercise);
                     dismiss();
-                }
-                //tell the user they tried to save an exercise
-                //with an empty name
-                else {
-                    alertEmptyExercise();
                 }
 
                 boolean foundExerciseInWorkout = false;
