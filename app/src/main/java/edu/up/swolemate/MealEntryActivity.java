@@ -3,7 +3,10 @@ package edu.up.swolemate;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -52,11 +55,6 @@ public class MealEntryActivity extends Activity implements OnClickListener{
         alertBuilder.setTitle("Add new food item");
         LayoutInflater inflater = LayoutInflater.from(this);
         final View addFoodView = inflater.inflate(R.layout.dialog_add_food, null);
-/*        final EditText srvSizeEdit = (EditText)addFoodView.findViewById(R.id.servingSizeEditText);
-        final EditText calEdit = (EditText)addFoodView.findViewById(R.id.caloriesEditText);
-        final EditText fatEdit = (EditText)addFoodView.findViewById(R.id.fatEditText);
-        final EditText proteinEdit = (EditText)addFoodView.findViewById(R.id.proteinEditText);
-        final EditText servingsEdit = (EditText)addFoodView.findViewById(R.id.servingsEditText);*/
 
         foodAutoEditText = (AutoCompleteTextView)addFoodView.findViewById(R.id.foodAutoEditText);
         FoodPresets presets = new FoodPresets();
@@ -88,6 +86,32 @@ public class MealEntryActivity extends Activity implements OnClickListener{
         carbsEditText = (EditText)addFoodView.findViewById(R.id.carbsEditText);
         proteinEditText = (EditText)addFoodView.findViewById(R.id.proteinEditText);
         servingsEditText = (EditText)addFoodView.findViewById(R.id.servingsEditText);
+        servingsEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int i, int i2, int i3) {
+                if(s.length() != 0){
+                    if(Integer.parseInt(s.toString()) != 1) {
+                       // currentFood.setFoodType(s.toString());
+                        multiplyNutrients(Integer.parseInt(s.toString()));
+                    }
+                    else{
+                        calEditText.setText(currentFood.getCalories());
+                        fatEditText.setText("" + currentFood.getFat());
+                        carbsEditText.setText("" + currentFood.getCarbs());
+                        proteinEditText.setText("" + currentFood.getProtein());
+                    }
+                }
+            }
+        });
 
         //initialize the buttons and set the onClickListener
         saveButton = (Button)addFoodView.findViewById(R.id.saveButton);
@@ -139,9 +163,9 @@ public class MealEntryActivity extends Activity implements OnClickListener{
         mealList.setAdapter(mealListAdapter);
 
 
-        /*//lock the device in portrait mode
+        //lock the device in portrait mode
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        *//*
+        /**//*
          * This section creates an array adapter, which populates the AutoCompleteEditText
          * with the value from the FoodPresets
          *//*
@@ -189,22 +213,6 @@ public class MealEntryActivity extends Activity implements OnClickListener{
     }
 
 
-    /*@Override
-    public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg4){
-        FoodPresets presets = new FoodPresets();
-        //get the selected Food Item
-        String item = (String)arg0.getItemAtPosition(position);
-        FoodItem food = presets.foodPresetsTable.get(item);
-        //set the text fields
-        srvSizeEditText.setText("" + food.getServingSize() + "oz.");
-        calEditText.setText("" + food.getCalories());
-        fatEditText.setText("" + food.getFat());
-        carbsEditText.setText("" + food.getCarbs());
-        proteinEditText.setText("" + food.getProtein());
-
-        addFoodToMeal(food);
-    }*/
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -221,6 +229,19 @@ public class MealEntryActivity extends Activity implements OnClickListener{
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    /**
+     * Multiplies the nutrient text field values by the serving size.
+     *
+     * @param servings
+     */
+    private void multiplyNutrients(int servings){
+        calEditText.setText("" +currentFood.getCalories()*servings);
+        fatEditText.setText("" + Math.round(currentFood.getFat()*servings*100.0)/100.0);
+        carbsEditText.setText("" + Math.round(currentFood.getCarbs()*servings*100.0)/100.0);
+        proteinEditText.setText("" + Math.round(currentFood.getProtein()*servings*100.0)/100.0);
     }
 
 
