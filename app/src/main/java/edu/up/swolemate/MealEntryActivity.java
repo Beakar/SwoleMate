@@ -5,8 +5,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,9 +19,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MealEntryActivity extends Activity implements OnClickListener{
     AutoCompleteTextView foodAutoEditText;
@@ -50,7 +51,7 @@ public class MealEntryActivity extends Activity implements OnClickListener{
     }
 
 
-    public void alertAddFood(){
+    public void alertAddFood(final Activity activity){
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
         alertBuilder.setTitle("Add new food item");
         LayoutInflater inflater = LayoutInflater.from(this);
@@ -88,7 +89,7 @@ public class MealEntryActivity extends Activity implements OnClickListener{
         });
 
 
-        servingsEditText.addTextChangedListener(new TextWatcher() {
+        /*servingsEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(Editable editable) {
 
@@ -105,7 +106,7 @@ public class MealEntryActivity extends Activity implements OnClickListener{
                     if(servings != 1){
                         if(Integer.parseInt(s.toString()) != 1) {
                             // currentFood.setFoodType(s.toString());
-                            multiplyNutrients(Integer.parseInt(s.toString()));
+                            //multiplyNutrients(Integer.parseInt(s.toString()));
 
                         }
                     }
@@ -123,7 +124,7 @@ public class MealEntryActivity extends Activity implements OnClickListener{
                     proteinEditText.setText("" + currentFood.getProtein());
                 }
             }
-        });
+        });*/
 
         //initialize the buttons and set the onClickListener
         saveButton = (Button)addFoodView.findViewById(R.id.saveButton);
@@ -136,9 +137,21 @@ public class MealEntryActivity extends Activity implements OnClickListener{
         saveButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                addFoodToMeal(currentFood);
-                System.out.println("ADDED THE FOOD");
-                alert.dismiss();
+                if(!hasEmptyFields()) {
+                    if(checkNutrientsFormat() == true){
+                        addFoodToMeal(currentFood);
+                        alert.dismiss();
+                    }
+                    else{
+                        Toast.makeText(activity, "Format error: \n1) Calories must only be a number.\n" +
+                                        "2) Fat, Carbs and Protein must only be a number.",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else{
+                    Toast.makeText(activity, "You must fill-in all nutrient fields.",
+                            Toast.LENGTH_SHORT).show();
+                }
                // dismiss();
             }
         });
@@ -157,6 +170,71 @@ public class MealEntryActivity extends Activity implements OnClickListener{
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
         alertBuilder.setTitle("Unsaved information");
         alertBuilder.setMessage("You have unsaved information. Are you sure you want to leave this page?");
+        return false;
+    }
+
+
+    private boolean checkNutrientsFormat(){
+        Pattern regexCal = Pattern.compile("\\d+");
+        Pattern regexOthers = Pattern.compile("\\d+\\.\\d+");
+        Pattern regexSrv = Pattern.compile("\\d+\\.\\d+oz\\.");
+
+        String srvSize = srvSizeEditText.getText().toString();
+        srvSize.replaceAll("\\s", "");//.replaceAll("oz\\.{1}", "");
+
+        String cal = calEditText.getText().toString();
+
+        String fat = fatEditText.getText().toString();
+        fat.replaceAll("\\s", "").replaceAll("g\\.{1}", "");
+
+        String carbs = carbsEditText.getText().toString();
+        carbs.replaceAll("\\s", "").replaceAll("g\\.{1}", "");
+
+        String protein = proteinEditText.getText().toString();
+        protein.replaceAll("\\s", "").replaceAll("g\\.{1}", "");
+
+        String servings = servingsEditText.getText().toString();
+        servings.replaceAll("\\s", "").replaceAll("g\\.{1}", "");
+
+System.out.println("srvSize: " + srvSize + "\ncal: " + cal + "\nfat: " + fat + "\ncarbs: " + carbs +
+"\nprotein: " + protein + "\nservings: " + servings);
+
+        Matcher servingSizeMatcher = regexSrv.matcher(srvSize);
+        Matcher calMatcher = regexCal.matcher(cal);
+        Matcher fatMatcher = regexOthers.matcher(fat);
+        Matcher carbsMatcher = regexOthers.matcher(carbs);
+        Matcher proteinMatcher = regexOthers.matcher(protein);
+        Matcher servingsMatcher = regexOthers.matcher(servings);
+
+        //everything matches!
+        return  servingSizeMatcher.matches() && calMatcher.matches() && fatMatcher.matches() &&
+                carbsMatcher.matches() && proteinMatcher.matches() && servingsMatcher.matches();
+    }
+
+
+    /**
+     * Checks if any of the text fields in the current layout are empty.
+     * @return true/false
+     */
+    private boolean hasEmptyFields(){
+        //if any of the fields are empty, return true
+        if(srvSizeEditText.getText().toString() == null ||
+                calEditText.getText().toString() == null ||
+                fatEditText.getText().toString() == null ||
+                carbsEditText.getText().toString() == null ||
+                proteinEditText.getText().toString() == null ||
+                servingsEditText.getText().toString() == null){
+            return true;
+        }
+        else if (srvSizeEditText.getText().toString().equals("") ||
+                calEditText.getText().toString().equals("") ||
+                fatEditText.getText().toString().equals("") ||
+                carbsEditText.getText().toString().equals("") ||
+                proteinEditText.getText().toString().equals("") ||
+                servingsEditText.getText().toString().equals("")){
+            return true;
+
+        }
         return false;
     }
 
@@ -212,7 +290,7 @@ public class MealEntryActivity extends Activity implements OnClickListener{
             alertAddFood();
         }*/
         else if(v.getId() == R.id.newFoodItemButton){
-            alertAddFood();
+            alertAddFood(this);
         }
     }
 
@@ -251,10 +329,18 @@ public class MealEntryActivity extends Activity implements OnClickListener{
      */
     private void multiplyNutrients(int servings){
         if(servings != 0) {
-            calEditText.setText("" + currentFood.getCalories() * servings);
-            fatEditText.setText("" + Math.round(currentFood.getFat() * servings * 100.0) / 100.0);
-            carbsEditText.setText("" + Math.round(currentFood.getCarbs() * servings * 100.0) / 100.0);
-            proteinEditText.setText("" + Math.round(currentFood.getProtein() * servings * 100.0) / 100.0);
+            if (calEditText.getText() != null) {
+                calEditText.setText("" + currentFood.getCalories() * servings);
+            }
+            if (fatEditText.getText() != null) {
+                fatEditText.setText("" + Math.round(currentFood.getFat() * servings * 100.0) / 100.0);
+            }
+            if (carbsEditText.getText() != null) {
+                carbsEditText.setText("" + Math.round(currentFood.getCarbs() * servings * 100.0) / 100.0);
+            }
+            if (proteinEditText.getText() != null) {
+                proteinEditText.setText("" + Math.round(currentFood.getProtein() * servings * 100.0) / 100.0);
+            }
         }
         else{
             return;

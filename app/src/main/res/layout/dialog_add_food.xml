@@ -20,6 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:ems="10"
+        android:inputType="phone"
         android:hint="Serving Size" />
 
     <EditText
@@ -27,6 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:inputType="number"
         android:ems="10"
         android:hint="Calories" />
 
@@ -35,6 +37,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:inputType="phone"
         android:ems="10"
         android:hint="Fat(g)" />
 
@@ -43,6 +46,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:inputType="phone"
         android:ems="10"
         android:hint="Carbs(g)" />
 
@@ -51,6 +55,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:inputType="phone"
         android:ems="10"
         android:hint="Protein(g)" />
 
@@ -73,7 +78,7 @@
                 android:ems="10"
                 android:layout_marginBottom="10dp"
                 android:hint="How much did you eat? (Servings)"
-                android:inputType="number"/>
+                android:inputType="phone"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
