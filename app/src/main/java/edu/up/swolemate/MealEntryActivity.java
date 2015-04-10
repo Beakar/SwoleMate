@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -80,11 +81,11 @@ public class MealEntryActivity extends Activity implements OnClickListener{
                 String item = (String)arg0.getItemAtPosition(position);
                 currentFood = presets.foodPresetsTable.get(item);
                 //set the text fields
-                srvSizeEditText.setText("" + currentFood.getServingSize() + "oz.");
-                calEditText.setText("" + currentFood.getCalories());
-                fatEditText.setText("" + currentFood.getFat());
-                carbsEditText.setText("" + currentFood.getCarbs());
-                proteinEditText.setText("" + currentFood.getProtein());
+                srvSizeEditText.setText("" + currentFood.getServingSize() + " oz.");
+                calEditText.setText("" + currentFood.getCalories() + " g.");
+                fatEditText.setText("" + currentFood.getFat() + " g.");
+                carbsEditText.setText("" + currentFood.getCarbs() + " g.");
+                proteinEditText.setText("" + currentFood.getProtein() + " g.");
 
                 //addFoodToMeal(food);
             }
@@ -149,6 +150,9 @@ public class MealEntryActivity extends Activity implements OnClickListener{
                                         "2) Fat, Carbs and Protein must only be a number.",
                                 Toast.LENGTH_SHORT).show();
                     }*/
+                }
+                else if(currentFood == null){
+                    Toast.makeText(activity, "You must enter a food name.", Toast.LENGTH_SHORT).show();
                 }
                 else{
                     Toast.makeText(activity, "You must fill-in all nutrient fields.",
