@@ -1,51 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffffff"
+    android:padding="10dp">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <!---->
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="PH:Set 1"
-        android:id="@+id/set_number"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingTop="2dp"
-        android:textSize="18dp" />
+        android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/weight_of_set_input"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:ems="10"
-        android:hint="@string/weight"
-        android:inputType="number|numberDecimal"
-        android:paddingRight="8dp"
-        android:paddingLeft="8dp" />
+        <edu.up.swolemate.FontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="PH:Set 1"
+            android:id="@+id/set_number"
+            android:paddingTop="2dp"
+            android:textSize="18dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Weight"
-        android:id="@+id/textView" />
+        <edu.up.swolemate.FontEditText
+            android:id="@+id/weight_of_set_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:ems="10"
+            android:hint="@string/weight"
+            android:inputType="number|numberDecimal"
+            android:paddingRight="8dp"
+            android:paddingLeft="8dp" />
 
-    <EditText
-        android:id="@+id/rep_input"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:ems="10"
-        android:hint="@string/number_of_reps"
-        android:inputType="number|numberDecimal"
-        android:paddingRight="8dp"
-        android:paddingLeft="8dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Weight"
+            android:id="@+id/textView" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="# of Reps"
-        android:id="@+id/textView3" />
+        <EditText
+            android:id="@+id/rep_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:ems="10"
+            android:hint="@string/number_of_reps"
+            android:inputType="number|numberDecimal"
+            android:paddingRight="8dp"
+            android:paddingLeft="8dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="# of Reps"
+            android:id="@+id/textView3" />
+
+    </LinearLayout>
+
+
+
+
 
 </LinearLayout>

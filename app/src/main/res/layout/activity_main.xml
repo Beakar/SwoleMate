@@ -4,65 +4,122 @@
     android:layout_height="match_parent"
     android:background="@color/app_background"
     android:orientation="vertical"
-    tools:context=".MainActivity">
-    
-    <edu.up.swolemate.FontTextView
-        android:id="@+id/userGreeting"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/title_text_size"/>
+    tools:context=".MainActivity"
+    android:animateLayoutChanges="true"
+    android:id="@+id/root_main">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_weight="1">
+        android:orientation="horizontal">
 
-        <edu.up.swolemate.FontButton
-            android:id="@+id/viewWorkoutHistoryButton"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="@string/view_workout_history"
-            android:background="#aaaaaa"
-            android:textColor="#ffffff"
-            android:gravity="bottom|left"
-            android:onClick="onViewWorkoutHistoryClick"/>
+        <HorizontalScrollView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3">
 
-        <edu.up.swolemate.FontButton
-            android:id="@+id/viewFoodHistoryButton"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="#bbbbbb"
-            android:textColor="#ffffff"
-            android:text="@string/view_eating_habits"
-            android:gravity="bottom|right"
-            android:onClick="onViewFoodHistoryClick"/>
+            <edu.up.swolemate.FontTextView
+                android:id="@+id/userGreeting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/title_text_size"
+                android:text="Hello, User"
+                android:inputType="text"
+                android:ellipsize="marquee"
+                android:layout_marginRight="5dp"
+                android:layout_marginLeft="5dp"/>
+
+        </HorizontalScrollView>
+
+        <LinearLayout
+            android:layout_width="10dp"
+            android:layout_height="wrap_content"></LinearLayout>
+
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onViewProfileClick"
+                android:layout_alignParentRight="true">
+
+                <edu.up.swolemate.FontTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="view profile"
+
+                    android:layout_marginRight="5dp"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_profile_arrow"/>
+
+            </LinearLayout>
+
+
+
+        </RelativeLayout>
+
 
     </LinearLayout>
+
+    <edu.up.swolemate.FontButton
+        android:id="@+id/viewWorkoutHistoryButton"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="5"
+        android:text="@string/view_workout_history"
+        android:background="#aaaaaa"
+        android:textColor="#000000"
+        android:gravity="bottom|left"
+        android:onClick="onViewWorkoutHistoryClick"
+        android:layout_margin="5dp"
+        android:padding="10dp"/>
+
+    <edu.up.swolemate.FontButton
+        android:id="@+id/viewFoodHistoryButton"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="5"
+        android:background="#bbbbbb"
+        android:textColor="#000000"
+        android:text="@string/view_eating_habits"
+        android:gravity="bottom|left"
+        android:onClick="onViewFoodHistoryClick"
+        android:layout_margin="5dp"
+        android:padding="10dp"/>
+
 
 
     <edu.up.swolemate.FontButton
         android:id="@+id/createNewWorkoutButton"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_height="0dp"
+        android:layout_weight="5"
         android:background="#cccccc"
-        android:textColor="#ffffff"
+        android:textColor="#000000"
         android:text="@string/create_new_workout"
         android:onClick="onCreateWorkoutClick"
-        android:gravity="bottom|right"/>
+        android:gravity="bottom|left"
+        android:layout_margin="5dp"
+        android:padding="10dp"/>
 
     <edu.up.swolemate.FontButton
         android:id="@+id/addNewFoodButton"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_height="0dp"
+        android:layout_weight="5"
         android:background="#dddddd"
-        android:textColor="#ffffff"
+        android:textColor="#000000"
         android:text="@string/add_new_food"
         android:onClick="onAddFoodClick"
-        android:gravity="bottom|left"/>
+        android:gravity="bottom|left"
+        android:layout_margin="5dp"
+        android:padding="10dp"/>
 
 </LinearLayout>

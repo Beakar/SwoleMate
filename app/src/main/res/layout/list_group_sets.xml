@@ -2,17 +2,44 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="8dp"
-    android:background="#000000">
+    android:orientation="horizontal"
+    android:background="#ffffff">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+        <TextView
+            android:id="@+id/setListHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="?android:attr/expandableListPreferredItemPaddingLeft"
+            android:textSize="17dp"
+            android:textColor="#000000"
+            android:text="placeholder"
+            android:layout_gravity="left|center_vertical"
+            android:focusableInTouchMode="false"
+            android:focusable="false" />
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <edu.up.swolemate.FontButton
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:text="x"
+                android:id="@+id/delete_set_button"
+                android:background="#ffdddd"
+                android:layout_alignParentRight="true"
+                android:focusable="false"
+                android:focusableInTouchMode="false" />
+        </RelativeLayout>
 
 
-    <TextView
-        android:id="@+id/setListHeader"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="?android:attr/expandableListPreferredItemPaddingLeft"
-        android:textSize="17dp"
-        android:textColor="#f9f93d" />
+    </LinearLayout>
+
+
+
 
 </LinearLayout>

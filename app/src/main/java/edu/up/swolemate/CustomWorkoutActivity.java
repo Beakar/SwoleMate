@@ -1,17 +1,21 @@
 package edu.up.swolemate;
 
 import android.app.Activity;
-import android.content.ContentValues;
 import android.content.pm.ActivityInfo;
-import android.database.sqlite.SQLiteDatabase;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
 
 
 public class CustomWorkoutActivity extends Activity {
 
     protected CustomWorkout currentWorkout;
+
+    EditText nameText;
+    EditText dataText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +24,9 @@ public class CustomWorkoutActivity extends Activity {
         currentWorkout = new CustomWorkout();
         //lock the device in portrait mode
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        nameText = (EditText)findViewById(R.id.tv_custom_title);
+        dataText = (EditText)findViewById(R.id.tv_custom_data);
 
         getActionBar().setDisplayHomeAsUpEnabled(true);
     }
@@ -54,13 +61,15 @@ public class CustomWorkoutActivity extends Activity {
      * Inserts the current workout into the CustomWorkouts database
      */
     public void insertCurrentWorkout() {
-        SQLiteDatabase db = new FitnessDatabaseHelper(this).getWritableDatabase();
+        currentWorkout.setDisplayName(nameText.getText().toString());
+        currentWorkout.setWorkoutData(dataText.getText().toString());
 
-        ContentValues vals = new ContentValues();
-        vals.put("displayName", currentWorkout.getDisplayName());
-        vals.put("workoutData", currentWorkout.getWorkoutData());
-        vals.put("dateCompleted", System.currentTimeMillis() / 1000);
+        new FitnessDatabaseHelper(this).insertWorkout(currentWorkout);
+    }
 
-        db.insert("CustomWorkouts", null, vals);
+    public void onFinishWorkoutClick(View v) {
+        insertCurrentWorkout();
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 }

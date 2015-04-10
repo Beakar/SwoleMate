@@ -2,9 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:layout_marginLeft="@dimen/activity_horizontal_margin"
-    android:layout_marginRight="@dimen/activity_horizontal_margin">
+    android:orientation="vertical">
 
     <AutoCompleteTextView
         android:layout_width="match_parent"
@@ -12,7 +10,9 @@
         android:hint="Food Item"
         android:id="@+id/foodAutoEditText"
         android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:inputType="text" />
+        android:inputType="text"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"/>
 
     <EditText
         android:id="@+id/servingSizeEditText"
@@ -20,7 +20,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:ems="10"
-        android:hint="Serving Size" />
+        android:hint="Serving Size"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"/>
 
     <EditText
         android:id="@+id/caloriesEditText"
@@ -28,7 +30,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:ems="10"
-        android:hint="Calories" />
+        android:hint="Calories"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"/>
 
     <EditText
         android:id="@+id/fatEditText"
@@ -36,7 +40,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:ems="10"
-        android:hint="Fat(g)" />
+        android:hint="Fat(g)"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"/>
 
     <EditText
         android:id="@+id/carbsEditText"
@@ -44,7 +50,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:ems="10"
-        android:hint="Carbs(g)" />
+        android:hint="Carbs(g)"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"/>
 
     <EditText
         android:id="@+id/proteinEditText"
@@ -52,13 +60,14 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:ems="10"
-        android:hint="Protein(g)" />
+        android:hint="Protein(g)"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"/>
 
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="@dimen/activity_vertical_margin">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -72,7 +81,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"
                 android:ems="10"
-                android:hint="How much did you eat? (Servings)"/>
+                android:hint="How much did you eat? (Servings)"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -85,14 +96,18 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="Save"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:background="#aaaaaa"
+                    android:textColor="#ffffff"/>
 
                 <Button
                     android:id="@+id/deletePresetButton"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="Delete Preset"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:background="#cccccc"
+                    android:textColor="#ffffff"/>
 
             </LinearLayout>
         </LinearLayout>

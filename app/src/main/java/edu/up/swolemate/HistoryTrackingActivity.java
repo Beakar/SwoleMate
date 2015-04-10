@@ -22,6 +22,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -58,7 +59,8 @@ public class HistoryTrackingActivity extends Activity {
 
         //Possibly redirected from other activities, this provides
         //the capability of starting the activity in different display modes
-        displayMode = getIntent().getExtras().getInt("display_mode", 0);
+        if(getIntent().getExtras() != null)
+            displayMode = getIntent().getExtras().getInt("display_mode", 0);
 
         //enables back button on app icon
         getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -66,6 +68,12 @@ public class HistoryTrackingActivity extends Activity {
         //initialize
         workouts = new ArrayList<BaseWorkout>();
         meals = new ArrayList<FoodMeal>();
+
+        FitnessDatabaseHelper db = new FitnessDatabaseHelper(this);
+        workouts.addAll(db.selectAllWorkouts());
+        Collections.sort(workouts);
+        meals.addAll(db.selectAllMeals());
+        Collections.sort(meals);
 
         //for testing purposes only
         initTestValues();
@@ -149,10 +157,6 @@ public class HistoryTrackingActivity extends Activity {
             insertTestMeals(db);
             insertTestWorkouts(db);
         }
-
-
-        workouts.addAll(db.selectAllWorkouts());
-        meals.addAll(db.selectAllMeals());
     }
 
     /**
@@ -450,7 +454,7 @@ public class HistoryTrackingActivity extends Activity {
         ArrayList<BaseWorkout> cWorkouts = new ArrayList<BaseWorkout>();
 
         for(BaseWorkout workout : this.workouts) {
-            if(workout instanceof CardioWorkout) {
+            if(workout instanceof CustomWorkout) {
                 cWorkouts.add(workout);
             }
         }
