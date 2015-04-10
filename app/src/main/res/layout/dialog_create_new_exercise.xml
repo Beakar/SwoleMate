@@ -29,7 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Exercise name"
-                android:id="@+id/exercise_search" />
+                android:id="@+id/exercise_name" />
 
             <ExpandableListView
                 android:id="@+id/sets_list"
