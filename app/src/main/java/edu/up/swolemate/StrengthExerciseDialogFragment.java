@@ -53,18 +53,19 @@ public class StrengthExerciseDialogFragment extends DialogFragment {
      * Alerts the user that they are trying to cancel an exercise
      * that is not empty.
      */
-    private void alertNonEmptySets(){
+    private void alertNonEmptySets(final Dialog firstDialog){
         LayoutInflater inflater = LayoutInflater.from(getActivity());
-        View view = inflater.inflate(R.layout.dialog_add_exercise, null);
+        //View view = inflater.inflate(R.layout.dialog_add_exercise, null);
+
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getActivity());
         alertBuilder.setTitle("Not an empty exercise");
         alertBuilder.setMessage("Your exercise is not empty.\n\nAre you cure you want to cancel?");
-        alertBuilder.setView(view);
+        //alertBuilder.setView(view);
 
         alertBuilder.setPositiveButton("Yes", new AlertDialog.OnClickListener(){
             public void onClick(DialogInterface dialog, int id){
-                //ADD THE FUNCTIONALITY FOR CANCELLING HERE
-                Activity activity = (StrengthWorkoutActivity)getActivity();
+                //Dismiss the StrengthExerciseDialog
+                firstDialog.dismiss();
             }
         });
         alertBuilder.setNegativeButton("No", new AlertDialog.OnClickListener(){
@@ -168,7 +169,8 @@ public class StrengthExerciseDialogFragment extends DialogFragment {
                     dismiss();
                 }
                 else {
-                    alertNonEmptySets();
+                    final Dialog activity = getDialog();
+                    alertNonEmptySets(activity);
                 }
             }
         });
