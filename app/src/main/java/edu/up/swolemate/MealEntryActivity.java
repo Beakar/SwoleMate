@@ -62,6 +62,14 @@ public class MealEntryActivity extends Activity implements OnClickListener{
         arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, names);
         foodAutoEditText.setAdapter(arrayAdapter);
 
+        //initialize all of the EditTexts
+        srvSizeEditText = (EditText)addFoodView.findViewById(R.id.servingSizeEditText);
+        calEditText = (EditText)addFoodView.findViewById(R.id.caloriesEditText);
+        fatEditText = (EditText)addFoodView.findViewById(R.id.fatEditText);
+        carbsEditText = (EditText)addFoodView.findViewById(R.id.carbsEditText);
+        proteinEditText = (EditText)addFoodView.findViewById(R.id.proteinEditText);
+        servingsEditText = (EditText)addFoodView.findViewById(R.id.servingsEditText);
+
         foodAutoEditText.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg4){
                 FoodPresets presets = new FoodPresets();
@@ -79,13 +87,7 @@ public class MealEntryActivity extends Activity implements OnClickListener{
             }
         });
 
-        //initialize all of the EditTexts
-        srvSizeEditText = (EditText)addFoodView.findViewById(R.id.servingSizeEditText);
-        calEditText = (EditText)addFoodView.findViewById(R.id.caloriesEditText);
-        fatEditText = (EditText)addFoodView.findViewById(R.id.fatEditText);
-        carbsEditText = (EditText)addFoodView.findViewById(R.id.carbsEditText);
-        proteinEditText = (EditText)addFoodView.findViewById(R.id.proteinEditText);
-        servingsEditText = (EditText)addFoodView.findViewById(R.id.servingsEditText);
+
         servingsEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(Editable editable) {
@@ -99,16 +101,26 @@ public class MealEntryActivity extends Activity implements OnClickListener{
             @Override
             public void onTextChanged(CharSequence s, int i, int i2, int i3) {
                 if(s.length() != 0){
-                    if(Integer.parseInt(s.toString()) != 1) {
-                       // currentFood.setFoodType(s.toString());
-                        multiplyNutrients(Integer.parseInt(s.toString()));
+                    int servings = Integer.parseInt(s.toString());
+                    if(servings != 1){
+                        if(Integer.parseInt(s.toString()) != 1) {
+                            // currentFood.setFoodType(s.toString());
+                            multiplyNutrients(Integer.parseInt(s.toString()));
+
+                        }
                     }
-                    else{
-                        calEditText.setText(currentFood.getCalories());
+                    else if(servings == 1){
+                        calEditText.setText("" + currentFood.getCalories());
                         fatEditText.setText("" + currentFood.getFat());
                         carbsEditText.setText("" + currentFood.getCarbs());
                         proteinEditText.setText("" + currentFood.getProtein());
                     }
+                }
+                else{
+                    calEditText.setText("" + currentFood.getCalories());
+                    fatEditText.setText("" + currentFood.getFat());
+                    carbsEditText.setText("" + currentFood.getCarbs());
+                    proteinEditText.setText("" + currentFood.getProtein());
                 }
             }
         });
@@ -238,10 +250,15 @@ public class MealEntryActivity extends Activity implements OnClickListener{
      * @param servings
      */
     private void multiplyNutrients(int servings){
-        calEditText.setText("" +currentFood.getCalories()*servings);
-        fatEditText.setText("" + Math.round(currentFood.getFat()*servings*100.0)/100.0);
-        carbsEditText.setText("" + Math.round(currentFood.getCarbs()*servings*100.0)/100.0);
-        proteinEditText.setText("" + Math.round(currentFood.getProtein()*servings*100.0)/100.0);
+        if(servings != 0) {
+            calEditText.setText("" + currentFood.getCalories() * servings);
+            fatEditText.setText("" + Math.round(currentFood.getFat() * servings * 100.0) / 100.0);
+            carbsEditText.setText("" + Math.round(currentFood.getCarbs() * servings * 100.0) / 100.0);
+            proteinEditText.setText("" + Math.round(currentFood.getProtein() * servings * 100.0) / 100.0);
+        }
+        else{
+            return;
+        }
     }
 
 
