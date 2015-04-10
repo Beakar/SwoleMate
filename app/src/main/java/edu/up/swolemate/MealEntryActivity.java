@@ -3,6 +3,7 @@ package edu.up.swolemate;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -28,6 +29,7 @@ import java.util.regex.Pattern;
 
 public class MealEntryActivity extends Activity implements OnClickListener{
     AutoCompleteTextView foodAutoEditText;
+    EditText mealNameEditText;
     EditText srvSizeEditText;
     EditText calEditText;
     EditText fatEditText;
@@ -255,6 +257,9 @@ System.out.println("srvSize: " + srvSize + "\ncal: " + cal + "\nfat: " + fat + "
 
         //lock the device in portrait mode
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        mealNameEditText = (EditText)findViewById(R.id.et_meal_name);
+
         /**//*
          * This section creates an array adapter, which populates the AutoCompleteEditText
          * with the value from the FoodPresets
@@ -392,5 +397,18 @@ System.out.println("srvSize: " + srvSize + "\ncal: " + cal + "\nfat: " + fat + "
             label.setText(foodList.get(position).getFoodType());
             return convertView;
         }
+    }
+
+    public void onFinishMealClick(View v) {
+        Editable name = mealNameEditText.getText();
+        String mealName = "";
+        if(name != null) {
+            mealName = name.toString();
+        }
+
+        currentMeal.setName(mealName);
+        new FitnessDatabaseHelper(this).insertMeal(currentMeal);
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 }

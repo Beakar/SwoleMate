@@ -12,7 +12,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/strength_exercise_list_item"
-            android:textSize="30dp"
+            android:textSize="20dp"
             android:text="text"
             android:layout_alignParentLeft="true"
             android:focusable="false"
@@ -26,15 +26,14 @@
             <Button
                 style="?android:attr/buttonStyleSmall"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Remove"
+                android:layout_height="50dp"
+                android:background="#550000"
+                android:textColor="#ffffff"
+                android:text="x"
                 android:id="@+id/remove_exercise_button"
-                android:layout_alignParentTop="true"
                 android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
                 android:focusable="false"
-                android:focusableInTouchMode="false"
-                />
+                android:focusableInTouchMode="false"/>
 
         </RelativeLayout>
     </LinearLayout>

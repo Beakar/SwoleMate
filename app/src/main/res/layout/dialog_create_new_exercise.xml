@@ -21,33 +21,15 @@
         android:layout_weight="1">
 
         <LinearLayout
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content">
 
             <AutoCompleteTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/exercise_name"
-                android:id="@+id/exercise_name"
-                />
-            <!--<edu.up.swolemate.FontEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/exercise_name"
-                android:textSize="16dp"
-                android:inputType="text"
                 android:hint="Exercise name"
-                android:layout_margin="10dp"/>-->
-        </LinearLayout>
-
-
-
-    </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="1">
+                android:id="@+id/exercise_name" />
 
             <ExpandableListView
                 android:id="@+id/sets_list"
@@ -55,6 +37,10 @@
                 android:layout_height="wrap_content">
             </ExpandableListView>
         </LinearLayout>
+
+
+
+    </LinearLayout>
 
     <LinearLayout
         android:orientation="horizontal"
