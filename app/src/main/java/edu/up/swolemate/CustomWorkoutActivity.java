@@ -1,9 +1,8 @@
 package edu.up.swolemate;
 
 import android.app.Activity;
-import android.content.ContentValues;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,6 +22,8 @@ public class CustomWorkoutActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_custom_workout);
         currentWorkout = new CustomWorkout();
+        //lock the device in portrait mode
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         nameText = (EditText)findViewById(R.id.tv_custom_title);
         dataText = (EditText)findViewById(R.id.tv_custom_data);

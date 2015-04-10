@@ -243,6 +243,8 @@ public class FoodPresets {
         FoodItem salt = new FoodItem();
          salt = setFoodPresetValues(salt, "Salt (table)", 0, 0.0, 0.0, 0.0, 0.21);
         foodPresets.add(salt);
+
+        initPresetsTable();
     }
 
 

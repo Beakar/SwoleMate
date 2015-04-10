@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -48,10 +49,12 @@ public class StrengthWorkoutActivity extends Activity  implements View.OnClickLi
         super.onCreate(savedInstanceState);
         fragManager = getFragmentManager();
 
+        //lock the device in portrait mode
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         createDialog = new StrengthExerciseDialogFragment();
         createExerciseButton = (Button)findViewById(R.id.newStrengthExercise);
         finishButton = (Button)findViewById(R.id.finishButton1);
-        createExerciseButton.setOnClickListener(this);
 
         nameEditText = (EditText)findViewById(R.id.enter_workout_name);
 
