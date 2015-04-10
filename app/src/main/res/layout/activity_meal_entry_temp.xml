@@ -3,7 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:weightSum="1">
+    android:background="#ffffff">
+
+    <edu.up.swolemate.FontEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:hint="Meal name"
+        android:id="@+id/et_meal_name"/>
 
     <LinearLayout
         android:orientation="vertical"
@@ -16,8 +23,7 @@
         <ListView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/list_border_width"
-            android:background="@color/list_background"
+            android:background="#ffffff"
             android:divider="@color/list_divider_color"
             android:dividerHeight="1dp"
             android:id="@+id/mealListView"
@@ -25,24 +31,33 @@
 
     </LinearLayout>
 
-    <Button
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/add_new_food"
-        android:id="@+id/newFoodItemButton"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="0dp"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:layout_gravity="bottom"/>
+        android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/finishMeal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:text="@string/finish" />
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/add_new_food"
+            android:id="@+id/newFoodItemButton"
+            android:layout_marginBottom="0dp"
+            android:layout_gravity="bottom"
+            android:background="#005500"
+            android:textColor="#ffffff"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/finishMeal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/finish"
+            android:background="#aaaaaa"
+            android:onClick="onFinishMealClick"/>
+
+    </LinearLayout>
+
+
 
 </LinearLayout>
