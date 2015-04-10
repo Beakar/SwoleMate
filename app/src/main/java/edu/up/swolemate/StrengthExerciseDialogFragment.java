@@ -3,25 +3,16 @@ package edu.up.swolemate;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ExpandableListView;
-import android.widget.NumberPicker;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by Carl Lulay on 3/8/2015.
@@ -32,7 +23,7 @@ public class StrengthExerciseDialogFragment extends DialogFragment {
     LayoutInflater inflater;
     View view;
     Exercise currentExercise;
-    AutoCompleteTextView exerciseSearchView;
+    AutoCompleteTextView exerciseNameView;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -52,16 +43,16 @@ public class StrengthExerciseDialogFragment extends DialogFragment {
         ExercisePresets presets = new ExercisePresets();
         //get the names of all of the strength exercises
         ArrayList<String> names = presets.getExerciseNames(presets.strengthPresets);
-        exerciseSearchView = (AutoCompleteTextView)view.findViewById(R.id.exercise_search);
+        exerciseNameView = (AutoCompleteTextView)view.findViewById(R.id.exercise_name);
         //creates and then set the array adapter for the exercise names
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_dropdown_item_1line, names);
-        exerciseSearchView.setAdapter(arrayAdapter);
+        exerciseNameView.setAdapter(arrayAdapter);
         //gets the name of the exercise in the text field and sets the
         //value of the text field and current exercise name to the chosen String.
-        exerciseSearchView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-            public void onItemClick(AdapterView parent, View view, int position, long id){
-                String exName = (String)parent.getItemAtPosition(position);
-                exerciseSearchView.setText(exName);
+        exerciseNameView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView parent, View view, int position, long id) {
+                String exName = (String) parent.getItemAtPosition(position);
+                exerciseNameView.setText(exName);
                 currentExercise.setName(exName);
             }
         });

@@ -25,21 +25,23 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content">
 
-            <edu.up.swolemate.FontEditText
+            <AutoCompleteTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/exercise_name"
+                android:id="@+id/exercise_name"
+                />
+            <!--<edu.up.swolemate.FontEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/exercise_name"
                 android:textSize="16dp"
                 android:inputType="text"
                 android:hint="Exercise name"
-                android:layout_margin="10dp"/>
+                android:layout_margin="10dp"/>-->
         </LinearLayout>
 
-        <AutoCompleteTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="@string/exercise_search"
-            android:id="@+id/exercise_search" />
+
 
     </LinearLayout>
         <LinearLayout
