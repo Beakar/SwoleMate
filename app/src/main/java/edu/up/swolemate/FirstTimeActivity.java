@@ -312,7 +312,7 @@ public class FirstTimeActivity extends Activity {
         editor.putString("height", height.replaceAll("\\s", ""));
         editor.putString("weight", weight);
         editor.putString("units", "imperial");
-        editor.putString("greeting", "Hello, " + name);
+        editor.putString("greeting", "Hi, " + name);
 
         editor.commit();
     }

@@ -23,7 +23,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/title_text_size"
-                android:text="Hello, User"
+                android:text="Hi, User"
                 android:inputType="text"
                 android:ellipsize="marquee"
                 android:layout_marginRight="5dp"

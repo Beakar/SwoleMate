@@ -144,11 +144,11 @@ public class MealEntryActivity extends Activity implements OnClickListener{
                   //  if(checkNutrientsFormat() == true){
                     currentFood = new FoodItem();
                     currentFood.setFoodType(foodAutoEditText.getText().toString());
-                    currentFood.setServingSize(Double.parseDouble(servingsEditText.getText().toString()));
-                    currentFood.setCalories(Integer.parseInt(calEditText.getText().toString()));
-                    currentFood.setCarbs(Double.parseDouble(servingsEditText.getText().toString()));
-                    currentFood.setFat(Double.parseDouble(fatEditText.getText().toString()));
-                    currentFood.setProtein(Double.parseDouble(fatEditText.getText().toString()));
+                    currentFood.setServingSize(Double.parseDouble(servingsEditText.getText().toString().replaceAll("[a-z.\\s]", "")));
+                    currentFood.setCalories(Integer.parseInt(calEditText.getText().toString().replaceAll("[a-z.\\s]", "")));
+                    currentFood.setCarbs(Double.parseDouble(servingsEditText.getText().toString().replaceAll("[a-z.\\s]", "")));
+                    currentFood.setFat(Double.parseDouble(fatEditText.getText().toString().replaceAll("[a-z.\\s]", "")));
+                    currentFood.setProtein(Double.parseDouble(fatEditText.getText().toString().replaceAll("[a-z.\\s]", "")));
                     addFoodToMeal(currentFood);
                     alert.dismiss();
                     //}
