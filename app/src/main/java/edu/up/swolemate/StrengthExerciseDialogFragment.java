@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -57,6 +59,20 @@ public class StrengthExerciseDialogFragment extends DialogFragment {
             }
         });
 
+        exerciseNameView.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() != 0) {
+                    currentExercise.setName(s.toString());
+                }
+            }
+        });
+
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         // set the view
@@ -76,7 +92,16 @@ public class StrengthExerciseDialogFragment extends DialogFragment {
                     currentExercise.setName("Unnamed Exercise");
                 }
 
-                currentActivity.addExerciseToWorkout(currentExercise);
+                boolean foundExerciseInWorkout = false;
+                for (Exercise e : currentActivity.currentWorkout.exercises){
+                    if(currentExercise.getName().equalsIgnoreCase(e.getName())){
+                        e = currentExercise;
+                        foundExerciseInWorkout = true;
+                    }
+                }
+                if(!foundExerciseInWorkout){
+                    currentActivity.addExerciseToWorkout(currentExercise);
+                }
 
                 dismiss();
             }
