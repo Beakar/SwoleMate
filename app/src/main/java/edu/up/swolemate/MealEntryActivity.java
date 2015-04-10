@@ -138,15 +138,15 @@ public class MealEntryActivity extends Activity implements OnClickListener{
             @Override
             public void onClick(View view) {
                 if(!hasEmptyFields()) {
-                    if(checkNutrientsFormat() == true){
+                  //  if(checkNutrientsFormat() == true){
                         addFoodToMeal(currentFood);
                         alert.dismiss();
-                    }
-                    else{
+                    //}
+                   /* else{
                         Toast.makeText(activity, "Format error: \n1) Calories must only be a number.\n" +
                                         "2) Fat, Carbs and Protein must only be a number.",
                                 Toast.LENGTH_SHORT).show();
-                    }
+                    }*/
                 }
                 else{
                     Toast.makeText(activity, "You must fill-in all nutrient fields.",
@@ -180,21 +180,21 @@ public class MealEntryActivity extends Activity implements OnClickListener{
         Pattern regexSrv = Pattern.compile("\\d+\\.\\d+oz\\.");
 
         String srvSize = srvSizeEditText.getText().toString();
-        srvSize.replaceAll("\\s", "");//.replaceAll("oz\\.{1}", "");
+        srvSize.replaceAll("oz\\.{1}", "");
 
         String cal = calEditText.getText().toString();
 
         String fat = fatEditText.getText().toString();
-        fat.replaceAll("\\s", "").replaceAll("g\\.{1}", "");
+        fat.replaceAll("g\\.{1}", "");
 
         String carbs = carbsEditText.getText().toString();
-        carbs.replaceAll("\\s", "").replaceAll("g\\.{1}", "");
+        carbs.replaceAll("g\\.{1}", "");
 
         String protein = proteinEditText.getText().toString();
-        protein.replaceAll("\\s", "").replaceAll("g\\.{1}", "");
+        protein.replaceAll("g\\.{1}", "");
 
         String servings = servingsEditText.getText().toString();
-        servings.replaceAll("\\s", "").replaceAll("g\\.{1}", "");
+        servings.replaceAll("g\\.{1}", "");
 
 System.out.println("srvSize: " + srvSize + "\ncal: " + cal + "\nfat: " + fat + "\ncarbs: " + carbs +
 "\nprotein: " + protein + "\nservings: " + servings);
