@@ -404,20 +404,22 @@ System.out.println("srvSize: " + srvSize + "\ncal: " + cal + "\nfat: " + fat + "
     }
 
     public void onFinishMealClick(View v) {
-        String mealName = mealNameEditText.getText().toString();
-        //if the user tries to save a meal with an empty name,
-        //tell 'em they can't.
-        if(mealName == null || mealName.toString().equals("")){
-            Toast.makeText(this, "You must enter a meal name.", Toast.LENGTH_SHORT).show();
-        }
-        else{
+        Editable name = mealNameEditText.getText();
+        String mealName = "";
+        if(name != null && !name.toString().equals("")) {
+            if(currentMeal.getFoodItems().size() == 0){
+                Toast.makeText(this, "You must enter a food item", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            mealName = name.toString();
             currentMeal.setName(mealName);
             new FitnessDatabaseHelper(this).insertMeal(currentMeal);
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         }
-/*        else{
-            Toast.makeText(this, "You must enter a meal name.", Toast.LENGTH_SHORT);
-        }*/
+        else{
+            Toast.makeText(this, "You must enter a meal name.", Toast.LENGTH_SHORT).show();
+        }
     }
 }
