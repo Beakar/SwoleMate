@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -141,8 +142,15 @@ public class MealEntryActivity extends Activity implements OnClickListener{
             public void onClick(View view) {
                 if(!hasEmptyFields()) {
                   //  if(checkNutrientsFormat() == true){
-                        addFoodToMeal(currentFood);
-                        alert.dismiss();
+                    currentFood = new FoodItem();
+                    currentFood.setFoodType(foodAutoEditText.getText().toString());
+                    currentFood.setServingSize(Double.parseDouble(servingsEditText.getText().toString()));
+                    currentFood.setCalories(Integer.parseInt(calEditText.getText().toString()));
+                    currentFood.setCarbs(Double.parseDouble(servingsEditText.getText().toString()));
+                    currentFood.setFat(Double.parseDouble(fatEditText.getText().toString()));
+                    currentFood.setProtein(Double.parseDouble(fatEditText.getText().toString()));
+                    addFoodToMeal(currentFood);
+                    alert.dismiss();
                     //}
                    /* else{
                         Toast.makeText(activity, "Format error: \n1) Calories must only be a number.\n" +
