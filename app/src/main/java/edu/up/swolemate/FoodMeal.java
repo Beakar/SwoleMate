@@ -172,10 +172,58 @@ public class FoodMeal implements Comparable<FoodMeal>{
         this.foodItems = foodItems;
     }
 
+    public int getTotalCalories() {
+        int total = 0;
+
+        for(FoodItem item : foodItems) {
+            total += item.getCalories();
+        }
+
+        return total;
+    }
+
+    public double getTotalFat() {
+        double total = 0;
+
+        for(FoodItem item : foodItems) {
+            total += item.getFat();
+        }
+
+        return total;
+    }
+
+    public double getTotalCarbs() {
+        double total = 0;
+
+        for(FoodItem item : foodItems) {
+            total += item.getCarbs();
+        }
+
+        return total;
+    }
+
+    public double getTotalProtein() {
+        double total = 0;
+
+        for(FoodItem item : foodItems) {
+            total += item.getProtein();
+        }
+
+        return total;
+    }
 
     @Override
     public String toString() {
         String stringRep = "";
+
+        for(FoodItem item : foodItems) {
+            stringRep += item.getFoodType() + "\n";
+            stringRep += "Calories: " + item.getCalories()+ "\n";
+            stringRep += "Fat: " + item.getFat() + "\n";
+            stringRep += "Carbs: " + item.getCarbs() + "\n";
+            stringRep += "Protein: " + item.getProtein() + "\n";
+            stringRep += "\n";
+        }
 
         return stringRep;
     }

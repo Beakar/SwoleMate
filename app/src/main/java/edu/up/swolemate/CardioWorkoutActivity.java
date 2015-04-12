@@ -180,6 +180,10 @@ public class CardioWorkoutActivity extends Activity implements View.OnClickListe
         }
     }
 
+    /**
+     * Gets the value of the timer (seconds)
+     * @return
+     */
     private long getTimerValue() {
         return (SystemClock.elapsedRealtime() - chronometer.getBase()) / 1000;
     }

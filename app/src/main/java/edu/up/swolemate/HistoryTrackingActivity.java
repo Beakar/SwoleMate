@@ -257,6 +257,24 @@ public class HistoryTrackingActivity extends Activity {
         }
     }
 
+    /**
+     * Deletes a meal from the database
+     * @param id
+     */
+    private void dbDeleteMeal(int id) {
+        FitnessDatabaseHelper db = new FitnessDatabaseHelper(this);
+        db.deleteMeal(id);
+
+        for(FoodMeal meal: meals) {
+            if(meal.getId() == id) {
+                foodAdapter.remove(meal);
+                meals.remove(meal);
+                foodAdapter.notifyDataSetChanged();
+                break;
+            }
+        }
+    }
+
 
 
 
@@ -553,9 +571,54 @@ public class HistoryTrackingActivity extends Activity {
 
 
     private void popupViewMeal(FoodMeal meal) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = LayoutInflater.from(this);
 
+        View root = inflater.inflate(R.layout.dialog_view_meal, null);
+
+        ((TextView)root.findViewById(R.id.tv_view_meal_title)).setText(meal.getName());
+
+        ((TextView)(root.findViewById(R.id.tv_view_meal_calories))).setText(meal.getTotalCalories() + "");
+        ((TextView)(root.findViewById(R.id.tv_view_meal_fat))).setText(meal.getTotalFat() + "");
+        ((TextView)(root.findViewById(R.id.tv_view_meal_carbs))).setText(meal.getTotalCarbs() + "");
+        ((TextView)(root.findViewById(R.id.tv_view_meal_protein))).setText(meal.getTotalProtein() + "");
+
+        ((TextView)(root.findViewById(R.id.tv_view_meal_foods))).setText(meal.toString());
+
+        builder.setView(root);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                //don't do anything
+            }
+        });
+
+        final int id = meal.getId();
+        builder.setNegativeButton("Delete", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                deleteMeal(id);
+            }
+        });
+
+
+        builder.create().show();
     }
 
+    public void deleteMeal(final int id) {
+        AlertDialog.Builder delete = new AlertDialog.Builder(this);
+        delete.setTitle("Delete");
+        delete.setMessage("Are you sure you want to delete this meal?");
+        delete.setNegativeButton("Cancel", null);
+        delete.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dbDeleteMeal(id);
+            }
+        });
+
+        delete.create().show();
+    }
 
     /**
      * Dialog for workout deletion popup

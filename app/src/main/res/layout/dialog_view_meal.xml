@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <edu.up.swolemate.FontTextView
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="view workout"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:gravity="center_vertical"
+            android:textSize="20dp"
+            android:textColor="#ffffff"
+            android:background="#aaaaaa"/>
+
+        <edu.up.swolemate.FontBoldTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Title"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:id="@+id/tv_view_meal_title"
+            android:layout_margin="@dimen/activity_horizontal_margin"/>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/activity_horizontal_margin">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:weightSum="4">
+
+                    <edu.up.swolemate.FontTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/calories"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:textStyle="bold"/>
+                    <edu.up.swolemate.FontTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/fat"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:textStyle="bold"/>
+                    <edu.up.swolemate.FontTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/carbs"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:textStyle="bold"/>
+                    <edu.up.swolemate.FontTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/protein"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent">
+                    <edu.up.swolemate.FontTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:id="@+id/tv_view_meal_calories"/>
+                    <edu.up.swolemate.FontTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="0g"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:id="@+id/tv_view_meal_fat"/>
+                    <edu.up.swolemate.FontTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="0g"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:id="@+id/tv_view_meal_carbs"/>
+                    <edu.up.swolemate.FontTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="0g"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:id="@+id/tv_view_meal_protein"/>
+                </LinearLayout>
+
+                <edu.up.swolemate.FontTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:id="@+id/tv_view_meal_foods"/>
+
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </LinearLayout>
+
+</LinearLayout>
