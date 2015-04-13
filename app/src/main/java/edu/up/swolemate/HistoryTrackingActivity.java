@@ -673,12 +673,15 @@ public class HistoryTrackingActivity extends Activity {
 
         final Dialog d = dg;
 
+        final Button sortButton = clicked;
+
         //each of these buttons should change the display
         all.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showDataFrom(0);
                 d.dismiss();
+                sortButton.setText("all");
             }
         });
 
@@ -688,6 +691,7 @@ public class HistoryTrackingActivity extends Activity {
                 int today = (int)((System.currentTimeMillis() / 1000) - 86400);
                 showDataFrom(today);
                 d.dismiss();
+                sortButton.setText("today");
             }
         });
 
@@ -697,6 +701,7 @@ public class HistoryTrackingActivity extends Activity {
                 int thisWeek = (int)((System.currentTimeMillis() / 1000) - 604800);
                 showDataFrom(thisWeek);
                 d.dismiss();
+                sortButton.setText("week");
             }
         });
 
@@ -706,6 +711,7 @@ public class HistoryTrackingActivity extends Activity {
                 int thisMonth = (int)((System.currentTimeMillis() / 1000) - 2629740);
                 showDataFrom(thisMonth);
                 d.dismiss();
+                sortButton.setText("month");
             }
         });
 
@@ -744,14 +750,16 @@ public class HistoryTrackingActivity extends Activity {
         dg.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
 
 
-
         final Dialog d = dg;
+
+        final Button workoutSort = clicked;
 
         all.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showAllWorkouts();
                 d.dismiss();
+                workoutSort.setText("all");
             }
         });
 
@@ -760,6 +768,7 @@ public class HistoryTrackingActivity extends Activity {
             public void onClick(View view) {
                 showStrengthWorkouts();
                 d.dismiss();
+                workoutSort.setText("strength");
             }
         });
 
@@ -768,6 +777,7 @@ public class HistoryTrackingActivity extends Activity {
             public void onClick(View view) {
                 showCardioWorkouts();
                 d.dismiss();
+                workoutSort.setText("cardio");
             }
         });
 
@@ -776,6 +786,7 @@ public class HistoryTrackingActivity extends Activity {
             public void onClick(View view) {
                 showCustomWorkouts();
                 d.dismiss();
+                workoutSort.setText("custom");
             }
         });
 
