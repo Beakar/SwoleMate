@@ -254,16 +254,22 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
      */
     public int insertMeal(FoodMeal meal) {
         SQLiteDatabase db = getWritableDatabase();
-        int id = -1;
-        for(FoodItem item : meal.getFoodItems()) {
-            insertFoodItem(item);
-        }
-
         ContentValues vals = new ContentValues();
         vals.put("displayName", meal.getName());
         vals.put("dateCompleted", System.currentTimeMillis() / 1000);
 
-        return (int)(db.insert("FoodMeals", null, vals));
+        int mealId = (int)(db.insert("FoodMeals", null, vals));
+
+        for(FoodItem item : meal.getFoodItems()) {
+            int itemId = insertFoodItem(item);
+            vals.clear();
+            vals.put("itemId", itemId);
+            vals.put("mealId", mealId);
+
+            db.insert("ItemsToMeals", null, vals);
+        }
+
+        return mealId;
     }
 
     
@@ -323,6 +329,7 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
         Cursor c = db.rawQuery(query, null);
         while(c.moveToNext()) {
             FoodMeal meal = new FoodMeal();
+            meal.setId(c.getInt(0));
             meal.setName(c.getString(1));
             meal.setDateCompleted(c.getInt(2));
             meal.setFoodItems(selectFoodItems(c.getInt(0)));
@@ -343,7 +350,7 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         ArrayList<FoodItem> items = new ArrayList<FoodItem>();
 
-        String query = "SELECT FoodItems.foodType, FoodItems.servingSize, foodItems.calories, foodItems.fat, foodItems.carbs, foodItems.protein " +
+        String query = "SELECT FoodItems.foodType, FoodItems.servingSize, FoodItems.calories, FoodItems.fat, FoodItems.carbs, FoodItems.protein " +
                        "FROM FoodItems " +
                        "LEFT OUTER JOIN ItemsToMeals ON FoodItems.id=ItemsToMeals.itemId " +
                        "LEFT OUTER JOIN FoodMeals ON ItemsToMeals.mealId=FoodMeals.id " +
@@ -519,6 +526,12 @@ public class FitnessDatabaseHelper extends SQLiteOpenHelper {
         return workouts;
     }
 
+    public void deleteMeal(int id) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        //delete meal
+        db.delete("FoodMeals", "id=" + id, null);
+    }
     
     /**
      * Deletes a StrengthWorkout

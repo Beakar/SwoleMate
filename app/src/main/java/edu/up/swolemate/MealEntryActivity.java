@@ -81,11 +81,11 @@ public class MealEntryActivity extends Activity implements OnClickListener{
                 String item = (String)arg0.getItemAtPosition(position);
                 currentFood = presets.foodPresetsTable.get(item);
                 //set the text fields
-                srvSizeEditText.setText("" + currentFood.getServingSize() + "oz.");
-                calEditText.setText("" + currentFood.getCalories());
-                fatEditText.setText("" + currentFood.getFat());
-                carbsEditText.setText("" + currentFood.getCarbs());
-                proteinEditText.setText("" + currentFood.getProtein());
+                srvSizeEditText.setText("" + currentFood.getServingSize() + " oz.");
+                calEditText.setText("" + currentFood.getCalories() + " g.");
+                fatEditText.setText("" + currentFood.getFat() + " g.");
+                carbsEditText.setText("" + currentFood.getCarbs() + " g.");
+                proteinEditText.setText("" + currentFood.getProtein() + " g.");
 
                 //addFoodToMeal(food);
             }
@@ -144,11 +144,11 @@ public class MealEntryActivity extends Activity implements OnClickListener{
                   //  if(checkNutrientsFormat() == true){
                     currentFood = new FoodItem();
                     currentFood.setFoodType(foodAutoEditText.getText().toString());
-                    currentFood.setServingSize(Double.parseDouble(servingsEditText.getText().toString()));
-                    currentFood.setCalories(Integer.parseInt(calEditText.getText().toString()));
-                    currentFood.setCarbs(Double.parseDouble(servingsEditText.getText().toString()));
-                    currentFood.setFat(Double.parseDouble(fatEditText.getText().toString()));
-                    currentFood.setProtein(Double.parseDouble(fatEditText.getText().toString()));
+                    currentFood.setServingSize(Double.parseDouble(servingsEditText.getText().toString().replaceAll("[a-z.\\s]", "")));
+                    currentFood.setCalories(Integer.parseInt(calEditText.getText().toString().replaceAll("[a-z.\\s]", "")));
+                    currentFood.setCarbs(Double.parseDouble(servingsEditText.getText().toString().replaceAll("[a-z.\\s]", "")));
+                    currentFood.setFat(Double.parseDouble(fatEditText.getText().toString().replaceAll("[a-z.\\s]", "")));
+                    currentFood.setProtein(Double.parseDouble(fatEditText.getText().toString().replaceAll("[a-z.\\s]", "")));
                     addFoodToMeal(currentFood);
                     alert.dismiss();
                     //}
@@ -157,6 +157,9 @@ public class MealEntryActivity extends Activity implements OnClickListener{
                                         "2) Fat, Carbs and Protein must only be a number.",
                                 Toast.LENGTH_SHORT).show();
                     }*/
+                }
+                else if(currentFood == null){
+                    Toast.makeText(activity, "You must enter a food name.", Toast.LENGTH_SHORT).show();
                 }
                 else{
                     Toast.makeText(activity, "You must fill-in all nutrient fields.",
@@ -410,13 +413,20 @@ System.out.println("srvSize: " + srvSize + "\ncal: " + cal + "\nfat: " + fat + "
     public void onFinishMealClick(View v) {
         Editable name = mealNameEditText.getText();
         String mealName = "";
-        if(name != null) {
-            mealName = name.toString();
-        }
+        if(name != null && !name.toString().equals("")) {
+            if(currentMeal.getFoodItems().size() == 0){
+                Toast.makeText(this, "You must enter a food item", Toast.LENGTH_SHORT).show();
+                return;
+            }
 
-        currentMeal.setName(mealName);
-        new FitnessDatabaseHelper(this).insertMeal(currentMeal);
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+            mealName = name.toString();
+            currentMeal.setName(mealName);
+            new FitnessDatabaseHelper(this).insertMeal(currentMeal);
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        }
+        else{
+            Toast.makeText(this, "You must enter a meal name.", Toast.LENGTH_SHORT).show();
+        }
     }
 }

@@ -32,7 +32,7 @@ public class MainActivity extends Activity{
 
         SharedPreferences settings = getSharedPreferences("user_settings", 0);
         TextView greeting = (TextView)findViewById(R.id.userGreeting);
-        greeting.setText(settings.getString("greeting", "Hello, user"));
+        greeting.setText(settings.getString("greeting", "Hi, user"));
     }
 
     @Override
